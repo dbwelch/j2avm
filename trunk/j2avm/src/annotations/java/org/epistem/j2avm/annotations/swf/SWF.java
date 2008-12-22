@@ -13,10 +13,10 @@ import java.lang.annotation.Target;
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.TYPE )
 public @interface SWF {
-    int width()  default -1;
-    int height() default -1;
-    int frameRate() default -1;
-    int version() default -1;
-    int background() default -1;
+    int width()  default 400;
+    int height() default 450;
+    int frameRate() default 12;
+    int version() default 9;
+    int background() default 0xffffff;
     boolean compressed() default false;    
 }

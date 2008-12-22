@@ -1,0 +1,7 @@
+<project name="Tests" default="test">
+
+    <target name="test">
+        <java classpath="../../../eclipse-build" classname="test.RunTest" />
+    </target>
+	
+</project>

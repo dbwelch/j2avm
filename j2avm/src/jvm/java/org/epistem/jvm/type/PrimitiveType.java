@@ -59,7 +59,7 @@ public final class PrimitiveType extends ValueType {
     /**
      * Whether a type is a 64 bit type.
      */
-    public static boolean is64Bit( JavaType type ) {
+    public static boolean is64Bit( JVMType type ) {
         return type == LONG || type == DOUBLE;
     }
     

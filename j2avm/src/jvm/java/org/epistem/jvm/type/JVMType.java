@@ -5,7 +5,7 @@ package org.epistem.jvm.type;
  *  
  * @author nickmain
  */
-public abstract class JavaType {
+public abstract class JVMType {
 
 	/**
 	 * The type name
@@ -17,7 +17,7 @@ public abstract class JavaType {
      */
     public final String abbreviation;
     
-    /*pkg*/ JavaType( String name, String abbreviation ) {
+    /*pkg*/ JVMType( String name, String abbreviation ) {
         this.name = name;
         this.abbreviation = abbreviation;
     }
@@ -30,9 +30,9 @@ public abstract class JavaType {
     /** @see java.lang.Object#equals(java.lang.Object) */
     @Override
     public final boolean equals( Object obj ) {
-        if( obj == null || !(obj instanceof JavaType)) return false;
+        if( obj == null || !(obj instanceof JVMType)) return false;
         
-        JavaType otherType = (JavaType) obj;
+        JVMType otherType = (JVMType) obj;
         return name.equals( otherType.name );
     }
 
@@ -48,7 +48,7 @@ public abstract class JavaType {
      * 
      * @return null if the types are incompatible
      */
-    public static JavaType common( JavaType a, JavaType b ) {
+    public static JVMType common( JVMType a, JVMType b ) {
     	
     	if( a.equals( b ) ) return a;
 
@@ -67,9 +67,9 @@ public abstract class JavaType {
     }
     
     /**
-     * Create a JavaType from a type name 
+     * Create a JVMType from a type name 
      */
-    public static JavaType fromName( String name ) {
+    public static JVMType fromName( String name ) {
     	
     	if( name.equals( "void" ) ) return VoidType.VOID;
     	

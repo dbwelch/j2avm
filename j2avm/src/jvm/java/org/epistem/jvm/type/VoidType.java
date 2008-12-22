@@ -5,7 +5,7 @@ package org.epistem.jvm.type;
  *
  * @author nickmain
  */
-public final class VoidType extends JavaType {
+public final class VoidType extends JVMType {
     
     public static final VoidType VOID = new VoidType();
     

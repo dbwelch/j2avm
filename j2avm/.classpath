@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="src/annotations/java"/>
 	<classpathentry kind="src" path="src/flash9/java"/>
 	<classpathentry kind="src" path="src/generator/java"/>
+	<classpathentry kind="src" path="src/jvm/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/freemarker-2.3.14.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/j2swf"/>

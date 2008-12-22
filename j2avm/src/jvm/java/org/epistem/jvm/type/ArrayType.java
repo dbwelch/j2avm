@@ -69,7 +69,7 @@ public final class ArrayType extends ObjectOrArrayType {
     		elemName = elemName.substring( 0, elemName.length() - ArrayType.SUFFIX.length() );
     	}
     	
-		JavaType elementType = JavaType.fromName( elemName );
+		JVMType elementType = JVMType.fromName( elemName );
 		if( elementType instanceof ValueType ) {
 			return new ArrayType( name, ((ValueType) elementType), dimCount );
 		} else {

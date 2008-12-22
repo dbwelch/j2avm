@@ -6,7 +6,7 @@ package org.epistem.jvm.type;
  *
  * @author nickmain
  */
-public abstract class ValueType extends JavaType {
+public abstract class ValueType extends JVMType {
 
     private static class Unknown extends ValueType { Unknown() {super("UNKNOWN","U");} }
     public static final ValueType UNKNOWN = new Unknown();
@@ -24,6 +24,6 @@ public abstract class ValueType extends JavaType {
     		throw new IllegalArgumentException( "Value type cannot be void" );
     	}
     	
-        return (ValueType) JavaType.fromName( name );
+        return (ValueType) JVMType.fromName( name );
     }
 }

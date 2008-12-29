@@ -1,7 +1,6 @@
 package org.epistem.j2avm.translator;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
@@ -14,11 +13,7 @@ import org.epistem.j2avm.TranslationManager;
 import org.epistem.j2avm.annotations.runtime.FlashNativeClass;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.j2swf.swf.code.CodeClass;
-import org.epistem.j2swf.swf.code.CodeConstructor;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.util.TraceClassVisitor;
+import org.epistem.jvm.JVMClass;
 
 import flash.FlashObject;
 
@@ -39,7 +34,7 @@ public class ClassTranslation {
      */
     public final TranslationManager manager;
     
-    private final ClassNode classNode;
+    private final JVMClass jvmClass;
     private boolean hasBeenTranslated;
     private CodeClass swfClass; 
     
@@ -49,24 +44,19 @@ public class ClassTranslation {
     
     /**
      * @param manager the translation manager
-     * @param name the fully qualified class name
-     * @param in the java class data to parse
+     * @param jvmClass the class to translate
      */
-    public ClassTranslation( TranslationManager manager, String name, InputStream in ) throws IOException {
-        this.name    = name;
-        this.manager = manager;
+    public ClassTranslation( TranslationManager manager, JVMClass jvmClass ) throws IOException {
+        this.name     = jvmClass.name.name;
+        this.manager  = manager;
+        this.jvmClass = jvmClass;
         
         //detect Flash native classes - not to be translated
         FlashNativeClass fnc = getAnnotation( FlashNativeClass.class );
         if( fnc != null ) {
             hasBeenTranslated = true;
-            classNode = null;
             return;
         }
-        
-        classNode = new ClassNode();
-        ClassReader reader = new ClassReader( in );
-        reader.accept( classNode, 0 );
     }
     
     /**

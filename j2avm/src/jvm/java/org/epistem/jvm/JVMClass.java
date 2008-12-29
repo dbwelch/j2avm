@@ -22,11 +22,11 @@ public class JVMClass {
     /** The class loader */
     public final JVMClassLoader loader;    
     
-    public final Collection<ObjectType> interfaces  = new HashSet<ObjectType>();
-    public final Collection<JVMField>  fields      = new HashSet<JVMField>();
-    public final Collection<JVMMethod> methods     = new HashSet<JVMMethod>();    
-    public final Map<String,JVMAttribute> attributes = new HashMap<String,JVMAttribute>();    
-    public final Collection<ClassFlag> flags = EnumSet.noneOf( ClassFlag.class );    
+    public final Collection<ObjectType>   interfaces  = new HashSet<ObjectType>();
+    public final Collection<JVMField>     fields      = new HashSet<JVMField>();
+    public final Collection<JVMMethod>    methods     = new HashSet<JVMMethod>();    
+    public final Map<String,JVMAttribute> attributes  = new HashMap<String,JVMAttribute>();    
+    public final Collection<ClassFlag>    flags       = EnumSet.noneOf( ClassFlag.class );    
     
     public final ObjectType superclassName;
     public final int majorVersion;

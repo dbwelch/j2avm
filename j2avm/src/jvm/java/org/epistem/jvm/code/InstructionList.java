@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.epistem.jvm.code.instructions.LineNumber;
+
 /**
  * A list of instructions and exception handlers
  *
@@ -138,7 +140,11 @@ public final class InstructionList {
     public void accept( InstructionVisitor visitor ) {
         visitor.visitStart( this );
     
-        for( Instruction i = first; i != null; i = i.next ) {
+        for( Instruction i = first; i != null; i = i.next ) {    
+            if( i.context != null && !( i instanceof LineNumber ) ) {
+                //visitor.visitContext( i.context );
+            }
+            
             i.accept( visitor );
         }        
         

@@ -1,8 +1,10 @@
 package org.epistem.jvm.code.analysis;
 
-import org.epistem.jvm.JVMMethod;
-import org.epistem.jvm.flags.MethodFlag;
-import org.epistem.jvm.type.ValueType;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.epistem.jvm.code.Instruction;
 
 /**
  * The execution context at particular point
@@ -12,79 +14,164 @@ import org.epistem.jvm.type.ValueType;
 public class ExecutionContext {
 
     /**
-     * The stack - top is at the start
+     * The stack - top is at the start. Values are stored as is - no account
+     * is made of the difference between 32 and 64-bit values.
      */
-    public final Value[] stack;
+    public final LinkedList<Value> stack = new LinkedList<Value>();
     
     /**
-     * The local vars
+     * The local vars - keyed by index
      */
-    public final VariableRef[] locals;
-    
+    public Map<Integer, Value> locals = new TreeMap<Integer, Value>();
+           
     /**
      * Create the initial context for a method
      */
-    public static ExecutionContext forMethod( JVMMethod method ) {
-        ValueType[] paramTypes = method.signature.paramTypes;
-        boolean isStatic = method.flags.contains( MethodFlag.MethodIsStatic );
-                
-        //--determine the var count based on param types
-        int varCount = isStatic ? 0 : 1; //"this"
-        for( ValueType valueType : paramTypes ) {
-            varCount += valueType.is64Bit() ? 2 : 1;
-        }
+    public static ExecutionContext forMethod( This thisInstruction,
+                                              Argument[] arguments ) {
+        ExecutionContext ec = new ExecutionContext();
         
-        Value[]    stack  = new Value[0];
-        VariableRef[] locals = new VariableRef[ varCount ];
-        
-        int varIndex = 0;
-        if( ! isStatic ) {
-            locals[0] = new VariableRef( 
-                new Variable( 0, method.containerClass.name )); //"this"
-            varIndex = 1;
+        if( thisInstruction != null ) {
+            ec.locals.put( 0, new Value( thisInstruction, thisInstruction.type ) );
         }
-        for( ValueType valueType : paramTypes ) {
-            locals[ varIndex ] = new VariableRef( new Variable( varIndex, valueType ));            
-            varIndex += valueType.is64Bit() ? 2 : 1;
+
+        for( Argument arg : arguments ) {
+            ec.locals.put( arg.index, new Value( arg, arg.type ));            
         }        
         
-        return new ExecutionContext( stack, locals );
+        return ec;
     }
     
-    private ExecutionContext( Value[] stack, VariableRef[] locals ) {
-        this.stack  = stack;
-        this.locals = locals;
+    private ExecutionContext() { }
+    
+    /**
+     * Pop a given number of items
+     */
+    public ExecutionContext pop( int count ) {
+        while( count-- > 0 ) stack.removeFirst(); 
+        return this;
+    }
+    
+    /**
+     * Peek at a value in the stack
+     *  
+     * @param posn zero for stack top, 1 for next down, etc
+     */
+    public Value peek( int posn ) {
+        return stack.get( posn );
+    }
+    
+    /**
+     * Pop the top value from the stack
+     */
+    public Value pop() {
+        return stack.removeFirst();
+    }
+    
+    /**
+     * Push a number of items such that the last one is on top.
+     */
+    public ExecutionContext push( Value...values ) {
+        for( Value value : values ) stack.addFirst( value );
+        return this;
     }
     
     /**
      * Make a copy
      */
     public static ExecutionContext copyOf( ExecutionContext toCopy ) {
-        Value[]       stack  = new Value[ toCopy.stack.length ];
-        VariableRef[] locals = new VariableRef[ toCopy.locals.length ];
-        
-        System.arraycopy( toCopy.stack,  0, stack,  0, stack.length );
-        System.arraycopy( toCopy.locals, 0, locals, 0, locals.length );
-        
-        return new ExecutionContext( stack, locals );
+        ExecutionContext newEC = new ExecutionContext();
+        newEC.stack .addAll( toCopy.stack );
+        newEC.locals.putAll( toCopy.locals );
+        return newEC;
     }  
+        
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj ) {
+        if( obj == null || !( obj instanceof ExecutionContext ) ) return false;
+        ExecutionContext other = (ExecutionContext) obj;
+        
+        return locals.equals( other.locals )
+            && stack .equals( other.stack );
+    }
     
     /**
-     * Make a new context from this one by popping a number of items and
-     * pushing a value
+     * Merge another context into this one.
      * 
-     * @param value the value to push
-     * @param popCount the number of 32-bit slots to pop
+     * @return true if this context changed (any values became merged values or
+     * a new local value was set)
      */
-    public ExecutionContext push( Value value, int popCount ) {
-        int pushSize = value.type.is64Bit() ? 2 : 1;
-        Value[]       stack2  = new Value[ stack.length + pushSize - popCount ];
-        VariableRef[] locals2 = new VariableRef[ locals.length ];
+    public boolean merge( Instruction insn, ExecutionContext ec ) {
+        if( ec.stack.size() != stack.size() ) throw new RuntimeException( "Mismatched stack sizes for merge" );
         
-        stack2[0] = value;
-        System.arraycopy( stack, popCount, stack2, pushSize, stack.length - popCount );
-        System.arraycopy( locals, 0, locals2, 0, locals.length );
+        boolean altered = false;
         
-        return new ExecutionContext( stack2, locals2 );        
+        for( Map.Entry<Integer,Value> entry : ec.locals.entrySet() ) {
+            Integer index   = entry.getKey();
+            Value   other   = entry.getValue();
+            Value   thisVal = locals.get( index );
+            
+            if( thisVal != null ) {
+                Value newVal  = merge( insn, thisVal, other );
+                
+                if( newVal != thisVal ) {
+                    altered = true;
+                    locals.put( index, newVal );
+                }                            
+            }
+            else {
+                altered = true;
+                locals.put( index, other );
+            }            
+        }
+        
+        int stackSize = stack.size();
+        for( int i = 0; i < stackSize; i++ ) {
+            Value thisVal = stack.get( i );
+            Value newVal  = merge( insn, thisVal, ec.stack.get( i ) );
+            if( newVal != thisVal ) {
+                altered = true;
+                stack.set( i, newVal );
+            }            
+        }
+        
+        return altered;
+    }
+    
+    private Value merge( Instruction insn, Value a, Value b ) {
+        if( a == null ) return b;
+        if( a.equals( b ) ) return a;
+        
+        if( a instanceof MergedValue ) {
+            MergedValue mv = (MergedValue) a;                       
+            mv.mergeWith( b );
+            return a;
+        }
+        
+        return new MergedValue( insn, a.type, a, b );
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder buff = new StringBuilder();
+        
+        buff.append( "locals:" );
+        for( Map.Entry<Integer,Value> entry : locals.entrySet() ) {
+            buff.append( "|" );
+            buff.append( entry.getKey() );
+            buff.append( ":" );
+            buff.append( entry.getValue() );
+        }        
+        
+        buff.append( "| stack:" );
+        for( Value val : stack ) {
+            buff.append( "|" );
+            buff.append( val );            
+        }
+        
+        return buff.toString();
     }
 }

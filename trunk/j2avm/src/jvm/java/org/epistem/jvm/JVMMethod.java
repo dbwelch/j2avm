@@ -3,6 +3,7 @@ package org.epistem.jvm;
 import java.util.*;
 
 import org.epistem.jvm.attributes.*;
+import org.epistem.jvm.code.analysis.Analyzer;
 import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.JVMType;
 import org.epistem.jvm.type.ObjectType;
@@ -19,12 +20,25 @@ public class JVMMethod extends JVMMember<MethodFlag> {
      * The method signature
      */
     public final Signature signature;
+    
+    private Analyzer analyzer;
 
     public JVMMethod( JVMClass containerClass, Signature signature, JVMType type ) {
         super( containerClass, signature.name, type, MethodFlag.class );  
         this.signature = signature;
     }
 
+    /**
+     * Get the analysis for the method - performing if necessary.
+     */
+    public Analyzer analyzer() {
+        if( analyzer == null ) {
+            analyzer = new Analyzer( this );
+        }
+        
+        return analyzer;
+    }
+    
     /**
      * Get the exceptions thrown by the method
      * 

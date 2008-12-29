@@ -1,5 +1,6 @@
 package org.epistem.jvm.code;
 
+import org.epistem.jvm.code.analysis.ExecutionContext;
 import org.epistem.jvm.code.instructions.*;
 
 /**
@@ -23,6 +24,11 @@ public interface InstructionVisitor {
      * Called when the end of the instruction list has been reached
      */
     public void visitEnd();
+    
+    /**
+     * Optional - for passing the execution context of the following instruction
+     */
+    public void visitContext( ExecutionContext context );
     
     public void visitLabel( Label label );
 
@@ -76,6 +82,7 @@ public interface InstructionVisitor {
      * Implementation of the interface
      */
     public static class Impl implements InstructionVisitor {
+        public void visitContext( ExecutionContext context ) {}
         public void visitArrayAccess( ArrayAccess arrayAccess ) {}
         public void visitArrayLength( ArrayLength arrayLength ) {}
         public void visitCall( MethodCall call ) {}

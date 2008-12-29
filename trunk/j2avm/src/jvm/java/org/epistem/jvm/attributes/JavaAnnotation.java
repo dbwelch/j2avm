@@ -1,9 +1,14 @@
 package org.epistem.jvm.attributes;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.epistem.io.IndentingPrintWriter;
+import org.epistem.jvm.JVMAttribute;
+import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMClassLoader;
+import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.type.JVMType;
 import org.epistem.jvm.type.ObjectType;
 
@@ -203,12 +208,32 @@ public class JavaAnnotation {
     
     /**
      * @param type the annotation class
-     * @param visible true if this annotation is visible at runtime.
      */
     public JavaAnnotation( ObjectType type ) {
         this.type = type;
     }
 
+    /**
+     * Get the annotation class from the given classloader and fill in the
+     * default values
+     */
+    public void fillInDefaults( JVMClassLoader loader ) 
+        throws ClassNotFoundException, IOException {
+        
+        JVMClass annoClass = loader.getClass( type );
+        for( JVMMethod method : annoClass.methods ) {
+            if( values.containsKey( method.name ) ) continue;
+            
+            AnnotationDefaultAttribute annoDef = 
+                JVMAttribute.forClass( AnnotationDefaultAttribute.class, 
+                                       method.attributes );
+            
+            if( annoDef != null ) {
+                values.put( method.name, annoDef.value );
+            }
+        }
+    }
+    
     /** @see java.lang.Object#equals(java.lang.Object) */
     @Override
     public boolean equals(Object obj) {

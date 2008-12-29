@@ -13,7 +13,7 @@ import org.epistem.jvm.code.*;
  */
 public abstract class CodeWalker<INFO> {
 
-    private final InstructionList list;    
+    protected final InstructionList list;    
     private final LinkedList<Visit<INFO>> queue = 
         new LinkedList<Visit<INFO>>();
     
@@ -29,12 +29,8 @@ public abstract class CodeWalker<INFO> {
     /**
      * Seed the visit queue with the first instruction in the list
      */
-    protected CodeWalker( InstructionList list, INFO info ) {
+    protected CodeWalker( InstructionList list ) {
         this.list = list;
-        Instruction first = list.first();
-        if( first == null ) return;
-        
-        enqueue( first, info );
     }
     
     /**

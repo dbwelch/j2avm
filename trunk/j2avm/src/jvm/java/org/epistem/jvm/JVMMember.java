@@ -51,4 +51,18 @@ public abstract class JVMMember<FLAGTYPE extends Enum<FLAGTYPE>> {
     public String toString() {
         return containerClass.name + "::" + name;
     }
+    
+    /**
+     * Get the attribute with the given class
+     */
+    public <T extends JVMAttribute> T attribute( Class<T> attrClass ) {
+        for( JVMAttribute attr : attributes.values()) {
+            if( attrClass.isAssignableFrom( attr.getClass() ) ) {
+                @SuppressWarnings("unchecked") T t = (T) attr;
+                return t;   
+            }
+        }
+        
+        return null;
+    }
 }

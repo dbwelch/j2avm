@@ -14,7 +14,7 @@ import org.epistem.jvm.type.ValueType;
 public class Variable {
 
     /**
-     * The local var index, -1 if not known
+     * The local var index
      */
     public final int index;
     
@@ -30,14 +30,27 @@ public class Variable {
     public final ValueType type;
     
     /**
-     * The instructions that read or write this variable
+     * The instructions that read this variable
      */
-    public final Set<VarAccess> accessors = new HashSet<VarAccess>();
+    public final Set<VarAccess> readers = new HashSet<VarAccess>();
+
+    /**
+     * The instructions that write this variable
+     */
+    public final Set<VarAccess> writers = new HashSet<VarAccess>();
     
-    /*pkg*/ final Set<VariableRef> references = new HashSet<VariableRef>();
-    
-    public Variable( int index, ValueType type ) {
+    /*pkg*/ Variable( int index, ValueType type ) {
         this.index = index;
         this.type  = type;
+    }
+
+    /**
+     * Makes instance identity explicit.
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public final boolean equals( Object obj ) {
+        return super.equals( obj );
     }
 }

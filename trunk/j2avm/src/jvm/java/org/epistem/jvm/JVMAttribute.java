@@ -1,5 +1,7 @@
 package org.epistem.jvm;
 
+import java.util.Map;
+
 import org.epistem.io.IndentingPrintWriter;
 import org.epistem.jvm.attributes.*;
 
@@ -35,7 +37,17 @@ public class JVMAttribute {
         
         private Name( Class<? extends JVMAttribute> attributeClass ) {
             this.attributeClass = attributeClass;
-        }        
+        }
+        
+        /**
+         * Get the name for the given class
+         */
+        public static Name forClass( Class<? extends JVMAttribute> attributeClass ) {
+            for( Name name : values() ) {
+                if( name.attributeClass == attributeClass ) return name;   
+            }
+            return null;
+        }
     }
     
     /** The attribute name */
@@ -65,5 +77,12 @@ public class JVMAttribute {
     /** Dump for debug purposes */
     public void dump( IndentingPrintWriter out ) {
         out.println( name );
+    }
+    
+    public static <T extends JVMAttribute> T forClass( Class<T> attrClass, Map<String, JVMAttribute> attrs ) {
+        Name name = Name.forClass( attrClass );
+        @SuppressWarnings("unchecked")
+        T t = (T) attrs.get( name.name() );
+        return t;
     }
 }

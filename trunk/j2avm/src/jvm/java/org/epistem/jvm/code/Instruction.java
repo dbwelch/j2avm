@@ -19,8 +19,7 @@ public abstract class Instruction {
     public int offset = -1;
     
     /**
-     * The execution context for this instruction - may be null if not yet
-     * determined
+     * The context before this instruction - null if analysis not performed
      */
     public ExecutionContext context;
     

@@ -5,6 +5,7 @@ import org.epistem.jvm.code.ExceptionHandler;
 import org.epistem.jvm.code.InstructionList;
 import org.epistem.jvm.code.InstructionVisitor;
 import org.epistem.jvm.code.Label;
+import org.epistem.jvm.code.analysis.ExecutionContext;
 import org.epistem.jvm.code.instructions.*;
 
 /**
@@ -21,6 +22,11 @@ public class CodePrinter implements InstructionVisitor {
      */
     public CodePrinter( IndentingPrintWriter ipw ) {
         this.ipw = ipw;
+    }
+    
+    /** @see org.epistem.jvm.code.InstructionVisitor#visitContext(org.epistem.jvm.code.analysis.ExecutionContext) */
+    public void visitContext( ExecutionContext context ) {
+        ipw.println( context );        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitArrayAccess(org.epistem.jvm.code.instructions.ArrayAccess) */
@@ -129,7 +135,13 @@ public class CodePrinter implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitIncrement(org.epistem.jvm.code.instructions.Increment) */
     public void visitIncrement( Increment increment ) {
-        ipw.println( "var " + increment.index + " += " + increment.value );
+        
+        if( increment.variable != null ) {
+            ipw.println( increment.variable.name + " += " + increment.value );   
+        }
+        else {
+            ipw.println( "var " + increment.index + " += " + increment.value );
+        }        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitInstanceOf(org.epistem.jvm.code.instructions.InstanceOf) */
@@ -215,7 +227,12 @@ public class CodePrinter implements InstructionVisitor {
         if( varAccess.isWrite ) ipw.print( "store " );
         else ipw.write( "load " );
         
-        ipw.println( varAccess.type + " " + varAccess.index );
+        if( varAccess.variable != null ) {
+            ipw.println( varAccess.variable.name );
+        }
+        else {
+            ipw.println( varAccess.type + "@" + varAccess.index );
+        }
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitLineNumber(org.epistem.jvm.code.instructions.LineNumber) */

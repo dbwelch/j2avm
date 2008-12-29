@@ -5,6 +5,7 @@ import org.epistem.jvm.JVMAttribute;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.JVMMethod;
+import org.epistem.jvm.code.analysis.Analyzer;
 import org.epistem.jvm.flags.ClassFlag;
 import org.epistem.jvm.flags.FieldFlag;
 import org.epistem.jvm.flags.MethodFlag;
@@ -19,10 +20,23 @@ public class ClassPrinter {
     
     private final IndentingPrintWriter out;
     
+    /**
+     * Set to true to cause method analysis
+     */
+    private boolean analyze = false;
+    
     public ClassPrinter( IndentingPrintWriter out ) {
         this.out = out;
     }
     
+    /**
+     * @param analyze whether to analyze the methods
+     */
+    public ClassPrinter( IndentingPrintWriter out, boolean analyze ) {
+        this.out = out;
+        this.analyze = analyze;
+    }
+
     /**
      * Print and entire class
      */
@@ -48,7 +62,7 @@ public class ClassPrinter {
         }
 
         for( JVMMethod method : jclass.methods ) {
-            out.println();
+            out.println();            
             print( method );
         }
         
@@ -91,6 +105,8 @@ public class ClassPrinter {
      * Print a method
      */
     public void print( JVMMethod method ) {
+        Analyzer analyzer = analyze ? method.analyzer() : null;                
+        
         out.print( method.type + " " + method.signature + " <");
         for( MethodFlag flag : method.flags ) {
             out.print( " " + flag.name() );

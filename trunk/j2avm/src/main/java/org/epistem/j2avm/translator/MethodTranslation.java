@@ -1,6 +1,6 @@
 package org.epistem.j2avm.translator;
 
-import org.objectweb.asm.tree.MethodNode;
+import org.epistem.jvm.JVMMethod;
 
 import com.anotherbigidea.flash.avm2.model.AVM2MethodSlot;
 
@@ -12,14 +12,13 @@ import com.anotherbigidea.flash.avm2.model.AVM2MethodSlot;
 public class MethodTranslation {
 
     private final ClassTranslation classTranslation;
-    private final MethodNode       methodNode;
+    private final JVMMethod        method;
     
     private AVM2MethodSlot   methodTrait;
  
-    /*pkg*/ MethodTranslation( ClassTranslation classTranslation, 
-                               MethodNode methodNode ) {
+    /*pkg*/ MethodTranslation( ClassTranslation classTranslation, JVMMethod method ) {
         
         this.classTranslation = classTranslation;
-        this.methodNode       = methodNode;
+        this.method           = method;
     }
 }

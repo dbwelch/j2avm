@@ -69,7 +69,7 @@ public class ClassPrinter {
         out.println();
         out.println( "attributes\n{" );
         out.indent();
-        for( JVMAttribute attr : jclass.attributes.values() ) {
+        for( JVMAttribute attr : jclass.attributes.byName.values() ) {
             attr.dump( out );
         }
         out.unindent();
@@ -90,10 +90,10 @@ public class ClassPrinter {
         }
         out.println( " >" );
         
-        if( ! field.attributes.isEmpty() ) {
+        if( ! field.attributes.byName.isEmpty() ) {
             out.println( "{" );
             out.indent();
-            for( JVMAttribute attr : field.attributes.values() ) {
+            for( JVMAttribute attr : field.attributes.byName.values() ) {
                 attr.dump( out );
             }            
             out.unindent();
@@ -113,10 +113,10 @@ public class ClassPrinter {
         }
         out.println( " >" );
 
-        if( ! method.attributes.isEmpty() ) {
+        if( ! method.attributes.byName.isEmpty() ) {
             out.println( "{" );
             out.indent();
-            for( JVMAttribute attr : method.attributes.values() ) {
+            for( JVMAttribute attr : method.attributes.byName.values() ) {
                 attr.dump( out );
             }            
             out.unindent();

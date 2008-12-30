@@ -32,7 +32,7 @@ public class Analyzer extends CodeWalker<ExecutionContext> {
      * @param method the method to analyze. The method must have a code attribute.
      */
     public Analyzer( JVMMethod method ) {
-        super( method.attribute( CodeAttribute.class ).instructions );
+        super( method.getCode().instructions );
         
         thisInstruction = ( method.flags.contains( MethodFlag.MethodIsStatic ) ) ?
                               null :

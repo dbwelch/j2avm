@@ -7,6 +7,7 @@ import org.epistem.j2avm.annotations.swf.SWF;
 import org.epistem.j2avm.translator.ClassTranslation;
 import org.epistem.j2swf.swf.SWFFile;
 import org.epistem.j2swf.swf.code.Code;
+import org.epistem.jvm.attributes.JavaAnnotation;
 
 import com.anotherbigidea.flash.structs.Color;
 
@@ -46,19 +47,20 @@ public class TargetSWF {
      * @param fileName the target file name
      * @param mainClass the main class for the SWF
      */
-    public TargetSWF( String fileName, 
-                      ClassTranslation mainClass ) {
+    public TargetSWF( String fileName, ClassTranslation mainClass ) 
+        throws ClassNotFoundException, IOException {
+
         this( fileName );
      
         //get swf params from annotation
-        SWF swfDef = mainClass.getAnnotation( SWF.class );
+        JavaAnnotation swfDef = mainClass.getAnnotation( SWF.class.getName() );
         if( swfDef != null ) {
-            swf.setWidth     ( swfDef.width() );
-            swf.setHeight    ( swfDef.height() );
-            swf.setBackground( new Color( swfDef.background() ));
-            swf.setFrameRate ( swfDef.frameRate() );
-            swf.setVersion   ( swfDef.version() );
-            compressed = swfDef.compressed();
+            swf.setWidth     ( swfDef.intValue( "width" ) );
+            swf.setHeight    ( swfDef.intValue( "height" ) );
+            swf.setBackground( new Color( swfDef.intValue( "background" )));
+            swf.setFrameRate ( swfDef.intValue( "frameRate" ));
+            swf.setVersion   ( swfDef.intValue( "version" ));
+            compressed = swfDef.boolValue( "compressed" );
         }
 
         //TODO: need way to set the script limits

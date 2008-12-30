@@ -97,7 +97,7 @@ public class ClassFileParser {
             int numAttrs = in.readUnsignedShort();            
             for (int i = 0; i < numAttrs; i++) {
                 JVMAttribute attr = parseAttribute();
-                jclass.attributes.put( attr.name, attr );
+                jclass.attributes.byName.put( attr.name, attr );
             }
             
         } finally {
@@ -126,7 +126,7 @@ public class ClassFileParser {
         int numAttrs = in.readUnsignedShort();       
         for (int i = 0; i < numAttrs; i++) {
             JVMAttribute attr = parseAttribute();
-            field.attributes.put( attr.name, attr );
+            field.attributes.byName.put( attr.name, attr );
         }
         
         return field;
@@ -158,7 +158,7 @@ public class ClassFileParser {
         int numAttrs = in.readUnsignedShort();       
         for (int i = 0; i < numAttrs; i++) {
             JVMAttribute attr = parseAttribute();
-            method.attributes.put( attr.name, attr );
+            method.attributes.byName.put( attr.name, attr );
         }
         
         return method;

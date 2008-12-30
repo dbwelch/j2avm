@@ -1,19 +1,19 @@
 package org.epistem.j2avm.translator;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
+import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.TranslationManager;
 import org.epistem.j2avm.annotations.runtime.FlashNativeClass;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMMethod;
+import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.flags.ClassFlag;
 
 import flash.FlashObject;
 
@@ -34,7 +34,11 @@ public class ClassTranslation {
      */
     public final TranslationManager manager;
     
-    private final JVMClass jvmClass;
+    /**
+     * The JVM class
+     */
+    public final JVMClass jvmClass;
+    
     private boolean hasBeenTranslated;
     private CodeClass swfClass; 
     
@@ -52,7 +56,7 @@ public class ClassTranslation {
         this.jvmClass = jvmClass;
         
         //detect Flash native classes - not to be translated
-        FlashNativeClass fnc = getAnnotation( FlashNativeClass.class );
+        JavaAnnotation fnc = getAnnotation( FlashNativeClass.class.getName() );
         if( fnc != null ) {
             hasBeenTranslated = true;
             return;
@@ -63,8 +67,13 @@ public class ClassTranslation {
      * Get the specified Java annotation
      * @return null if the annotation does not exist
      */
-    public <A extends Annotation> A getAnnotation( Class<A> annotationClass ) {
-        return javaClass.getAnnotation( annotationClass );
+    public JavaAnnotation getAnnotation( String name ) {
+        try {
+            return jvmClass.attributes.annotation( name );
+        } catch( Exception ex ) {
+            J2AVM.log.severe( "While looking for annotation " + name + ": " + ex.getMessage() );
+            return null;
+        }
     }
     
     /**
@@ -83,29 +92,33 @@ public class ClassTranslation {
      * 
      * @param code the code block to translate the class into
      */
-    public void translate( Code code ) {
+    public void translate( Code code ) throws ClassNotFoundException, IOException {
         if( hasBeenTranslated ) return;
+        
+        J2AVM.log.info( "Translating class " + name );
         
         //TODO: handle interfaces
         
         //get the superclasses
         LinkedList<String> superNames = new LinkedList<String>();
-        Class<?> superClass = javaClass.getSuperclass();
-        while( superClass != null ) {
+        JVMClass superClass = jvmClass.getSuperclass();
+        while( true ) {
             
             //stop when Flash root Object class is reached
-            if( superClass == FlashObject.class ) {
+            //TODO: also stop at java.lang.Object - but rethink this
+            if( superClass.name.equals( FlashObject.class.getName() )
+             || superClass.name.equals( Object.class.getName() )) {
                 superNames.addFirst( "Object" );
                 break;
             }
             
-            superNames.addFirst( superClass.getName() );
+            superNames.addFirst( superClass.name.name );
             superClass = superClass.getSuperclass();
         }
         String[] superclasses = superNames.toArray( new String[ superNames.size() ] );
         
-        boolean isFinal = Modifier.isFinal( javaClass.getModifiers());
-        boolean isIFace = javaClass.isInterface();
+        boolean isFinal = jvmClass.flags.contains( ClassFlag.IsFinal );
+        boolean isIFace = jvmClass.flags.contains( ClassFlag.IsInterface );
         
         swfClass = code.addClass( name, true, isFinal, isIFace, superclasses );
         
@@ -114,12 +127,11 @@ public class ClassTranslation {
         //TODO: instance fields
         
         //-- method, constructors and static initializer
-        @SuppressWarnings( "unchecked" )
-        List<MethodNode> methods = (List<MethodNode>) classNode.methods;
-        for( MethodNode method : methods ) {
-            
+        for( JVMMethod method : jvmClass.methods ) {            
             
             //MethodTranslation
+            
+            
             
             //TODO: static initializer
             //TODO: instance methods
@@ -138,20 +150,5 @@ public class ClassTranslation {
         //TODO: ---
         
         hasBeenTranslated = true;
-    }
-    
-    /**
-     * Dump a textual representation of the Java class
-     */
-    public void dumpJavaClass( PrintWriter out ) {
-        if( classNode == null ) {
-            out.println( "Non-translating class " + name );
-        }
-        else {
-            TraceClassVisitor tracer = new TraceClassVisitor( out );
-            classNode.accept( tracer );
-        }
-        
-        out.flush();
     }
 }

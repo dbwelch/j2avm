@@ -32,9 +32,9 @@ public abstract class JVMMember<FLAGTYPE extends Enum<FLAGTYPE>> {
     public final Collection<FLAGTYPE> flags;
             
     /**
-     * Map of attributes
+     * The attributes
      */
-    public final Map<String,JVMAttribute> attributes = new HashMap<String,JVMAttribute>();
+    public final AttributeContainer attributes;
     
     /*pkg*/ JVMMember( JVMClass containerClass,
                         String name,
@@ -45,24 +45,12 @@ public abstract class JVMMember<FLAGTYPE extends Enum<FLAGTYPE>> {
         this.name           = name;
         this.type           = type;
         this.flags          = EnumSet.noneOf( flagClass );
+        
+        attributes = new AttributeContainer( containerClass.loader );
     }
            
     @Override
     public String toString() {
         return containerClass.name + "::" + name;
-    }
-    
-    /**
-     * Get the attribute with the given class
-     */
-    public <T extends JVMAttribute> T attribute( Class<T> attrClass ) {
-        for( JVMAttribute attr : attributes.values()) {
-            if( attrClass.isAssignableFrom( attr.getClass() ) ) {
-                @SuppressWarnings("unchecked") T t = (T) attr;
-                return t;   
-            }
-        }
-        
-        return null;
-    }
+    }    
 }

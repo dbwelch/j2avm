@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.epistem.io.IndentingPrintWriter;
-import org.epistem.jvm.JVMAttribute;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMClassLoader;
 import org.epistem.jvm.JVMMethod;
@@ -225,8 +224,7 @@ public class JavaAnnotation {
             if( values.containsKey( method.name ) ) continue;
             
             AnnotationDefaultAttribute annoDef = 
-                JVMAttribute.forClass( AnnotationDefaultAttribute.class, 
-                                       method.attributes );
+                method.attributes.forClass( AnnotationDefaultAttribute.class );
             
             if( annoDef != null ) {
                 values.put( method.name, annoDef.value );
@@ -247,6 +245,14 @@ public class JavaAnnotation {
     public int hashCode() {
         return type.hashCode();
     }        
+    
+    public int     intValue   ( String name ) { return ((IntegerValue) values.get( name )).value; }
+    public boolean boolValue  ( String name ) { return ((IntegerValue) values.get( name )).value != 0; }
+    public long    longValue  ( String name ) { return ((LongValue)    values.get( name )).value; }
+    public float   floatValue ( String name ) { return ((FloatValue)   values.get( name )).value; }
+    public double  doubleValue( String name ) { return ((DoubleValue)  values.get( name )).value; }
+    public String  stringValue( String name ) { return ((StringValue)  values.get( name )).value; }
+    public JVMType classValue ( String name ) { return ((ClassValue)   values.get( name )).value; }
     
     /**
      * Dump for debug purposes

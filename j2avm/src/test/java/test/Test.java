@@ -10,20 +10,28 @@ import flash.display.MovieClip;
  *
  * @author nickmain
  */
-@SWF( width  = 100, 
-      height = 100,
-      background = 0xffff00 )
+@SWF( width  = 110, 
+      height = 110,
+      background = 0xffeeee )
 public class Test extends MovieClip {
 
     public Test() {
+        for( int x = 10; x < 90; x += 10 ) {
+            for( int y = 10; y < 90; y += 10 ) {
+                paint( x, y );
+            }            
+        }
+    }
+    
+    private void paint( int x, int y ) {
         Graphics g = getGraphics();
         g.beginFill( 0xff0000 );
         g.lineStyle( 3.0, 0x000080 );
-        g.moveTo( 10, 10 );
-        g.lineTo( 90, 10 );
-        g.lineTo( 90, 90 );
-        g.lineTo( 10, 90 );
-        g.lineTo( 10, 10 );
-        g.endFill();
+        g.moveTo( x, y );
+        g.lineTo( x + 10, y );
+        g.lineTo( x + 10, y + 10 );
+        g.lineTo( x, y + 10 );
+        g.lineTo( x, y );
+        g.endFill();        
     }
 }

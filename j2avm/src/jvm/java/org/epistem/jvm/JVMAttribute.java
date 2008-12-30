@@ -78,11 +78,5 @@ public class JVMAttribute {
     public void dump( IndentingPrintWriter out ) {
         out.println( name );
     }
-    
-    public static <T extends JVMAttribute> T forClass( Class<T> attrClass, Map<String, JVMAttribute> attrs ) {
-        Name name = Name.forClass( attrClass );
-        @SuppressWarnings("unchecked")
-        T t = (T) attrs.get( name.name() );
-        return t;
-    }
+
 }

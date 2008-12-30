@@ -27,10 +27,17 @@ public abstract class JVMType {
         return name;
     }
 
-    /** @see java.lang.Object#equals(java.lang.Object) */
+    /** 
+     * Name comparison - also compares to String.
+     *  
+     * @see java.lang.Object#equals(java.lang.Object) 
+     */
     @Override
     public final boolean equals( Object obj ) {
-        if( obj == null || !(obj instanceof JVMType)) return false;
+        if( obj == null ) return false;
+        
+        if( obj instanceof String ) return name.equals( obj );
+        if( !(obj instanceof JVMType)) return false;
         
         JVMType otherType = (JVMType) obj;
         return name.equals( otherType.name );

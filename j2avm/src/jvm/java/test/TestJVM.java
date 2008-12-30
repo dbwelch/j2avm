@@ -44,12 +44,7 @@ public final class TestJVM implements Cloneable, Serializable {
         ClassPrinter cp = new ClassPrinter( IndentingPrintWriter.SYSOUT );
         new ClassPrinter( IndentingPrintWriter.SYSOUT );
         
-        RuntimeVisibleAnnotationsAttribute anno = 
-            JVMAttribute.forClass( RuntimeVisibleAnnotationsAttribute.class,
-                                   clazz.attributes );
-        
-        JavaAnnotation swf = anno.annotations.get( SWF.class.getName() );
-        swf.fillInDefaults( loader );        
+        JavaAnnotation swf = clazz.attributes.annotation( SWF.class.getName() );
         swf.dump( IndentingPrintWriter.SYSOUT );
         IndentingPrintWriter.SYSOUT.flush();
     }

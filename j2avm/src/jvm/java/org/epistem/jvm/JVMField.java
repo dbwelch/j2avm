@@ -28,11 +28,8 @@ public class JVMField extends JVMMember<FieldFlag> {
      * @return null if none, otherwise String or Number derivative
      */
     public Object constantValue() {
-        ConstantValueAttribute cval = (ConstantValueAttribute) 
-            attributes.get( JVMAttribute.Name.ConstantValue.name() );
-        
+        ConstantValueAttribute cval = attributes.forClass( ConstantValueAttribute.class );
         if( cval == null ) return null;
-        
         return cval.value;
     }
     

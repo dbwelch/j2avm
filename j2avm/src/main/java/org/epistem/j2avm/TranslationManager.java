@@ -1,12 +1,14 @@
 package org.epistem.j2avm;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import org.epistem.j2avm.translator.ClassTranslation;
+import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMClassLoader;
+import org.epistem.jvm.type.ObjectType;
 
 /**
  * Caches ClassTranslations and manages the translation
@@ -15,7 +17,10 @@ import org.epistem.j2avm.translator.ClassTranslation;
  */
 public class TranslationManager {
 
-    private final ClassLoader loader;
+    /**
+     * The loader being used
+     */
+    public final JVMClassLoader loader;
     
     private final Map<String, ClassTranslation> classes = 
         new HashMap<String, ClassTranslation>();
@@ -26,7 +31,7 @@ public class TranslationManager {
     /**
      * @param loader the loader to use to find Java classes
      */
-    public TranslationManager( ClassLoader loader ) {
+    public TranslationManager( JVMClassLoader loader ) {
         this.loader = loader;
     }
     
@@ -43,13 +48,8 @@ public class TranslationManager {
         ClassTranslation trans = classes.get( name );
         
         if( trans == null ) {
-            Class<?> javaClass = loader.loadClass( name );
-            
-            String classFile = name.replace( '.', '/' ) + ".class";
-            InputStream in = loader.getResourceAsStream( classFile );
-            if( in == null ) throw new ClassNotFoundException( name );
-            
-            trans = new ClassTranslation( this, javaClass, in );
+            JVMClass jvmClass = loader.getClass( new ObjectType( name ) );
+            trans = new ClassTranslation( this, jvmClass );
             classes.put( name, trans );
         }        
         

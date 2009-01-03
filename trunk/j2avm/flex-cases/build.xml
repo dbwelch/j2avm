@@ -1,0 +1,12 @@
+<project>
+
+	<!-- Dump the Flex-compiled comparison swf -->
+	<target name="dump">
+	  <java classpath="../../j2swf/eclipse-build"
+	  	    classname="com.anotherbigidea.flash.writers.SWFTagDumper" 
+	  	    >
+	    <arg line="/Users/nickmain/Documents/workspace/ListSpinner/J2AVM_TestBed/bin-debug/J2AVM_TestBed.swf acts"/>
+	  </java>
+	</target>
+	
+</project>

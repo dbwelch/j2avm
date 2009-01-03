@@ -3,7 +3,6 @@ package org.epistem.jvm.code.analysis;
 import java.util.*;
 
 import org.epistem.jvm.JVMMethod;
-import org.epistem.jvm.attributes.CodeAttribute;
 import org.epistem.jvm.code.*;
 import org.epistem.jvm.code.instructions.*;
 import org.epistem.jvm.code.instructions.MethodCall.CallType;
@@ -69,6 +68,17 @@ public class Analyzer extends CodeWalker<ExecutionContext> {
      */
     public Variable getArg( int index ) {
         return arguments[ index ].variable;
+    }
+    
+    /**
+     * Get the argument variables
+     */
+    public Variable[] getArgs() {
+        Variable[] args = new Variable[ arguments.length ];
+        for( int i = 0; i < args.length; i++ ) {
+            args[i] = arguments[i].variable;
+        }
+        return args;
     }
     
     /**

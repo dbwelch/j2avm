@@ -13,7 +13,7 @@ public final class Signature {
 	/** The parameter types */
 	public final ValueType[] paramTypes;
 	
-	private int hashcode = -1;	
+	private String toString;	
 	
 	public Signature( String name, ValueType...paramTypes ) {
 		this.paramTypes = paramTypes;
@@ -22,33 +22,19 @@ public final class Signature {
 
 	@Override
 	public boolean equals(Object obj) {
-		if( obj == null || !( obj instanceof Signature )) return false;
-		Signature sig = (Signature) obj;
-		
-		if( ! sig.name.equals( name ) ) return false;
-		if( sig.paramTypes.length != paramTypes.length ) return false;
-		
-		for (int i = 0; i < paramTypes.length; i++) {
-			if( ! paramTypes[i].equals( sig.paramTypes[i] ) ) return false;
-		}
-		
-		return true;
+		if( obj == null ) return false;
+		return toString().equals( obj.toString() );
 	}
 
 	@Override
 	public int hashCode() {
-	    if( hashcode == -1 ) {
-	        hashcode = name.hashCode();
-	        for( ValueType vt : paramTypes ) {
-	            hashcode *= vt.hashCode();
-	        }	        
-	    }
-	    
-		return hashcode;
+	    return toString().hashCode();
 	}
 
 	@Override
 	public String toString() {
+	    if( toString != null ) return toString;
+	    
 		StringBuilder buff = new StringBuilder( name );
 		buff.append( "(" );
 		
@@ -61,6 +47,6 @@ public final class Signature {
 		}
 		
 		buff.append( ")" );
-		return buff.toString();
+		return toString = buff.toString();
 	}
 }

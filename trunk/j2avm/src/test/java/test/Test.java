@@ -15,17 +15,23 @@ import flash.display.MovieClip;
       background = 0xffeeee )
 public class Test extends MovieClip {
 
+    private int color;
+    
     public Test() {
-        for( int x = 10; x < 90; x += 10 ) {
-            for( int y = 10; y < 90; y += 10 ) {
-                paint( x, y );
-            }            
-        }
+        color = 0xff0000;
+
+        paint( 10, 10 );
+        
+//        for( int x = 10; x < 90; x += 10 ) {
+//            for( int y = 10; y < 90; y += 10 ) {
+//                paint( x, y );
+//            }            
+//        }
     }
     
     private void paint( int x, int y ) {
         Graphics g = getGraphics();
-        g.beginFill( 0xff0000 );
+        g.beginFill( color );
         g.lineStyle( 3.0, 0x000080 );
         g.moveTo( x, y );
         g.lineTo( x + 10, y );

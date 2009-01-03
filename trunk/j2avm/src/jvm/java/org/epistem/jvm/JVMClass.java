@@ -61,6 +61,7 @@ public class JVMClass {
      * Get the superclass
      */
     public JVMClass getSuperclass() throws ClassNotFoundException, IOException {
+        if( superclassName == null ) return null;
         return loader.getClass( superclassName );
     }
     

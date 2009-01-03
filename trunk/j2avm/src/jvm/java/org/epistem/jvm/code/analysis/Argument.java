@@ -11,6 +11,5 @@ import org.epistem.jvm.type.ValueType;
 public class Argument extends VarAccess {
     public Argument( int index, ValueType type ) {
         super( index, type, true );
-        // TODO Auto-generated constructor stub
     }
 }

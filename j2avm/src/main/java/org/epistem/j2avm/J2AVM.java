@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.epistem.io.IndentingPrintWriter;
-import org.epistem.j2avm.translator.ClassTranslation;
+import org.epistem.j2avm.translator.ClassTranslator;
+import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.jvm.JVMClassLoader;
 
 /**
@@ -14,6 +15,12 @@ import org.epistem.jvm.JVMClassLoader;
  */
 public class J2AVM {
 
+    /**
+     * True to include debugging trace logging in the translated code
+     */
+    public static boolean TRACE_ON = true;
+    public static final String TRACE_PREFIX = "J2AVM: ";
+    
     /**
      * The default logger
      */
@@ -32,13 +39,13 @@ public class J2AVM {
     public static void translate( String className, String targetFile, JVMClassLoader loader ) 
         throws ClassNotFoundException, IOException {
         
-        TranslationManager translator = new TranslationManager( loader );
-        ClassTranslation mainClass = translator.getClassTranslation( className );
+        TranslatorManager translator = new TranslatorManager( loader );
+        ClassTranslator mainClass = translator.getClassTranslation( className );
         
         //TODO: debugging
-        mainClass.jvmClass.dump( IndentingPrintWriter.SYSOUT );
+        //mainClass.jvmClass.dump( IndentingPrintWriter.SYSOUT );
 
-        TargetSWF swf = new TargetSWF( targetFile, mainClass );
+        TargetSWF swf = new TargetSWF( translator, targetFile, className );
         swf.write();
     }
 }

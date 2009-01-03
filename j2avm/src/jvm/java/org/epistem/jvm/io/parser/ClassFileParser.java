@@ -64,12 +64,12 @@ public class ClassFileParser {
             Collection<ClassFlag> flagSet = FlagIO.parse( ClassFlag.class, flags );            
             
             int superclass = in.readShort();
-            String superName = pool.getClassName( superclass );
+            String superName = (superclass != 0) ? pool.getClassName( superclass ) : null;
             
             jclass = new JVMClass( ObjectType.fromName( className ),
-                                    loader,
-                                    ObjectType.fromName( superName ),
-                                    majorVersion, minorVersion );
+                                   loader,
+                                   (superName != null) ? ObjectType.fromName( superName ) : null,
+                                   majorVersion, minorVersion );
 
             jclass.flags.addAll( flagSet );
             

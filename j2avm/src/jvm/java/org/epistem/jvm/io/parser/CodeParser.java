@@ -761,7 +761,7 @@ public class CodeParser {
     
     private void lookupswitch( int defAddress, int[][] cases ){ 
         Switch sw = new Switch( "" + defAddress );
-        for( int i = 0; i <= cases.length; i++ ) {
+        for( int i = 0; i < cases.length; i++ ) {
             sw.addCase( cases[i][0], "" + cases[i][1] );
         }
         

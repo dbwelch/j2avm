@@ -96,11 +96,16 @@ public class MethodTranslator {
             state.codeClass.addInstanceMethod( avm2name, retType, isFinal, isOverride, types );
         
         state.codeMethod = avm2method;
-            
+
+        //transform JVM instructions 
+        if( state.transformer != null ) {
+            jvmMethod.getCode().instructions.accept( state.transformer );
+        }
+        
         //translate the instructions
         AVM2Code code = avm2method.code();
-        if( J2AVM.TRACE_ON ) code.trace( J2AVM.TRACE_PREFIX + "method " + jvmMethod.name );
-
+        if( J2AVM.TRACE_ON ) code.trace( J2AVM.TRACE_PREFIX + "method " + state.classTranslator.name + "::" + avm2name );
+        
         BytecodeTranslator translator = new BytecodeTranslator( state );
         jvmMethod.getCode().instructions.accept( translator );        
     }

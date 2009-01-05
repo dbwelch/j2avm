@@ -2,11 +2,14 @@ package org.epistem.j2avm.translator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.epistem.j2avm.translator.transformers.StaticCallHandler;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.j2swf.swf.code.CodeMethod;
+import org.epistem.jvm.code.InstructionVisitor;
 
 /**
  * The state required by a translation pass.
@@ -45,6 +48,12 @@ public class TranslationState {
      */
     public CodeMethod codeMethod;
     
+    /**
+     * An instruction visitor that will rewrite the JVM instructions to make
+     * them suitable for translation. May be null.
+     */
+    public InstructionVisitor transformer;
+    
     private final Set<String> dependencies = new HashSet<String>();
     private final Set<String> alreadyTranslated;
     
@@ -57,6 +66,10 @@ public class TranslationState {
         this.code    = code;
         this.manager = manager;
         this.alreadyTranslated = alreadyTranslated;
+        
+        //set up the transformers - TODO: this should be refactored into some
+        // sort of factory-driven process
+        transformer = new StaticCallHandler();
     }
     
     /**

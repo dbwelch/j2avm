@@ -4,3 +4,17 @@ A special call to a private method is translated as a virtual call. This may
 not be correct if a subclass implements a similar method - need a way to
 prevent the virtual call from targetting the wrong method - maybe some name
 mangling ? Or will the private namespace suffice ?
+
+Need to implement super-access to fields.
+
+Test strict equality conditions.
+
+Revisit the need to insert a coerce_a operation before each setlocal.
+
+Implement Tableswitch optimization.
+
+Implement long operations.
+
+Implement double compare_g/l.
+
+Exception handlers.

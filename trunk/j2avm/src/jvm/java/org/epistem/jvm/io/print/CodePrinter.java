@@ -207,7 +207,7 @@ public class CodePrinter implements InstructionVisitor {
         ipw.println( "switch {" );
         ipw.indent();
         
-        for( Switch.Case c : switchBranch ) {
+        for( Switch.Case c : switchBranch.cases ) {
             ipw.println( c.value + " -> " + c.target );
         }
         

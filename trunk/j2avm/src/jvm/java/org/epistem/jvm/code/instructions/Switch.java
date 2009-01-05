@@ -15,7 +15,7 @@ import org.epistem.jvm.code.InstructionVisitor;
  *
  * @author nickmain
  */
-public class Switch extends BranchInstruction implements Iterable<Switch.Case>, AbrubtFlow {
+public class Switch extends BranchInstruction implements AbrubtFlow {
 
     /**
      * A switch case
@@ -37,7 +37,10 @@ public class Switch extends BranchInstruction implements Iterable<Switch.Case>, 
         }
     }
     
-    private final List<Case> cases = new ArrayList<Case>();
+    /**
+     * The cases
+     */
+    public final List<Case> cases = new ArrayList<Case>();
     
     /**
      * @param defaultTarget the default case
@@ -72,7 +75,7 @@ public class Switch extends BranchInstruction implements Iterable<Switch.Case>, 
     public void gatherLabels( Collection<String> labels ) {
         labels.add( defaultTarget );
         
-        for( Case c : this ) {
+        for( Case c : this.cases ) {
             labels.add( c.target );
         }
     }

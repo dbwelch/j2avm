@@ -59,6 +59,11 @@ public class ClassTranslator {
      * Whether is a Flash native class
      */
     /*pkg*/ final boolean isFlashNative;
+
+    /**
+     * The helper to use when translating code that references this class
+     */
+    /*pkg*/ final TranslationHelper helper;
     
     /*pkg*/ AVM2Namespace privateNamespace;
     /*pkg*/ AVM2Namespace packageNamespace;
@@ -80,6 +85,7 @@ public class ClassTranslator {
         this.name     = jvmClass.name.name;
         this.manager  = manager;
         this.jvmClass = jvmClass;
+        this.helper   = manager.helperForClass( jvmClass );
         
         avm2name = NameUtils.nameForJavaClass( jvmClass.name );
         

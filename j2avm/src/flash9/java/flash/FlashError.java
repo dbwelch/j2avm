@@ -7,6 +7,7 @@ import org.epistem.j2avm.annotations.runtime.FlashNativeClass;
  *
  * @author nickmain
  */
+@SuppressWarnings("serial")
 @FlashNativeClass
 public class FlashError extends RuntimeException {
 

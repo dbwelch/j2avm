@@ -32,6 +32,11 @@ public class FieldTranslator {
     /*pkg*/ final AVM2QName avm2type;
 
     /**
+     * The helper for accesses of this field
+     */
+    /*pkg*/ final TranslationHelper helper;
+    
+    /**
      * The class this field belongs to
      */
     private final ClassTranslator classTrans;
@@ -40,6 +45,8 @@ public class FieldTranslator {
         this.jvmField = field;
         this.classTrans = classTrans;
         avm2type = NameUtils.qnameForJavaType( jvmField.type );
+        
+        this.helper = classTrans.manager.helperForField( field, classTrans );
         
         AVM2Namespace namespace = null;
         if( jvmField.flags.contains( FieldFlag.FieldIsPrivate ) ) {

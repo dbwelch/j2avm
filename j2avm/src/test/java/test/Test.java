@@ -5,6 +5,7 @@ import org.epistem.j2avm.annotations.swf.SWF;
 import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.MovieClip;
+import flash.text.TextField;
 
 /**
  * A simple test case
@@ -48,13 +49,24 @@ public class Test extends MovieClip {
     };
     
     protected int colorIndex = 0;
+
+    private final TextField field;
     
     public Test() {
         trace( "New Test" );
 
+        field = new TextField();
+        field.setX( 10 );
+        field.setY( 150 );
+        field.setWidth( 150 );
+        field.setHeight( 20 );
+        field.setText( "Hello World" );
+        
         for( int x = 10; x < 90; x += 15 ) {
+            // StringBuilder test --> trace( "x = " + x );
+            
             for( int y = 10; y < 90; y += 15 ) {
-
+                
                 switch( x ) {
                     case 25: trace( "25" ); break;                      
                     case 55: trace( "55" ); break;                      

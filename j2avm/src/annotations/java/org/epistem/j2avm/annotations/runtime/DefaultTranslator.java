@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 import org.epistem.j2avm.translator.TranslationHelper;
 
 /**
- * Annotation on classes, methods or fields to indicate the TranslationHelper
- * that will translate a call or access.
+ * Annotation on annotations to provide the default Translation Helper for
+ * the elements that annotation is on.
  *
  * @author nickmain
  */
 @Retention( RetentionPolicy.RUNTIME )
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
-public @interface Translator {
+@Target( ElementType.ANNOTATION_TYPE )
+public @interface DefaultTranslator {
     Class<? extends TranslationHelper> value();
 }

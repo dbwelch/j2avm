@@ -31,15 +31,17 @@ public class ClassFileParser {
     private final DataInput in;
     private final ConstantPool pool = new ConstantPool();
     private final JVMClassLoader loader;
+    private final ObjectType realName;
     private JVMClass jclass;
     
     /**
      * @param in the raw class data
      * @param loader the loader for the class
      */
-    public ClassFileParser( DataInput in, JVMClassLoader loader ) {
+    public ClassFileParser( DataInput in, JVMClassLoader loader, ObjectType realName ) {
         this.in     = in;
         this.loader = loader;
+        this.realName = realName;
     }
     
     /**
@@ -67,6 +69,7 @@ public class ClassFileParser {
             String superName = (superclass != 0) ? pool.getClassName( superclass ) : null;
             
             jclass = new JVMClass( ObjectType.fromName( className ),
+                                   realName,
                                    loader,
                                    (superName != null) ? ObjectType.fromName( superName ) : null,
                                    majorVersion, minorVersion );

@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.epistem.j2avm.translator.helpers.FlashGetterHelper;
+
 /**
  * Annotation on methods to indicate a getter method 
  *
@@ -12,6 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target({ ElementType.METHOD })
+@DefaultTranslator( FlashGetterHelper.class )
 public @interface Getter {
     //nada
 }

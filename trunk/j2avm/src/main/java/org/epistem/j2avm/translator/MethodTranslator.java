@@ -21,9 +21,15 @@ public class MethodTranslator {
     /*pkg*/ final JVMMethod       jvmMethod;    
     /*pkg*/ final AVM2QName       avm2name; 
  
+    /**
+     * The helper for calls to this method
+     */
+    /*pkg*/ final TranslationHelper helper;
+    
     /*pkg*/ MethodTranslator( ClassTranslator classTrans, JVMMethod method ) {        
         this.classTrans = classTrans;
-        this.jvmMethod  = method;
+        this.jvmMethod  = method;        
+        this.helper     = classTrans.manager.helperForMethod( method, classTrans );
         
         AVM2Namespace namespace = null;
         if( jvmMethod.flags.contains( MethodFlag.MethodIsPrivate ) ) {

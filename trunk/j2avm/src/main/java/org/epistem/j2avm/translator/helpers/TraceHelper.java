@@ -13,8 +13,7 @@ public class TraceHelper extends TranslationHelper {
 
     /** @see org.epistem.j2avm.translator.TranslationHelper#translateMethodCall(org.epistem.j2avm.translator.TranslationState, org.epistem.jvm.code.instructions.MethodCall) */
     @Override
-    public boolean translateMethodCall( TranslationState state, MethodCall call ) {
+    public void translateMethodCall( TranslationState state, MethodCall call ) {
         state.codeMethod.code().trace();
-        return true;
     }
 }

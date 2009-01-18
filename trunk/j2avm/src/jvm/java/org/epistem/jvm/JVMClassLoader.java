@@ -23,7 +23,7 @@ public abstract class JVMClassLoader {
      * Note: this is unlike the normal ClassLoader behavior of going to the
      * parent first.
      */
-    private final JVMClassLoader parentLoader;
+    protected final JVMClassLoader parentLoader;
     
     private final Map<ObjectType,JVMClass> cache = new HashMap<ObjectType, JVMClass>();
     /*pkg*/ final void cacheClass( JVMClass jclass ) { cache.put( jclass.name, jclass ); }    
@@ -38,7 +38,7 @@ public abstract class JVMClassLoader {
         
         this.parentLoader = parent;
     }
-    
+
     /**
      * Load a class or get it from a cache.
      * 
@@ -47,12 +47,29 @@ public abstract class JVMClassLoader {
      * @throws IOException if the class was found but could not be loaded
      * @throws ClassNotFoundException if the class could not be found
      */
-    public final JVMClass getClass( ObjectType className ) throws IOException, ClassNotFoundException {
+    public final JVMClass getClass( ObjectType className ) 
+        throws IOException, ClassNotFoundException {
+    
+        return getClass( className, null );
+    }
+
+    
+    /**
+     * Load a class or get it from a cache.
+     * 
+     * @param className the name of the class to load
+     * @param realName the real name for the class - null for none
+     * @return the class
+     * @throws IOException if the class was found but could not be loaded
+     * @throws ClassNotFoundException if the class could not be found
+     */
+    public final JVMClass getClass( ObjectType className, ObjectType realName ) 
+        throws IOException, ClassNotFoundException {
         
         JVMClass clazz = getWithoutLoading( className );
         if( clazz != null ) return clazz;
         
-        clazz = loadClass( className );
+        clazz = loadClass( className, realName );
         if( clazz != null ) {
             cacheClass( clazz );
         }
@@ -71,19 +88,22 @@ public abstract class JVMClassLoader {
      * Load a class.
      * 
      * @param className the name of the class to load
+     * @param realName the real name for the class - null for none
      * @return null if the class was not found
      * @throws IOException if the class was found but could not be loaded
      */
-    protected abstract JVMClass loadClass( ObjectType className ) throws IOException;
+    protected abstract JVMClass loadClass( ObjectType className, ObjectType realName ) throws IOException;
     
     /**
      * Create a JClass from data in the given input
      * @param name the class name
+     * @param realName the real name for the class - null for none
      * @param in the class file
      * @return the JClass
      * @throws IOException if the class file data could not be read
      */
-    protected final JVMClass loadClass( ObjectType name, InputStream in ) throws IOException {
+    protected final JVMClass loadClass( ObjectType name, ObjectType realName, InputStream in ) 
+        throws IOException {
         //System.out.println( "LOADING CLASS: " + name );
 
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -97,7 +117,7 @@ public abstract class JVMClassLoader {
         
         byte[] classData = bout.toByteArray();
         DataInputStream dataIn = new DataInputStream( new ByteArrayInputStream( classData ));
-        ClassFileParser parser = new ClassFileParser( dataIn, this );
+        ClassFileParser parser = new ClassFileParser( dataIn, this, realName );
         return parser.parseClass();
     }
     

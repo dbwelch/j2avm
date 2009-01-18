@@ -1,6 +1,7 @@
 package org.epistem.jvm;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,19 @@ public class AttributeContainer {
         return defaultedAnnotations.get( name );
     }
     
+    /**
+     * Get all the annotations
+     */
+    @SuppressWarnings("unchecked")
+    public Collection<JavaAnnotation> annotations() 
+        throws ClassNotFoundException, IOException {
+        
+        loadAnnotations( RuntimeVisibleAnnotationsAttribute.class,
+                         RuntimeInvisibleAnnotationsAttribute.class );
+        
+        return defaultedAnnotations.values();
+    }
+    
     private void lookInAttributes( String name, Class<? extends Annotations>... classes ) 
         throws ClassNotFoundException, IOException {
         
@@ -74,6 +88,21 @@ public class AttributeContainer {
             anno.fillInDefaults( loader );
             defaultedAnnotations.put( name, anno );
             return;
+        }
+    }
+
+    //load all the annotations in the given attributes
+    private void loadAnnotations( Class<? extends Annotations>... classes ) 
+        throws ClassNotFoundException, IOException {
+    
+        for( int i = 0; i < classes.length; i++ ) {
+            Annotations annos = forClass( classes[i] );
+            if( annos == null ) continue;
+            
+            for( JavaAnnotation anno : annos.annotations.values() ) {
+                anno.fillInDefaults( loader );
+                defaultedAnnotations.put( anno.type.name, anno );                
+            }
         }
     }
     

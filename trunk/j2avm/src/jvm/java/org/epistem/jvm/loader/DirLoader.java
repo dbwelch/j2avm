@@ -25,14 +25,14 @@ public final class DirLoader extends JVMClassLoader {
     }
 
     /**
-     * @see org.epistem.jvm.JVMClassLoader#loadClass(org.epistem.jvm.type.ObjectType)
+     * @see org.epistem.jvm.JVMClassLoader#loadClass(ObjectType, ObjectType)
      */
     @Override
-    protected final JVMClass loadClass(ObjectType className) throws IOException {        
+    protected final JVMClass loadClass(ObjectType className, ObjectType realName) throws IOException {        
         try {
             File classFile = new File( basePath, makeFilePath(className.name) );
             InputStream in = new FileInputStream( classFile );
-            return loadClass(className,in);
+            return loadClass(className,realName,in);
             
         } catch( FileNotFoundException nfe ) {
             return null;

@@ -27,12 +27,12 @@ public final class SystemLoader extends JVMClassLoader {
     }
 
     /**
-     * @see org.epistem.jvm.JVMClassLoader#loadClass(ObjectType, ObjectType)
+     * @see org.epistem.jvm.JVMClassLoader#loadClass(ObjectType)
      */
     @Override
-    protected JVMClass loadClass(ObjectType className, ObjectType realName) throws IOException {
+    protected JVMClass loadClass(ObjectType className ) throws IOException {
         try {
-            return systemCLwrapper.getClass( className, realName );
+            return systemCLwrapper.getClass( className );
         } catch( ClassNotFoundException cnfe ) {
             return null;
         }

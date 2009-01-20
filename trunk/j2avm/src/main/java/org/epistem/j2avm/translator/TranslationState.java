@@ -69,7 +69,7 @@ public class TranslationState {
         
         //set up the transformers - TODO: this should be refactored into some
         // sort of factory-driven process
-        transformer = new StaticCallHandler();
+        //transformer = new StaticCallHandler();
     }
     
     /**

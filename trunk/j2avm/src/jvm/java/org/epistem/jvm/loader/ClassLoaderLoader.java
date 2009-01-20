@@ -43,13 +43,13 @@ public final class ClassLoaderLoader extends JVMClassLoader {
     }
 
     /**
-     * @see org.epistem.jvm.JVMClassLoader#loadClass(ObjectType, ObjectType)
+     * @see org.epistem.jvm.JVMClassLoader#loadClass(ObjectType)
      */
     @Override
-    protected final JVMClass loadClass(ObjectType className, ObjectType realName ) throws IOException {     
+    protected final JVMClass loadClass(ObjectType className) throws IOException {     
         String filename = makeFilePath(className.name);
         InputStream in = loader.getResourceAsStream( filename );
         if( in == null ) return null;
-        return loadClass(className,realName,in);
+        return loadClass(className,in);
     }
 }

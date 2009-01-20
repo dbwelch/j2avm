@@ -1,5 +1,13 @@
 package org.epistem.j2avm.translator;
 
+import java.io.IOException;
+
+import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
+import org.epistem.j2avm.annotations.runtime.Translator;
+import org.epistem.jvm.AttributeContainer;
+import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMClassLoader;
+import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.code.instructions.FieldAccess;
 import org.epistem.jvm.code.instructions.MethodCall;
 import org.epistem.jvm.code.instructions.New;
@@ -20,6 +28,15 @@ public abstract class TranslationHelper {
     @SuppressWarnings("serial")
     public static class NotFoundException extends RuntimeException {
         NotFoundException( String msg ) { super( msg ); }
+    }
+    
+    /**
+     * Translate the current class
+     * 
+     * @param state the translation state
+     */
+    public void translateClass( TranslationState state ) {
+        throw new UnsupportedOperationException( "Cannot translate." );
     }
     
     /**
@@ -60,5 +77,35 @@ public abstract class TranslationHelper {
      */
     public void translateStore( TranslationState state, FieldAccess access ) {
         throw new UnsupportedOperationException( "Cannot translate." );
+    }
+    
+
+    /**
+     * Find a Translator or DefaultTranslator annotation
+     * 
+     * @return null if not found
+     */
+    /*pkg*/ static JavaAnnotation findTranslatorAnnotation( JVMClassLoader loader, AttributeContainer attrs ) {
+        try {
+            JavaAnnotation anno = attrs.annotation( Translator.class.getName());
+            if( anno != null ) return anno;
+
+            anno = attrs.annotation( DefaultTranslator.class.getName());
+            if( anno != null ) return anno;
+            
+            //look for meta annotation
+            for( JavaAnnotation ann : attrs.annotations() ) {
+                JVMClass annoClass = loader.getClass( ann.type );
+                anno = findTranslatorAnnotation( loader, annoClass.attributes );
+                if( anno != null ) return anno;
+            }
+            
+            return null;
+            
+        } catch( ClassNotFoundException e ) {
+            throw new RuntimeException( e );            
+        } catch( IOException e ) {
+            throw new RuntimeException( e );
+        }
     }
 }

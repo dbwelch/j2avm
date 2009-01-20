@@ -18,9 +18,6 @@ public class JVMClass {
     public static final int MAGIC = 0xCAFEBABE;
     public static final int MAJOR = 0x0031;
     public static final int MINOR = 0x0000;
-
-    /** The real name of the class before any alias */
-    public final ObjectType realName;
     
     /** The class name */
     public final ObjectType name;
@@ -41,17 +38,12 @@ public class JVMClass {
     public final ObjectType superclassName;
     public final int majorVersion;
     public final int minorVersion;
-
-    /**
-     * Name could be an alias.
-     */
-    public JVMClass( ObjectType name,
-                     ObjectType realName,
+ 
+    public JVMClass( ObjectType name, 
                      JVMClassLoader loader,     
                      ObjectType superclassName,
                      int majorVersion,
-                     int minorVersion ) {
-        this.realName = (realName != null) ? realName : name;
+                     int minorVersion ) { 
         this.name     = name;
         this.loader   = loader;
         this.superclassName = superclassName;
@@ -59,18 +51,7 @@ public class JVMClass {
         this.minorVersion = minorVersion;
         attributes = new AttributeContainer( loader );
     }
-
-    /**
-     * No aliasing.
-     */
-    public JVMClass( ObjectType name,
-                     JVMClassLoader loader,     
-                     ObjectType superclassName,
-                     int majorVersion,
-                     int minorVersion ) {
-        this( name, null, loader, superclassName, majorVersion, minorVersion );
-    }
-    
+ 
     /** @see java.lang.Object#toString() */
     public String toString() {
         return "class " + name;

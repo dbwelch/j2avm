@@ -30,6 +30,7 @@ import com.anotherbigidea.flash.avm2.model.*;
 public class BytecodeTranslator implements InstructionVisitor {
 
     private final TranslationState state;
+    private final TranslatorManager manager;
     private final AVM2Code code;
     
     //mapping from JVM locals to AVM2 locals
@@ -37,8 +38,9 @@ public class BytecodeTranslator implements InstructionVisitor {
         new HashMap<Variable, LocalValue<Instruction>>();
     
     BytecodeTranslator( TranslationState state ) {
-        this.state  = state;
-        this.code   = state.codeMethod.code();
+        this.state   = state;
+        this.code    = state.codeMethod.code();
+        this.manager = state.manager;
         
         //set up the variables for "this" and the arguments
         Analyzer analyzer = state.methodTranslator.jvmMethod.analyzer();
@@ -81,6 +83,8 @@ public class BytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCall(org.epistem.jvm.code.instructions.MethodCall) */
     public void visitCall( MethodCall call ) {      
+        
+        TranslationHelper helper = manager.helperForMethod( call.owner, call.signature );
         
         int     argCount = call.signature.paramTypes.length;
         boolean isVoid   = ( call.returnType == VoidType.VOID );

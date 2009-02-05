@@ -176,7 +176,7 @@ public class ClassTranslator {
      */
     /*pkg*/ ClassTranslator superclass() throws ClassNotFoundException, IOException {
         if( jvmClass.superclassName == null ) return null;
-        return manager.getClassTranslation( jvmClass.superclassName.name );
+        return manager.getClassTranslator( jvmClass.superclassName.name );
     }
     
     /**

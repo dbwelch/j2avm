@@ -24,7 +24,7 @@ public class TranslatorManager {
      */
     public final JVMClassLoader loader;
     
-    private final Map<String, ClassTranslator> classes = new HashMap<String, ClassTranslator>();
+    private final Map<ObjectType, ClassTranslator> classes = new HashMap<ObjectType, ClassTranslator>();
     
     private final TranslationHelper vanillaHelper = new VanillaHelper();
     private final Map<ObjectType, TranslationHelper> helperCache = new HashMap<ObjectType, TranslationHelper>();
@@ -37,34 +37,36 @@ public class TranslatorManager {
     }
     
     /**
-     * Get the translation wrapper for a Java class
+     * Get the translator for a Java class
      * @param name the fully qualified Java class name
      * 
      * @throws ClassNotFoundException if the class cannot be found
      * @throws IOException if there is a problem parsing the class
      */
-    public ClassTranslator getClassTranslation( String name ) 
+    public ClassTranslator getClassTranslator( ObjectType type ) 
         throws ClassNotFoundException, IOException {
         
-        ClassTranslator trans = classes.get( name );
+        ClassTranslator trans = classes.get( type );
         
         if( trans == null ) {
-            JVMClass jvmClass = loader.getClass( new ObjectType( name ) );
+            JVMClass jvmClass = loader.getClass( type );
             trans = new ClassTranslator( this, jvmClass );
-            classes.put( name, trans );
+            classes.put( type, trans );
         }        
         
         return trans;
     }
     
     /**
-     * Get the translation helper for the given method
+     * Get the translator for the given method
      * 
      * @param owner the target class
      * @param signature the method signature
      * @return not null
      */
-    /*pkg*/ TranslationHelper helperForMethod( ObjectType owner, Signature signature ) {
+    /*pkg*/ MethodTranslator translatorForMethodXX( ObjectType owner, Signature signature ) {
+        ClassTranslator classTranslator = 
+        
         try {
             JavaAnnotation anno = findTranslatorAnnotation( method.attributes );
             

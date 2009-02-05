@@ -17,7 +17,7 @@ import com.anotherbigidea.flash.avm2.model.*;
  */
 public class MethodTranslator {
 
-    private final ClassTranslator classTrans;
+    /*pkg*/ final ClassTranslator classTrans;
     /*pkg*/ final JVMMethod       jvmMethod;    
     /*pkg*/ final AVM2QName       avm2name; 
  

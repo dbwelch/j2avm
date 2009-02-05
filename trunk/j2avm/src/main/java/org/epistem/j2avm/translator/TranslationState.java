@@ -54,7 +54,8 @@ public class TranslationState {
      */
     public InstructionVisitor transformer;
     
-    private final Set<String> dependencies = new HashSet<String>();
+    private final Set<ClassTranslator> requiredClasses = new HashSet<ClassTranslator>();
+    
     private final Set<String> alreadyTranslated;
     
     /**
@@ -74,11 +75,14 @@ public class TranslationState {
     
     /**
      * Require that the given class dependency also be translated
-     * 
-     * @param name the fully qualified class name
      */
-    public void requireClass( String name ) {
-        dependencies.add( name );
+    public void requireClass( ClassTranslator clazz ) 
+        throws ClassNotFoundException, IOException {        
+        
+        while( clazz != null ) {
+            requiredClasses.add( clazz );
+            clazz = clazz.superclass();
+        }
     }
     
     /**

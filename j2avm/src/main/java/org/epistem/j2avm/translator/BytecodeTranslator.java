@@ -84,7 +84,13 @@ public class BytecodeTranslator implements InstructionVisitor {
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCall(org.epistem.jvm.code.instructions.MethodCall) */
     public void visitCall( MethodCall call ) {      
         
-        TranslationHelper helper = manager.helperForMethod( call.owner, call.signature );
+        ClassTranslator owner = manager.getClassTranslator( call.owner );        
+        MethodTranslator methodTranslator = owner.findMethod( call.signature );
+        
+        state.requireClass( owner );
+        methodTranslator.translateCall( state );
+        
+        //======================
         
         int     argCount = call.signature.paramTypes.length;
         boolean isVoid   = ( call.returnType == VoidType.VOID );

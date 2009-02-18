@@ -63,7 +63,7 @@ public class ClassTranslator {
     /**
      * The helper to use when translating code that references this class
      */
-    /*pkg*/ final TranslationHelper helper;
+    public final TranslationHelper helper;
     
     /*pkg*/ AVM2Namespace privateNamespace;
     /*pkg*/ AVM2Namespace packageNamespace;
@@ -176,7 +176,7 @@ public class ClassTranslator {
      */
     /*pkg*/ ClassTranslator superclass() throws ClassNotFoundException, IOException {
         if( jvmClass.superclassName == null ) return null;
-        return manager.getClassTranslator( jvmClass.superclassName.name );
+        return manager.getClassTranslator( jvmClass.superclassName );
     }
     
     /**

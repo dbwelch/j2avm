@@ -88,23 +88,18 @@ public class BytecodeTranslator implements InstructionVisitor {
         MethodTranslator methodTranslator = owner.findMethod( call.signature );
         
         state.requireClass( owner );
-        methodTranslator.translateCall( state );
+        methodTranslator.helper.translateMethodCall( state, methodTranslator, call );
         
         //======================
         
         int     argCount = call.signature.paramTypes.length;
         boolean isVoid   = ( call.returnType == VoidType.VOID );
         
-        //make sure target class is required
-        state.requireClass( call.owner.name );
-        
         //find the target method
         AVM2QName methodName;
         JVMMethod jvmMethod;
         MethodTranslator methodTrans;
         ClassTranslator classTrans;
-        boolean isGetter = false;
-        boolean isSetter = false;
         
         try {
             classTrans = state.manager.getClassTranslation( call.owner.name );
@@ -112,9 +107,6 @@ public class BytecodeTranslator implements InstructionVisitor {
             methodName = methodTrans.avm2name;
             jvmMethod = methodTrans.jvmMethod;
             
-            isGetter = jvmMethod.attributes.annotation( Getter.class.getName() ) != null;
-            isSetter = jvmMethod.attributes.annotation( Setter.class.getName() ) != null;
-
             //--check for and defer to a translation-helper
             JavaAnnotation translator = jvmMethod.attributes.annotation( Translator.class.getName() );
             if( translator != null ) {
@@ -129,16 +121,6 @@ public class BytecodeTranslator implements InstructionVisitor {
             throw new RuntimeException( ex );
         }
         
-        //turn getter/setter calls into field accesses
-        if( isGetter || isSetter ) {
-            AVM2QName fieldName = new AVM2QName( methodTrans.avm2name.namespace, 
-                                                 NameUtils.nameFromAccessor( jvmMethod.name ));
-            
-            if( isGetter ) code.getProperty( fieldName );
-            else code.setProperty( fieldName );
-                
-            return;
-        }
 
         //--TODO: implement static calls in a more efficient manner
         if( call.callType == CallType.Static ) {

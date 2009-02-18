@@ -2,14 +2,13 @@ package org.epistem.j2avm.translator;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.epistem.j2avm.translator.transformers.StaticCallHandler;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.j2swf.swf.code.CodeMethod;
 import org.epistem.jvm.code.InstructionVisitor;
+import org.epistem.jvm.type.ObjectType;
 
 /**
  * The state required by a translation pass.
@@ -56,14 +55,14 @@ public class TranslationState {
     
     private final Set<ClassTranslator> requiredClasses = new HashSet<ClassTranslator>();
     
-    private final Set<String> alreadyTranslated;
+    private final Set<ClassTranslator> alreadyTranslated;
     
     /**
      * @param manager the translator manager
      * @param code the target code block
      * @param alreadyTranslated a set of classes already translated
      */
-    public TranslationState( TranslatorManager manager, Code code, Set<String> alreadyTranslated ) {
+    public TranslationState( TranslatorManager manager, Code code, Set<ClassTranslator> alreadyTranslated ) {
         this.code    = code;
         this.manager = manager;
         this.alreadyTranslated = alreadyTranslated;
@@ -71,6 +70,13 @@ public class TranslationState {
         //set up the transformers - TODO: this should be refactored into some
         // sort of factory-driven process
         //transformer = new StaticCallHandler();
+    }
+    
+    /**
+     * Require that the given class dependency also be translated
+     */
+    public void requireClass( ObjectType type ) throws ClassNotFoundException, IOException {
+        requireClass( manager.getClassTranslator( type ));
     }
     
     /**

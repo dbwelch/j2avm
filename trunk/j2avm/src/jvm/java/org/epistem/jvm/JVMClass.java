@@ -7,6 +7,7 @@ import org.epistem.io.IndentingPrintWriter;
 import org.epistem.jvm.flags.ClassFlag;
 import org.epistem.jvm.io.print.ClassPrinter;
 import org.epistem.jvm.type.ObjectType;
+import org.epistem.jvm.type.Signature;
 
 /**
  * A JVM Class definition.
@@ -71,6 +72,28 @@ public class JVMClass {
     public void dump( IndentingPrintWriter ipw ) {
         new ClassPrinter( ipw ).print( this );
         ipw.flush();
+    }
+    
+    /**
+     * Get the method with the given signature.
+     * @return null if the method is not found in this class
+     */
+    public JVMMethod getMethod( Signature sig ) {
+        for( JVMMethod method : methods ) {
+            if( method.signature.equals( sig ) ) return method;
+        }
+        return null;
+    }
+    
+    /**
+     * Get the field with the given name
+     * @return null if the field is not found in this class
+     */
+    public JVMField getField( String name ) {
+       for( JVMField field : fields ) {
+           if( field.name.equals( name ) ) return field;
+       }
+       return null;
     }
 }
 

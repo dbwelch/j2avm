@@ -4,6 +4,7 @@ import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.util.NameUtils;
 import org.epistem.j2swf.swf.code.CodeMethod;
 import org.epistem.jvm.JVMMethod;
+import org.epistem.jvm.code.instructions.MethodCall;
 import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.ValueType;
@@ -17,9 +18,9 @@ import com.anotherbigidea.flash.avm2.model.*;
  */
 public class MethodTranslator {
 
-    /*pkg*/ final ClassTranslator classTrans;
-    /*pkg*/ final JVMMethod       jvmMethod;    
-    /*pkg*/ final AVM2QName       avm2name; 
+    public final ClassTranslator classTrans;
+    public final JVMMethod       jvmMethod;    
+    public final AVM2QName       avm2name; 
  
     /**
      * The helper for calls to this method
@@ -64,9 +65,9 @@ public class MethodTranslator {
         
         avm2name = new AVM2QName( namespace, buff.toString() ); 
     }
-    
+        
     /**
-     * Translate the method
+     * Translate the method implementation
      * 
      * @param state the target context
      */
@@ -77,11 +78,11 @@ public class MethodTranslator {
         
         //make sure that all referenced classes are required
         if( jvmMethod.type instanceof ObjectType ) {
-            state.requireClass( jvmMethod.type.name );
+            state.requireClass( (ObjectType) jvmMethod.type );
         }
         for( ValueType type : jvmMethod.signature.paramTypes ) {
             if( type instanceof ObjectType ) {
-                state.requireClass( type.name );
+                state.requireClass( (ObjectType) type );
             }            
         }
         

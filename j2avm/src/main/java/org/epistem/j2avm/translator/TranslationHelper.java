@@ -12,11 +12,11 @@ import org.epistem.jvm.code.instructions.FieldAccess;
 import org.epistem.jvm.code.instructions.MethodCall;
 import org.epistem.jvm.code.instructions.New;
 
-import com.sun.org.apache.xml.internal.utils.UnImplNode;
-
 /**
  * Extended by translation helpers. Use the Translator annotation to 
  * associate an implementation of this class with a class, field or method.
+ * TranslationHelpers are instantiated anew for each object they are
+ * attached to (and can thus contain state). 
  *
  * @author nickmain
  */
@@ -43,9 +43,10 @@ public abstract class TranslationHelper {
      * Translate a method call
      * 
      * @param state the translation context
-     * @param call the method call
+     * @param method the method being called
+     * @param call the call
      */
-    public void translateMethodCall( TranslationState state, MethodCall call ) {
+    public void translateMethodCall( TranslationState state, MethodTranslator method, MethodCall call ) {
         throw new UnsupportedOperationException( "Cannot translate." );
     }
 

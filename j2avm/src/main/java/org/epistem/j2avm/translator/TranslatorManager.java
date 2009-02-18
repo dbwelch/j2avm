@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
-import org.epistem.j2avm.annotations.runtime.Translator;
 import org.epistem.j2avm.translator.helpers.VanillaHelper;
-import org.epistem.jvm.*;
+import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMClassLoader;
+import org.epistem.jvm.JVMField;
+import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
@@ -27,7 +28,6 @@ public class TranslatorManager {
     private final Map<ObjectType, ClassTranslator> classes = new HashMap<ObjectType, ClassTranslator>();
     
     private final TranslationHelper vanillaHelper = new VanillaHelper();
-    private final Map<ObjectType, TranslationHelper> helperCache = new HashMap<ObjectType, TranslationHelper>();
     
     /**
      * @param loader the loader to use to find Java classes
@@ -58,34 +58,35 @@ public class TranslatorManager {
     }
     
     /**
-     * Get the translator for the given method
+     * Get the translation helper for the given method
      * 
      * @param owner the target class
      * @param signature the method signature
      * @return not null
      */
-    /*pkg*/ MethodTranslator translatorForMethodXX( ObjectType owner, Signature signature ) {
-        ClassTranslator classTranslator = 
-        
+    /*pkg*/ TranslationHelper translatorForMethod( ObjectType owner, Signature signature ) {
         try {
-            JavaAnnotation anno = findTranslatorAnnotation( method.attributes );
+            JVMClass  clazz  = loader.getClass( owner );
+            JVMMethod method = clazz.getMethod( signature );
+            if( method == null ) throw new RuntimeException( "Method " + owner + "::" + signature + " not found" );
             
-            if( anno == null ) return ct.helper;
+            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, method.attributes );
+            
+            if( anno == null ) {
+                ClassTranslator ct = getClassTranslator( owner );
+                return ct.helper;
+            }
                 
             ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            TranslationHelper helper = helperCache.get( helperType );
-            if( helper == null ) {
-                helper = (TranslationHelper) Class.forName( helperType.name ).newInstance();
-                helperCache.put( helperType, helper );                
-            }
-            
-            return helper;
+            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
             
         } catch( IllegalAccessException e ) {
             throw new RuntimeException( e );            
         } catch( ClassNotFoundException e ) {
             throw new RuntimeException( e );            
         } catch( InstantiationException e ) {
+            throw new RuntimeException( e );
+        } catch( IOException e ) {
             throw new RuntimeException( e );
         }        
     }
@@ -98,24 +99,25 @@ public class TranslatorManager {
      */
     /*pkg*/ TranslationHelper helperForField( ObjectType owner, String name ) {
         try {
-            JavaAnnotation anno = findTranslatorAnnotation( field.attributes );
+            JVMClass clazz = loader.getClass( owner );
+            JVMField field = clazz.getField( name );
+            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, field.attributes );
             
-            if( anno == null ) return ct.helper;
+            if( anno == null ) {
+                ClassTranslator ct = getClassTranslator( owner );
+                return ct.helper;
+            }
                 
             ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            TranslationHelper helper = helperCache.get( helperType );
-            if( helper == null ) {
-                helper = (TranslationHelper) Class.forName( helperType.name ).newInstance();
-                helperCache.put( helperType, helper );                
-            }
-            
-            return helper;
+            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
             
         } catch( IllegalAccessException e ) {
             throw new RuntimeException( e );            
         } catch( ClassNotFoundException e ) {
             throw new RuntimeException( e );            
         } catch( InstantiationException e ) {
+            throw new RuntimeException( e );
+        } catch( IOException e ) {
             throw new RuntimeException( e );
         }                
     }
@@ -128,8 +130,9 @@ public class TranslatorManager {
      * @throws TranslationHelper.NotFoundException if a helper cannot be found
      */
     /*pkg*/ TranslationHelper helperForClass( JVMClass jvmClass ) {
+        
         try {
-            JavaAnnotation anno = findTranslatorAnnotation( jvmClass.attributes );
+            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, jvmClass.attributes );
             if( anno == null ) {
                 String name = jvmClass.name.name;
          
@@ -145,13 +148,7 @@ public class TranslatorManager {
             }
             
             ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            TranslationHelper helper = helperCache.get( helperType );
-            if( helper == null ) {
-                helper = (TranslationHelper) Class.forName( helperType.name ).newInstance();
-                helperCache.put( helperType, helper );                
-            }
-            
-            return helper;
+            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
             
         } catch( IllegalAccessException e ) {
             throw new RuntimeException( e );            

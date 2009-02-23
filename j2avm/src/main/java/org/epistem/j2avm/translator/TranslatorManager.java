@@ -2,19 +2,21 @@ package org.epistem.j2avm.translator;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import org.epistem.j2avm.translator.helpers.VanillaHelper;
+import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
+import org.epistem.j2avm.annotations.runtime.Translator;
+import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
+import org.epistem.jvm.AttributeContainer;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMClassLoader;
-import org.epistem.jvm.JVMField;
-import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.type.ObjectType;
-import org.epistem.jvm.type.Signature;
 
 /**
- * Caches ClassTranslators 
+ * Manages the translation of a set of Java classes to a target SWF.
  *
  * @author nickmain
  */
@@ -25,9 +27,10 @@ public class TranslatorManager {
      */
     public final JVMClassLoader loader;
     
-    private final Map<ObjectType, ClassTranslator> classes = new HashMap<ObjectType, ClassTranslator>();
+    private final Map<ObjectType, ClassTranslator> translators = new HashMap<ObjectType, ClassTranslator>();
     
-    private final TranslationHelper vanillaHelper = new VanillaHelper();
+    private final Set<ClassTranslator> requiredClasses   = new HashSet<ClassTranslator>();    
+    private final Set<ClassTranslator> alreadyTranslated = new HashSet<ClassTranslator>();
     
     /**
      * @param loader the loader to use to find Java classes
@@ -39,124 +42,110 @@ public class TranslatorManager {
     /**
      * Get the translator for a Java class
      * @param name the fully qualified Java class name
-     * 
-     * @throws ClassNotFoundException if the class cannot be found
-     * @throws IOException if there is a problem parsing the class
      */
-    public ClassTranslator getClassTranslator( ObjectType type ) 
-        throws ClassNotFoundException, IOException {
+    public ClassTranslator getClassTranslator( ObjectType type ) {
         
-        ClassTranslator trans = classes.get( type );
+        ClassTranslator trans = translators.get( type );
         
         if( trans == null ) {
-            JVMClass jvmClass = loader.getClass( type );
-            trans = new ClassTranslator( this, jvmClass );
-            classes.put( type, trans );
-        }        
+            translators.put( type, trans = getClassTranslator( type ) );
+        }
         
         return trans;
     }
     
     /**
-     * Get the translation helper for the given method
-     * 
-     * @param owner the target class
-     * @param signature the method signature
-     * @return not null
+     * Require that the given class dependency also be translated
      */
-    /*pkg*/ TranslationHelper translatorForMethod( ObjectType owner, Signature signature ) {
+    public void requireClass( ObjectType type ) {
         try {
-            JVMClass  clazz  = loader.getClass( owner );
-            JVMMethod method = clazz.getMethod( signature );
-            if( method == null ) throw new RuntimeException( "Method " + owner + "::" + signature + " not found" );
-            
-            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, method.attributes );
-            
-            if( anno == null ) {
-                ClassTranslator ct = getClassTranslator( owner );
-                return ct.helper;
-            }
-                
-            ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
-            
-        } catch( IllegalAccessException e ) {
-            throw new RuntimeException( e );            
-        } catch( ClassNotFoundException e ) {
-            throw new RuntimeException( e );            
-        } catch( InstantiationException e ) {
-            throw new RuntimeException( e );
-        } catch( IOException e ) {
-            throw new RuntimeException( e );
-        }        
+            requireClass( getClassTranslator( type ));
+        } catch( Exception ex ) {
+            throw new RuntimeException( ex );
+        }
     }
-
+    
     /**
-     * Get the translation helper for the given field
+     * Require that the given class dependency also be translated
+     */
+    public void requireClass( ClassTranslator clazz ) 
+        throws ClassNotFoundException, IOException {        
+        
+        while( clazz != null ) {
+            requiredClasses.add( clazz );
+            clazz = clazz.getSuperclass();
+        }
+    }
+    
+    /**
+     * Get the translator for the given class
      * 
-     * @param field the field
+     * @param type the class
      * @return not null
      */
-    /*pkg*/ TranslationHelper helperForField( ObjectType owner, String name ) {
-        try {
-            JVMClass clazz = loader.getClass( owner );
-            JVMField field = clazz.getField( name );
-            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, field.attributes );
-            
-            if( anno == null ) {
-                ClassTranslator ct = getClassTranslator( owner );
-                return ct.helper;
-            }
-                
-            ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
-            
-        } catch( IllegalAccessException e ) {
-            throw new RuntimeException( e );            
-        } catch( ClassNotFoundException e ) {
-            throw new RuntimeException( e );            
-        } catch( InstantiationException e ) {
-            throw new RuntimeException( e );
-        } catch( IOException e ) {
-            throw new RuntimeException( e );
-        }                
-    }
-
-    /**
-     * Get the translation helper for the given class
-     * 
-     * @param jvmClass the class
-     * @return not null
-     * @throws TranslationHelper.NotFoundException if a helper cannot be found
-     */
-    /*pkg*/ TranslationHelper helperForClass( JVMClass jvmClass ) {
+    public ClassTranslator translatorForClass( ObjectType type ) {
+        
+        ClassTranslator trans = translators.get( type );
+        if( trans != null ) return trans;
         
         try {
-            JavaAnnotation anno = TranslationHelper.findTranslatorAnnotation( loader, jvmClass.attributes );
+            JVMClass jvmClass = loader.getClass( type );
+            JavaAnnotation anno = findTranslatorAnnotation( loader, jvmClass.attributes );
             if( anno == null ) {
                 String name = jvmClass.name.name;
          
                 //framework classes require an explicit annotation
                 if( name.startsWith( "java." )
                  || name.startsWith( "javax." )) {
-                    throw new TranslationHelper.NotFoundException(
-                        "Explicit Translator annotation required - cannot translate " + name );
+                    throw new RuntimeException( "Explicit Translator annotation required - cannot translate " + name );
                 }
                 
                 //--assume a vanilla Java class
-                return vanillaHelper;
+                trans = new JavaClassTranslator( this, jvmClass );                
             }
+            else {
             
-            ObjectType helperType = (ObjectType) anno.classValue( "value" );
-            return (TranslationHelper) Class.forName( helperType.name ).newInstance();
+                ObjectType helperType = (ObjectType) anno.classValue( "value" );
+                trans = (ClassTranslator) Class.forName( helperType.name ).newInstance();
+            }
+
+            translators.put( type, trans );
+            return trans;
             
-        } catch( IllegalAccessException e ) {
+        } catch( Exception e ) {
             throw new RuntimeException( e );            
-        } catch( ClassNotFoundException e ) {
-            throw new RuntimeException( e );            
-        } catch( InstantiationException e ) {
-            throw new RuntimeException( e );
         }
     }
 
+
+    /**
+     * Find a Translator or DefaultTranslator annotation
+     * 
+     * @param loader the load to use for resolving any required types
+     * @param attrs the attribute container to search
+     * @return null if not found
+     */
+    public static JavaAnnotation findTranslatorAnnotation( JVMClassLoader loader, AttributeContainer attrs ) {
+        try {
+            JavaAnnotation anno = attrs.annotation( Translator.class.getName());
+            if( anno != null ) return anno;
+
+            anno = attrs.annotation( DefaultTranslator.class.getName());
+            if( anno != null ) return anno;
+            
+            //look for meta annotation
+            for( JavaAnnotation ann : attrs.annotations() ) {
+                JVMClass annoClass = loader.getClass( ann.type );
+                anno = findTranslatorAnnotation( loader, annoClass.attributes );
+                if( anno != null ) return anno;
+            }
+            
+            return null;
+            
+        } catch( ClassNotFoundException e ) {
+            throw new RuntimeException( e );            
+        } catch( IOException e ) {
+            throw new RuntimeException( e );
+        }
+    }
 }

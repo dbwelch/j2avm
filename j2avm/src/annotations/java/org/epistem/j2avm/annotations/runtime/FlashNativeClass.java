@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.epistem.j2avm.translator.helpers.FlashNativeHelper;
+import org.epistem.j2avm.translator.impl.flash.FlashNativeClassTranslator;
 
 /**
  * Annotation on Java classes that represent Flash player native classes
@@ -14,7 +14,7 @@ import org.epistem.j2avm.translator.helpers.FlashNativeHelper;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.TYPE )
-@DefaultTranslator( FlashNativeHelper.class )
+@DefaultTranslator( FlashNativeClassTranslator.class )
 public @interface FlashNativeClass {
     //nada
 }

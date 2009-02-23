@@ -5,16 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.epistem.j2avm.translator.TranslationHelper;
-
 /**
- * Annotation on classes, methods or fields to indicate the TranslationHelper
- * that will translate a call or access.
+ * Annotation on classes, methods or fields to indicate the Translator
+ * that will handle the entity
  *
  * @author nickmain
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
 public @interface Translator {
-    Class<? extends TranslationHelper> value();
+    Class<?> value();
 }

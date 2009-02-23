@@ -1,4 +1,4 @@
-package org.epistem.j2avm.translator;
+package org.epistem.j2avm.translator.impl.java;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,7 @@ import org.epistem.code.LocalValue;
 import org.epistem.j2avm.annotations.runtime.Getter;
 import org.epistem.j2avm.annotations.runtime.Setter;
 import org.epistem.j2avm.annotations.runtime.Translator;
+import org.epistem.j2avm.translator.*;
 import org.epistem.j2avm.util.NameUtils;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
@@ -27,7 +28,7 @@ import org.epistem.jvm.type.*;
 import com.anotherbigidea.flash.avm2.instruction.Instruction;
 import com.anotherbigidea.flash.avm2.model.*;
 
-public class BytecodeTranslator implements InstructionVisitor {
+public class JavaBytecodeTranslator implements InstructionVisitor {
 
     private final TranslationState state;
     private final TranslatorManager manager;
@@ -37,7 +38,7 @@ public class BytecodeTranslator implements InstructionVisitor {
     private final Map<Variable, LocalValue<Instruction>> localValues = 
         new HashMap<Variable, LocalValue<Instruction>>();
     
-    BytecodeTranslator( TranslationState state ) {
+    JavaBytecodeTranslator( TranslationState state ) {
         this.state   = state;
         this.code    = state.codeMethod.code();
         this.manager = state.manager;

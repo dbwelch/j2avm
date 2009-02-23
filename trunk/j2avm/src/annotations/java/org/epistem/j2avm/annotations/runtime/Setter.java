@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.epistem.j2avm.translator.helpers.FlashSetterHelper;
+import org.epistem.j2avm.translator.impl.flash.FlashSetterTranslator;
 
 /**
  * Annotation on methods to indicate a setter method 
@@ -14,7 +14,7 @@ import org.epistem.j2avm.translator.helpers.FlashSetterHelper;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target({ ElementType.METHOD })
-@DefaultTranslator( FlashSetterHelper.class )
+@DefaultTranslator( FlashSetterTranslator.class )
 public @interface Setter {
     //nada
 }

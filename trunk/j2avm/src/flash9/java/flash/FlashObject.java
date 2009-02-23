@@ -2,7 +2,7 @@ package flash;
 
 import org.epistem.j2avm.annotations.runtime.FlashNativeClass;
 import org.epistem.j2avm.annotations.runtime.Translator;
-import org.epistem.j2avm.translator.helpers.TraceHelper;
+import org.epistem.j2avm.translator.impl.flash.FlashTraceTranslator;
 
 /**
  * Base for Flash player objects
@@ -17,7 +17,8 @@ public class FlashObject {
      * 
      * @param message the message to write
      */
-    @Translator( TraceHelper.class )
-    public static void trace( String message ) {}
-
+    @Translator( FlashTraceTranslator.class )
+    public static void trace( String message ) {
+        System.out.println( "trace > " + message );
+    }
 }

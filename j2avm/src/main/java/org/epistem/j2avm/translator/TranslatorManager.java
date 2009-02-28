@@ -40,26 +40,11 @@ public class TranslatorManager {
     }
     
     /**
-     * Get the translator for a Java class
-     * @param name the fully qualified Java class name
-     */
-    public ClassTranslator getClassTranslator( ObjectType type ) {
-        
-        ClassTranslator trans = translators.get( type );
-        
-        if( trans == null ) {
-            translators.put( type, trans = getClassTranslator( type ) );
-        }
-        
-        return trans;
-    }
-    
-    /**
      * Require that the given class dependency also be translated
      */
     public void requireClass( ObjectType type ) {
         try {
-            requireClass( getClassTranslator( type ));
+            requireClass( translatorForClass( type ));
         } catch( Exception ex ) {
             throw new RuntimeException( ex );
         }

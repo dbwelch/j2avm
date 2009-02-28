@@ -1,6 +1,7 @@
 package org.epistem.j2avm.translator;
 
 import org.epistem.j2swf.swf.code.Code;
+import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.type.Signature;
 
@@ -52,7 +53,8 @@ public interface ClassTranslator {
     public MethodTranslator getTranslatorForMethod( Signature sig ) throws NoSuchMethodException;
     
     /**
-     * Get the translator for the given field - looking in
+     * Get the translator for the given field - looking in superclasses
+     * if necessary
      * 
      * @param name the JVM field name
      * @throws NoSuchFieldException if the field cannot be found
@@ -78,4 +80,10 @@ public interface ClassTranslator {
      * Get the AVM2 private namespace of the class
      */
     public AVM2Namespace getAVM2PrivateNamespace();
+    
+    /**
+     * Get the specified Java annotation
+     * @return null if the annotation does not exist
+     */
+    public JavaAnnotation getAnnotation( String name );
 }

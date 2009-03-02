@@ -14,14 +14,16 @@ public interface FieldTranslator extends MemberTranslator {
      * 
      * @param method the method being written
      * @param access the accessor instruction
+     * @param whether the access is "super"
      */
-    public void translateRead( MethodTranslator method, FieldAccess access );
+    public void translateRead( MethodTranslator method, FieldAccess access, boolean isSuper );
     
     /**
      * Write the code to set this field
      * 
      * @param method the method being written
      * @param access the accessor instruction
+     * @param whether the access is "super"
      */
-    public void translateWrite( MethodTranslator method, FieldAccess access );
+    public void translateWrite( MethodTranslator method, FieldAccess access, boolean isSuper );
 }

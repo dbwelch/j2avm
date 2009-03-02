@@ -1,0 +1,7 @@
+Things to pay attention to when setting up tests:
+
+Flash methods returning boolean
+Static field reads
+Static field writes
+Super field reads
+Super field writes

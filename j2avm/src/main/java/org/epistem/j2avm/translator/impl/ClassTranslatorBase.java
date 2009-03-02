@@ -10,7 +10,10 @@ import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.util.NameUtils;
 import org.epistem.jvm.JVMClass;
+import org.epistem.jvm.JVMField;
+import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
 import com.anotherbigidea.flash.avm2.NamespaceKind;
@@ -24,36 +27,82 @@ import com.anotherbigidea.flash.avm2.model.AVM2QName;
  */
 public abstract class ClassTranslatorBase implements ClassTranslator {
 
-    private final String name;
-    private final TranslatorManager manager;
-    private final JVMClass jvmClass;
-    private final AVM2QName avm2name;
+    protected final String name;
+    protected final TranslatorManager manager;
+    protected final AVM2QName avm2name;
     
-    private final AVM2Namespace privateNamespace;
-    private final AVM2Namespace internalNamespace;
-    private final AVM2Namespace protectedNamespace;
+    protected final AVM2Namespace privateNamespace;
+    protected final AVM2Namespace internalNamespace;
+    protected final AVM2Namespace protectedNamespace;
     
-    private final Map<String, FieldTranslatorBase> fields = new HashMap<String, FieldTranslatorBase>();
-    private final Map<Signature, MethodTranslator> methods = new HashMap<Signature, MethodTranslator>();
+    protected final JVMClass jvmClass;
+    protected final Map<String, FieldTranslator> fields = new HashMap<String, FieldTranslator>();
+    protected final Map<Signature, MethodTranslator> methods = new HashMap<Signature, MethodTranslator>();
         
     /**
      * @param manager the translation manager
      * @param jvmClass the class to translate
      */
-    public ClassTranslatorBase( TranslatorManager manager, JVMClass jvmClass ) {
+    protected ClassTranslatorBase( TranslatorManager manager, JVMClass jvmClass ) {
+        this( manager, jvmClass, null, null, null, null );
+    }
+    
+    /**
+     * Make the default type of method translator
+     */
+    public abstract MethodTranslator defaultMethodTranslator( JVMMethod method ); 
+
+    /**
+     * Make the default type of field translator
+     */
+    public abstract FieldTranslator defaultFieldTranslator( JVMField field ); 
+    
+    /**
+     * @param manager the translation manager
+     * @param jvmClass the class to translate
+     */
+    protected ClassTranslatorBase( TranslatorManager manager, JVMClass jvmClass,
+                                   AVM2QName avm2name, 
+                                   AVM2Namespace privateNamespace,
+                                   AVM2Namespace internalNamespace,
+                                   AVM2Namespace protectedNamespace ) {
         
         this.name     = jvmClass.name.name;
         this.manager  = manager;
         this.jvmClass = jvmClass;
         
-        avm2name = NameUtils.nameForJavaClass( jvmClass.name );
+        if( avm2name == null ) avm2name = NameUtils.nameForJavaClass( jvmClass.name );
+        this.avm2name = avm2name;
         
-        privateNamespace   = new AVM2Namespace( NamespaceKind.PrivateNamespace, name );
-        internalNamespace  = new AVM2Namespace( NamespaceKind.PackageInternalNamespace, 
-                                                jvmClass.name.packageName );
-        protectedNamespace = new AVM2Namespace( NamespaceKind.ProtectedNamespace, 
-                                                jvmClass.name.packageName + ":" 
-                                                    + jvmClass.name.simpleName );  
+        this.privateNamespace = (privateNamespace != null) ?
+            privateNamespace : 
+            new AVM2Namespace( NamespaceKind.PrivateNamespace, avm2name.toQualString() );
+
+        this.internalNamespace = (internalNamespace != null) ?
+            internalNamespace :
+            new AVM2Namespace( NamespaceKind.PackageInternalNamespace, avm2name.namespace.name );
+        
+        this.protectedNamespace = (protectedNamespace != null) ? 
+            protectedNamespace :
+            new AVM2Namespace( NamespaceKind.ProtectedNamespace, 
+                               avm2name.namespace.name + ":" + avm2name.name );  
+    }
+    
+    /**
+     * Add all the class member translators
+     */
+    protected void addAllMemberTranslators() {
+        //-- fields 
+        for( JVMField field : jvmClass.fields ) {
+            FieldTranslator fieldTrans = FieldTranslatorBase.forField( field, this );
+            fields.put( field.name, fieldTrans );
+        }
+        
+        //-- method, constructors and static initializer
+        for( JVMMethod method : jvmClass.methods ) {            
+            MethodTranslator methodTrans = MethodTranslatorBase.forMethod( method, this );
+            methods.put( method.signature, methodTrans );               
+        }
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#getAVM2InternalNamespace() */
@@ -76,20 +125,20 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         return protectedNamespace;
     }
 
-    /** @see org.epistem.j2avm.translator.ClassTranslator#getTranslatorForMethod(org.epistem.jvm.type.Signature) */
-    public MethodTranslator getTranslatorForMethod( Signature sig ) throws NoSuchMethodException {
+    /** @see org.epistem.j2avm.translator.ClassTranslator#getMethodTranslator(org.epistem.jvm.type.Signature) */
+    public MethodTranslator getMethodTranslator( Signature sig ) throws NoSuchMethodException {
         MethodTranslator mt = methods.get( sig );
         if( mt != null ) return mt;
         
         ClassTranslator superclass = getSuperclass();
         if( superclass == null ) throw new NoSuchMethodException( jvmClass.name + "::" + sig.toString() );
         
-        return superclass.getTranslatorForMethod( sig );
+        return superclass.getMethodTranslator( sig );
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#getFieldTranslator(java.lang.String) */
     public FieldTranslator getFieldTranslator( String name ) throws NoSuchFieldException {
-        FieldTranslatorBase ft = fields.get( name );
+        FieldTranslator ft = fields.get( name );
         if( ft != null ) return ft;
 
         ClassTranslator superclass = getSuperclass();
@@ -117,5 +166,30 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
             J2AVM.log.severe( "While looking for annotation " + name + ": " + ex.getMessage() );
             return null;
         }
+    }
+
+    /** @see org.epistem.j2avm.translator.ClassTranslator#getJVMType() */
+    public ObjectType getJVMType() {
+        return jvmClass.name;
+    }
+    
+    /**
+     * Determine whether one class is a superclass of another
+     * 
+     * @param subclass the sub-class
+     * @param superClass the potential superclass
+     * @return true if the second arg is a superclass of the first
+     */
+    public static boolean isSuperclassOf( ClassTranslator subclass, ClassTranslator superClass ) {
+        for( ClassTranslator superTran = subclass.getSuperclass(); 
+             superTran != null; 
+             superTran = superTran.getSuperclass() ) {
+       
+           if( superTran == superClass ) {
+               return true;
+           }
+        }
+        
+        return false;
     }
 }

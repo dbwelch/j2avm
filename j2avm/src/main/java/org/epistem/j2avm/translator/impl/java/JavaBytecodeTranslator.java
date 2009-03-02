@@ -1,28 +1,25 @@
 package org.epistem.j2avm.translator.impl.java;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.epistem.code.LocalValue;
-import org.epistem.j2avm.annotations.runtime.Getter;
-import org.epistem.j2avm.annotations.runtime.Setter;
-import org.epistem.j2avm.annotations.runtime.Translator;
-import org.epistem.j2avm.translator.*;
-import org.epistem.j2avm.util.NameUtils;
+import org.epistem.j2avm.translator.ClassTranslator;
+import org.epistem.j2avm.translator.FieldTranslator;
+import org.epistem.j2avm.translator.MethodTranslator;
+import org.epistem.j2avm.translator.TranslatorManager;
+import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.jvm.JVMMethod;
-import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.code.ExceptionHandler;
 import org.epistem.jvm.code.InstructionList;
 import org.epistem.jvm.code.InstructionVisitor;
 import org.epistem.jvm.code.Label;
 import org.epistem.jvm.code.analysis.Analyzer;
 import org.epistem.jvm.code.analysis.ExecutionContext;
+import org.epistem.jvm.code.analysis.Value;
 import org.epistem.jvm.code.analysis.Variable;
 import org.epistem.jvm.code.instructions.*;
 import org.epistem.jvm.code.instructions.MethodCall.CallType;
-import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.*;
 
 import com.anotherbigidea.flash.avm2.instruction.Instruction;
@@ -30,22 +27,24 @@ import com.anotherbigidea.flash.avm2.model.*;
 
 public class JavaBytecodeTranslator implements InstructionVisitor {
 
-    private final TranslationState state;
     private final TranslatorManager manager;
+    private final MethodTranslator method;
     private final AVM2Code code;
+    private final JVMMethod jvmMethod;
     
     //mapping from JVM locals to AVM2 locals
     private final Map<Variable, LocalValue<Instruction>> localValues = 
         new HashMap<Variable, LocalValue<Instruction>>();
     
-    JavaBytecodeTranslator( TranslationState state ) {
-        this.state   = state;
-        this.code    = state.codeMethod.code();
-        this.manager = state.manager;
+    JavaBytecodeTranslator( MethodTranslator method, JVMMethod jvmMethod ) {
+        this.method  = method;
+        this.code    = method.getCode().code();
+        this.manager = method.getClassTranslator().getManager();
+        this.jvmMethod = jvmMethod;
         
         //set up the variables for "this" and the arguments
-        Analyzer analyzer = state.methodTranslator.jvmMethod.analyzer();
-        Variable thisVar = analyzer.getThis();
+        Analyzer analyzer = jvmMethod.analyzer();
+        Variable thisVar  = analyzer.getThis();
         if( thisVar != null ) localValues.put( thisVar, code.thisValue );
         
         Variable[] args = analyzer.getArgs();
@@ -85,109 +84,33 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCall(org.epistem.jvm.code.instructions.MethodCall) */
     public void visitCall( MethodCall call ) {      
         
-        ClassTranslator owner = manager.getClassTranslator( call.owner );        
-        MethodTranslator methodTranslator = owner.findMethod( call.signature );
-        
-        state.requireClass( owner );
-        methodTranslator.helper.translateMethodCall( state, methodTranslator, call );
-        
-        //======================
-        
-        int     argCount = call.signature.paramTypes.length;
-        boolean isVoid   = ( call.returnType == VoidType.VOID );
-        
-        //find the target method
-        AVM2QName methodName;
-        JVMMethod jvmMethod;
-        MethodTranslator methodTrans;
-        ClassTranslator classTrans;
-        
-        try {
-            classTrans = state.manager.getClassTranslation( call.owner.name );
-            methodTrans = classTrans.findMethod( call.signature );
-            methodName = methodTrans.avm2name;
-            jvmMethod = methodTrans.jvmMethod;
-            
-            //--check for and defer to a translation-helper
-            JavaAnnotation translator = jvmMethod.attributes.annotation( Translator.class.getName() );
-            if( translator != null ) {
-                JVMType helperClass = translator.classValue( "value" );
-                TranslationHelper helper = (TranslationHelper) 
-                    Class.forName( helperClass.name ).newInstance();
-                
-                if( helper.translateMethodCall( state, call )) return;
-            }
-            
-        } catch( Exception ex ) {
-            throw new RuntimeException( ex );
-        }
-        
+        ClassTranslator owner = manager.translatorForClass( call.owner );        
+        int argCount = call.signature.paramTypes.length;
 
-        //--TODO: implement static calls in a more efficient manner
-        if( call.callType == CallType.Static ) {
-            //pop all args into locals
-            List<LocalValue<Instruction>> args = new ArrayList<LocalValue<Instruction>>();
-            for( int i = 0; i < argCount; i++ ) {
-                LocalValue<Instruction> local = code.newLocal();
-                code.setLocal( local );
-                args.add( 0, local );
-            }
-            
-            //find the class
-            code.getLex( classTrans.avm2name );
-            
-            //restore args
-            for( LocalValue<Instruction> local : args ) {
-                code.getLocal( local );
-            }
-            
-            if( isVoid ) code.callPropVoid( methodName, argCount );
-            else         code.callProperty( methodName, argCount );            
-            
-            return;
+        MethodTranslator methodTranslator;
+        try {
+            methodTranslator = owner.getMethodTranslator( call.signature );
+        } catch( NoSuchMethodException e ) {
+            throw new RuntimeException( e );
         }
         
-        
-        if( call.callType == CallType.Interface ) {
-            throw new RuntimeException( "Interface calls not yet implemented" );
-        }
-        
-        supercall:
+        //determine whether a super call
+        boolean isSuper = false;
         if( call.callType == CallType.Special ) {
-            //if this is a call to a private method then translate as a non-super
-            //call
-            if( jvmMethod.flags.contains( MethodFlag.MethodIsPrivate ) ) break supercall; 
+            Value instance = call.context.stack.get( argCount );
+            ObjectType instType = (ObjectType) instance.type; //only object types have methods
             
-            if( isVoid ) {
-                
-                //if this is an <init> call to a Flash native superclass then
-                //suppress it since that class will not have an <init> method
-                if( ( classTrans.isFlashNative || classTrans.name.equals( "java.lang.Object" ) ) 
-                 && jvmMethod.name.equals( "<init>" )) {
-                    code.pop(); //the instance
-                    return;
-                }
-                //TODO: obviate the need for the above by using a Transformer
-                
-                //if this is a call to an <init> method on a new object then
-                //it should not be a super call
-                if( methodTrans.jvmMethod.name.equals( "<init>" )
-                 && call.context.peek( argCount ).producer instanceof New ) {
-                    break supercall; 
-                }                
-                
-                code.callSuperVoid( methodName, argCount );
-            }
-            else {
-                code.callSuperProperty( methodName, argCount );            
-            }
+            //if the method owner is a superclass of the instance then it is a supercall
+            if( ! instType.equals( call.owner )) {
+                ClassTranslator instTran = manager.translatorForClass( instType );                
+                isSuper = ClassTranslatorBase.isSuperclassOf( instTran, owner );
+            }    
             
-            return;
+            //Note - special calls to self are private calls or non-super <init>
         }
         
-        //--virtual call
-        if( isVoid ) code.callPropVoid( methodName, argCount );
-        else         code.callProperty( methodName, argCount );            
+        manager.requireClass( owner );
+        methodTranslator.translateCall( method, call, isSuper );        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCheckCast(org.epistem.jvm.code.instructions.CheckCast) */
@@ -379,26 +302,37 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     /** @see org.epistem.jvm.code.InstructionVisitor#visitField(org.epistem.jvm.code.instructions.FieldAccess) */
     public void visitField( FieldAccess fieldAccess ) {
 
-        if( fieldAccess.isStatic ) throw new RuntimeException( "Static field access UNIMPLEMENTED" );
-
         //make sure target class is required
-        state.requireClass( fieldAccess.owner.name );
+        manager.requireClass( fieldAccess.owner );
         
         //find the target field
-        AVM2QName fieldName = null;
+        ClassTranslator classTrans = manager.translatorForClass( fieldAccess.owner );
+        FieldTranslator fieldTrans;
         try {
-            ClassTranslator classTrans = state.manager.getClassTranslation( fieldAccess.owner.name );
-            FieldTranslator fieldTrans = classTrans.findField( fieldAccess.name ); 
-            fieldName = fieldTrans.avm2name;
-        } catch( Exception ex ) {
-            throw new RuntimeException( ex );
+            fieldTrans = classTrans.getFieldTranslator( fieldAccess.name );
+        } catch( NoSuchFieldException e ) {
+            throw new RuntimeException( e );
+        } 
+
+        //detect whether this is a super access
+        boolean isSuper = false;
+        if( ! fieldAccess.isStatic ) {
+            Value instance = fieldAccess.context.stack.get( fieldAccess.isWrite ? 1 : 0 );
+            ObjectType instType = (ObjectType) instance.type; //only object types have fields
+            ObjectType targType = fieldAccess.owner;
+            
+            //if the field owner is a superclass of the instance then it is a super access
+            if( ! instType.equals( targType )) {
+                ClassTranslator instTran = manager.translatorForClass( instType );                
+                isSuper = ClassTranslatorBase.isSuperclassOf( instTran, classTrans );
+            }
         }
         
         if( fieldAccess.isWrite ) {
-            code.setProperty( fieldName );
+            fieldTrans.translateWrite( method, fieldAccess, isSuper );
         }
         else {
-            code.getProperty( fieldName );
+            fieldTrans.translateRead( method, fieldAccess, isSuper );
         }
     }
 
@@ -437,14 +371,15 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
         
         ObjectOrArrayType type = instanceOf.type;
         
-        AVM2QName typeName = ( type instanceof ArrayType ) ?
-                                 new AVM2QName( "Array" ) :
-                                 new AVM2QName( type.name );
-        
-        //make sure referenced type is translated
-        if( type instanceof ObjectType ) state.requireClass( type.name );
-        
-        code.isType( typeName );        
+        if( type instanceof ArrayType )  {
+            //TODO: need to check array type - maybe by tagging the array somehow ?
+            code.isType( new AVM2QName( "Array" ));
+            return;
+        }
+
+        ClassTranslator trans = manager.translatorForClass( (ObjectType) type );
+        manager.requireClass( trans );        
+        trans.translateInstanceOf( method, instanceOf );        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitLabel(org.epistem.jvm.code.Label) */
@@ -465,23 +400,9 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitNew(org.epistem.jvm.code.instructions.New) */
-    public void visitNew( New newInstance ) {
-        
-        ClassTranslator clazz;
-        
-        try {
-            clazz = state.manager.getClassTranslation( newInstance.type.name );
-            
-        } catch( Exception ex ) {
-            throw new RuntimeException( ex );
-        }
-        
-        if( clazz.isFlashNative ) throw new RuntimeException( "new Flash Native UNIMPLEMENTED" ); // TODO: new Flash native classes
-     
-        AVM2QName name = clazz.avm2name;
-        
-        code.findPropStrict( name );
-        code.constructProp( name, 0 );
+    public void visitNew( New newInstance ) {        
+        manager.translatorForClass( newInstance.type )
+               .translateInstantiation( method, newInstance );        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitNewArray(org.epistem.jvm.code.instructions.NewArray) */

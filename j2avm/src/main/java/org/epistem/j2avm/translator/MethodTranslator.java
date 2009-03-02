@@ -15,8 +15,9 @@ public interface MethodTranslator extends MemberTranslator {
      * 
      * @param method the method being written
      * @param call the call instruction
+     * @param isSuper is a super call
      */
-    public void translateCall( MethodTranslator method, MethodCall call );
+    public void translateCall( MethodTranslator method, MethodCall call, boolean isSuper );
     
     /**
      * Get the code of the method implementation

@@ -2,7 +2,9 @@ package org.epistem.j2avm.translator;
 
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.code.instructions.New;
+import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
@@ -37,6 +39,22 @@ public interface ClassTranslator {
     public void translateInstantiation( MethodTranslator method, New newInsn );
     
     /**
+     * Translate an instanceof operation
+     * 
+     * @param method the method being written
+     * @param instOfInsn the instanceOf instruction
+     */
+    public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn );
+    
+    /**
+     * Generate instruction(s) to push the static class object (that holds the
+     * static properties and methods) on the stack.
+     * 
+     * @param method the method being written
+     */
+    public void translateStaticPush( MethodTranslator method );
+    
+    /**
      * Get the translator for the superclass
      * 
      * @return null if there is no superclass
@@ -50,7 +68,7 @@ public interface ClassTranslator {
      * @param sig the JVM signature of the method
      * @throws NoSuchMethodException if the method cannot be found
      */
-    public MethodTranslator getTranslatorForMethod( Signature sig ) throws NoSuchMethodException;
+    public MethodTranslator getMethodTranslator( Signature sig ) throws NoSuchMethodException;
     
     /**
      * Get the translator for the given field - looking in superclasses
@@ -60,6 +78,11 @@ public interface ClassTranslator {
      * @throws NoSuchFieldException if the field cannot be found
      */
     public FieldTranslator getFieldTranslator( String name ) throws NoSuchFieldException;
+    
+    /**
+     * Get the JVM type
+     */
+    public ObjectType getJVMType();
     
     /**
      * Get the AVM2 name for the class

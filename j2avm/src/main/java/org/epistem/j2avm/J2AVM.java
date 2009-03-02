@@ -3,9 +3,6 @@ package org.epistem.j2avm;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.epistem.io.IndentingPrintWriter;
-import org.epistem.j2avm.runtime.RuntimeLoader;
-import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.jvm.JVMClassLoader;
 
@@ -40,10 +37,7 @@ public class J2AVM {
     public static void translate( String className, String targetFile, JVMClassLoader loader ) 
         throws ClassNotFoundException, IOException {
         
-        //Use RuntimeLoader in order to pull in the runtime support classes 
-        JVMClassLoader runtimeLoader = new RuntimeLoader( loader );
-        
-        TranslatorManager translator = new TranslatorManager( runtimeLoader );
+        TranslatorManager translator = new TranslatorManager( loader );
         //ClassTranslator mainClass = translator.getClassTranslation( className );
         
         //TODO: debugging

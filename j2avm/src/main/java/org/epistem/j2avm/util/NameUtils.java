@@ -47,10 +47,13 @@ public class NameUtils {
      * @param className the Java class name
      */
     public static final AVM2QName nameForJavaClass( ObjectType className ) {
-        String name = ( className.name.startsWith( "flash.Flash" ) ) ?
-                          className.name.substring( 11 ) :
-                          className.name;
+        
+//-The following is handled in FlashNativeClassTranslator:        
+//        String name = ( className.name.startsWith( "flash.Flash" ) ) ?
+//                          className.name.substring( 11 ) :
+//                          className.name;
             
+        String name = className.name;
         return new AVM2QName( name );
     }
     

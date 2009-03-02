@@ -1,14 +1,13 @@
 package org.epistem.j2avm.translator;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
 import org.epistem.j2avm.annotations.runtime.Translator;
+import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
+import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.AttributeContainer;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMClassLoader;
@@ -29,8 +28,8 @@ public class TranslatorManager {
     
     private final Map<ObjectType, ClassTranslator> translators = new HashMap<ObjectType, ClassTranslator>();
     
-    private final Set<ClassTranslator> requiredClasses   = new HashSet<ClassTranslator>();    
-    private final Set<ClassTranslator> alreadyTranslated = new HashSet<ClassTranslator>();
+    private final LinkedList<ClassTranslator> translationQueue  = new LinkedList<ClassTranslator>();
+    private final Collection<ClassTranslator> requiredClasses   = new HashSet<ClassTranslator>();    
     
     /**
      * @param loader the loader to use to find Java classes
@@ -40,23 +39,35 @@ public class TranslatorManager {
     }
     
     /**
-     * Require that the given class dependency also be translated
+     * Translate all required classes
+     * 
+     * @param code the target avm2 code
      */
-    public void requireClass( ObjectType type ) {
-        try {
-            requireClass( translatorForClass( type ));
-        } catch( Exception ex ) {
-            throw new RuntimeException( ex );
+    public void translateRequiredClasses( Code code ) {
+        while( ! translationQueue.isEmpty() ) {
+            ClassTranslator trans = translationQueue.removeFirst();
+            
+            System.out.println( trans.getJVMType() );
+            System.out.flush();
+            trans.translateImplementation( code );
         }
     }
     
     /**
      * Require that the given class dependency also be translated
      */
-    public void requireClass( ClassTranslator clazz ) 
-        throws ClassNotFoundException, IOException {        
-        
+    public void requireClass( ObjectType type ) {
+        requireClass( translatorForClass( type ));
+    }
+    
+    /**
+     * Require that the given class dependency also be translated
+     */
+    public void requireClass( ClassTranslator clazz ) {                
         while( clazz != null ) {
+            if( requiredClasses.contains( clazz ) ) return;
+            
+            translationQueue.add( clazz );
             requiredClasses.add( clazz );
             clazz = clazz.getSuperclass();
         }
@@ -67,7 +78,7 @@ public class TranslatorManager {
      * 
      * @param type the class
      * @return not null
-     */
+     */    
     public ClassTranslator translatorForClass( ObjectType type ) {
         
         ClassTranslator trans = translators.get( type );
@@ -79,19 +90,26 @@ public class TranslatorManager {
             if( anno == null ) {
                 String name = jvmClass.name.name;
          
-                //framework classes require an explicit annotation
-                if( name.startsWith( "java." )
-                 || name.startsWith( "javax." )) {
-                    throw new RuntimeException( "Explicit Translator annotation required - cannot translate " + name );
+                //java framework classes
+                if( name.startsWith( "java." ) || name.startsWith( "javax." )) {                    
+                    trans = new JavaFrameworkClassTranslator( this, jvmClass );
                 }
-                
-                //--assume a vanilla Java class
-                trans = new JavaClassTranslator( this, jvmClass );                
+                else {
+                    //--assume a vanilla Java class
+                    trans = new JavaClassTranslator( this, jvmClass );
+                }
             }
             else {
             
                 ObjectType helperType = (ObjectType) anno.classValue( "value" );
-                trans = (ClassTranslator) Class.forName( helperType.name ).newInstance();
+                
+                @SuppressWarnings("unchecked")
+                Class<? extends ClassTranslator> ctClass = 
+                    (Class<? extends ClassTranslator>) Class.forName( helperType.name );
+                
+                trans = (ClassTranslator) 
+                    ctClass.getConstructor( TranslatorManager.class, JVMClass.class )
+                           .newInstance( this, jvmClass );
             }
 
             translators.put( type, trans );
@@ -101,7 +119,6 @@ public class TranslatorManager {
             throw new RuntimeException( e );            
         }
     }
-
 
     /**
      * Find a Translator or DefaultTranslator annotation
@@ -121,6 +138,7 @@ public class TranslatorManager {
             //look for meta annotation
             for( JavaAnnotation ann : attrs.annotations() ) {
                 JVMClass annoClass = loader.getClass( ann.type );
+                if( annoClass.name.name.startsWith( "java" )) continue; //avoid loops with the @Retention annotation
                 anno = findTranslatorAnnotation( loader, annoClass.attributes );
                 if( anno != null ) return anno;
             }

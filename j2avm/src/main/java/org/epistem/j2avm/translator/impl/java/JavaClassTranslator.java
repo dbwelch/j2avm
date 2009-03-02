@@ -1,33 +1,26 @@
 package org.epistem.j2avm.translator.impl.java;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
-import org.epistem.code.LocalValue;
 import org.epistem.j2avm.J2AVM;
-import org.epistem.j2avm.annotations.runtime.FlashNativeClass;
 import org.epistem.j2avm.translator.ClassTranslator;
+import org.epistem.j2avm.translator.FieldTranslator;
+import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
-import org.epistem.j2avm.translator.impl.FieldTranslatorBase;
-import org.epistem.j2avm.util.NameUtils;
+import org.epistem.j2swf.swf.code.Code;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.JVMMethod;
-import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.code.instructions.InstanceOf;
+import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.flags.ClassFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
-import com.anotherbigidea.flash.avm2.NamespaceKind;
-import com.anotherbigidea.flash.avm2.instruction.Instruction;
 import com.anotherbigidea.flash.avm2.model.AVM2Class;
 import com.anotherbigidea.flash.avm2.model.AVM2Code;
-import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
-import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
 import flash.FlashObject;
 import flash.display.MovieClip;
@@ -39,172 +32,74 @@ import flash.display.MovieClip;
  */
 public class JavaClassTranslator extends ClassTranslatorBase implements ClassTranslator {
 
+    private static final Signature NO_ARG_CONTRUCTOR = new Signature( "<init>" );
+    
+    private CodeClass codeClass;
+    
     public JavaClassTranslator(  TranslatorManager manager, JVMClass jvmClass ) {
         super( manager, jvmClass );
+        
+        addAllMemberTranslators();
     }
     
-    /**
-     * @param manager the translation manager
-     * @param jvmClass the class to translate
-     */
-    public void ClassTranslatorBase( TranslatorManager manager, JVMClass jvmClass ) {
+    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultFieldTranslator(org.epistem.jvm.JVMField) */
+    @Override
+    public FieldTranslator defaultFieldTranslator( JVMField field ) {
+        return new JavaFieldTranslator( this, field );
+    }
+
+    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultMethodTranslator(org.epistem.jvm.JVMMethod) */
+    @Override
+    public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
+        return new JavaMethodTranslator( this, method );
+    }
+
+    /** @see org.epistem.j2avm.translator.ClassTranslator#translateImplementation(org.epistem.j2swf.swf.code.Code) */
+    public void translateImplementation( Code code ) {
+        J2AVM.log.info( "Translating class " + name );
         
-        this.name     = jvmClass.name.name;
-        this.manager  = manager;
-        this.jvmClass = jvmClass;
-        this.helper   = manager.helperForClass( jvmClass );
-        
-        avm2name = NameUtils.nameForJavaClass( jvmClass.name );
-        
-        privateNamespace   = new AVM2Namespace( NamespaceKind.PrivateNamespace, name );
-        packageNamespace   = new AVM2Namespace( NamespaceKind.PackageNamespace, 
-                                                jvmClass.name.packageName );
-        internalNamespace  = new AVM2Namespace( NamespaceKind.PackageInternalNamespace, 
-                                                jvmClass.name.packageName );
-        protectedNamespace = new AVM2Namespace( NamespaceKind.ProtectedNamespace, 
-                                                jvmClass.name.packageName + ":" 
-                                                    + jvmClass.name.simpleName );  
-        
-        //detect Flash native classes 
-        JavaAnnotation fnc = getAnnotation( FlashNativeClass.class.getName() );
-        isFlashNative = fnc != null;
+        // TODO Auto-generated method stub
         
         //TODO: implemented interfaces
         //TODO: Enums
-        
-        //-- fields 
-        for( JVMField field : jvmClass.fields ) {
-            FieldTranslatorBase fieldTrans = new FieldTranslatorBase( this, field );
-            fields.put( field.name, fieldTrans );
-        }
-        
-        //-- method, constructors and static initializer
-        for( JVMMethod method : jvmClass.methods ) {            
-            
-            //MethodTranslation
-            MethodTranslator methodTrans = new MethodTranslator( this, method );
-            methods.put( method.signature, methodTrans );
-            
-            //detect the no arg constructor
-            if( method.name.equals( "<init>" ) 
-             && method.signature.paramTypes.length == 0 ) {                
-                noArgConstructor = methodTrans;
-            }                
-        }
-        
-    }
-    
-    /**
-     * Get the specified Java annotation
-     * @return null if the annotation does not exist
-     */
-    public JavaAnnotation getAnnotation( String name ) {
-        try {
-            return jvmClass.attributes.annotation( name );
-        } catch( Exception ex ) {
-            J2AVM.log.severe( "While looking for annotation " + name + ": " + ex.getMessage() );
-            return null;
-        }
-    }
-    
-    /**
-     * Find the given method on this class or a superclass
-     * 
-     * @param sig the method signature
-     * @throws NoSuchMethodException if the method cannot be found
-     */
-    /*pkg*/ MethodTranslator findMethod( Signature sig ) 
-        throws NoSuchMethodException, ClassNotFoundException, IOException {
-        
-        MethodTranslator mt = methods.get( sig );
-        if( mt != null ) return mt;
-        ClassTranslatorBase superclass = superclass();
-        if( superclass == null ) throw new NoSuchMethodException( sig.toString() );
-        
-        return superclass.findMethod( sig );
-    }
-    
-    /**
-     * Find the given field on this class or a superclass
-     */
-    /*pkg*/ FieldTranslatorBase findField( String name ) 
-        throws NoSuchFieldException, ClassNotFoundException, IOException {
-        
-        FieldTranslatorBase ft = fields.get( name );
-        if( ft != null ) return ft;
-        JavaClassTranslator superclass = superclass();
-        if( superclass == null ) throw new NoSuchFieldException( name );
-        
-        return superclass.findField( name );
-    }
-    
-    /**
-     * Get the superclass
-     */
-    /*pkg*/ JavaClassTranslator superclass() throws ClassNotFoundException, IOException {
-        if( jvmClass.superclassName == null ) return null;
-        return manager.getClassTranslator( jvmClass.superclassName );
-    }
-    
-    /**
-     * Cause the class to be translated.
-     * 
-     * @param state the translation context
-     */
-    public CodeClass translate( TranslationState state ) 
-        throws ClassNotFoundException, IOException {
-        
-        if( isFlashNative ) return null;
-        
-        //TODO: handle java classes
-        if( jvmClass.name.packageName.startsWith( "java." ) ) {
-            J2AVM.log.info( "Skipping unsupported " + name );            
-            return null;
-        }
-        
-        state.classTranslator = this;
-        J2AVM.log.info( "Translating class " + name );
-        
-        //TODO: handle interfaces
-        
+
         //get the superclasses
         LinkedList<String> superNames = new LinkedList<String>();
-        JVMClass superClass = jvmClass.getSuperclass();
+        ClassTranslator superClass = getSuperclass();
         while( true ) {            
             //stop when Flash root Object class is reached
             //TODO: also stop at java.lang.Object - but rethink this
-            if( superClass.name.equals( FlashObject.class.getName() )
-             || superClass.name.equals( ObjectType.OBJECT )) {
+            if( superClass.getJVMType().equals( FlashObject.class.getName() )
+             || superClass.getJVMType().equals( ObjectType.OBJECT )) {
                 superNames.addFirst( "Object" );
                 break;
             }
-            
-            superNames.addFirst( superClass.name.name );
-            superClass = superClass.getSuperclass();
-            
+
             //make sure the superclass is also translated
-            state.requireClass( superClass.name.name );
+            manager.requireClass( superClass );
+            
+            superNames.addFirst( superClass.getAVM2Name().toQualString() );
+            superClass = superClass.getSuperclass();            
         }
         String[] superclasses = superNames.toArray( new String[ superNames.size() ] );
         
         boolean isFinal = jvmClass.flags.contains( ClassFlag.IsFinal );
         boolean isIFace = jvmClass.flags.contains( ClassFlag.IsInterface );
         
-        CodeClass codeClass = state.code.addClass( name, true, isFinal, isIFace, superclasses );
-        state.codeClass = codeClass;
-        
+        codeClass = code.addClass( name, true, isFinal, isIFace, superclasses );
+    
         //TODO: implemented interfaces
         //TODO: Enums
         
-        for( FieldTranslatorBase field : fields.values() ) {
-            field.translate( state );
+        for( FieldTranslator field : fields.values() ) {
+            field.translateImplementation( codeClass );
         }
         for( MethodTranslator method : methods.values() ) {            
-            method.translate( state );
+            method.translateImplementation( codeClass );
         }
-
+        
         //-- Constructor
-        makeConstructor( state );
+        makeConstructor();
         
         //TODO: static initializer
         //TODO: constructor
@@ -216,10 +111,31 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         //TODO: parameter annotations
         
         //TODO: a bunch of things I forgot
+    }
+
+    /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstantiation(MethodTranslator, New) */
+    public void translateInstantiation( MethodTranslator method, New newInsn ) {
+        AVM2Code code = method.getCode().code();
         
-        return codeClass;
+        code.findPropStrict( avm2name );
+        code.constructProp( avm2name, 0 );
+        
+        //The <init> method will be called later in the same manner as
+        //normal JVM instantiation
     }
     
+    /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.InstanceOf) */
+    public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn ) {
+        method.getCode().code().isType( avm2name );
+    }
+
+    /** @see org.epistem.j2avm.translator.ClassTranslator#translateStaticPush(org.epistem.j2avm.translator.MethodTranslator) */
+    public void translateStaticPush( MethodTranslator method ) {
+        // TODO this would be the place to implement ClassLoader support ?
+        
+        method.getCode().code().getLex( avm2name );
+    }
+
     /**
      * Make the constructor. 
      * 
@@ -236,24 +152,26 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
      * Flash native code then the init methods will not be called. TODO: need 
      * to figure out a way to address this
      */
-    public void makeConstructor( TranslationState state ) {
-        AVM2Class avm2class = state.codeClass.avm2class;
+    public void makeConstructor() {
+        AVM2Class avm2class = codeClass.avm2class;
         AVM2Code cons = AVM2Code.startNoArgConstructor( avm2class );
         
-        if( J2AVM.TRACE_ON ) cons.trace( J2AVM.TRACE_PREFIX + "In Constructor" );
+        if( J2AVM.TRACE_ON ) cons.trace( J2AVM.TRACE_PREFIX + "New JVM instance: " + getJVMType() );
         
         //if this is an extension of MovieClip then also need to call
         //the <init> method - since this class will be instantiated by the
         //Flash player, which will not know to call <init>
-        if( jvmClass.superclassName.equals( MovieClip.class.getName() ) ) {
-            if( noArgConstructor == null ) {
+        if( getSuperclass().getJVMType().equals( MovieClip.class.getName() ) ) {
+            
+            MethodTranslator noArgInit = methods.get( NO_ARG_CONTRUCTOR );
+            if( noArgInit == null ) {
                 throw new RuntimeException( "LIMITATION: Java class that extends MovieClip must have a no-arg constructor" );
             }
 
-            if( J2AVM.TRACE_ON ) cons.trace( J2AVM.TRACE_PREFIX + "Calling <init> from constructor" );
+            if( J2AVM.TRACE_ON ) cons.trace( J2AVM.TRACE_PREFIX + "MovieClip extension - calling <init>() from constructor" );
 
-            cons.getLocal( cons.thisValue );
-            cons.callPropVoid( noArgConstructor.avm2name, 0 );
+            cons.getLocal( cons.thisValue );            
+            cons.callPropVoid( noArgInit.getAVM2Name(), 0 );
         }
         
         cons.returnVoid();
@@ -261,28 +179,28 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
     }
     
     
-    private void THIS_IS_ONLY_FOR_DEV_PURPOSES( AVM2Code cons ) {
-        
-        cons.trace( "J2AVM: In Constructor" );
-        cons.getLocal( cons.thisValue );
-        cons.getProperty( "graphics" );
-        cons.coerceTo( "flash.display.Graphics" );
-
-        LocalValue<Instruction> g = cons.newLocal();
-        cons.setLocal( g );
-
-        cons.callPropVoid( g, "beginFill", 0x888800 );
-        cons.callPropVoid( g, "lineStyle", 5, 0x000088 );
-        cons.callPropVoid( g, "moveTo", 10, 10 );
-        cons.callPropVoid( g, "lineTo", 90, 10 );
-        cons.callPropVoid( g, "lineTo", 90, 90 );
-        cons.callPropVoid( g, "lineTo", 10, 90 );
-        cons.callPropVoid( g, "lineTo", 10, 10 );
-        cons.callPropVoid( g, "endFill" );
-
-        cons.trace( "J2AVM: At end of Constructor" );
-        
-        cons.returnVoid();    
-        cons.analyze();
-    }
+//    private void THIS_IS_ONLY_FOR_DEV_PURPOSES( AVM2Code cons ) {
+//        
+//        cons.trace( "J2AVM: In Constructor" );
+//        cons.getLocal( cons.thisValue );
+//        cons.getProperty( "graphics" );
+//        cons.coerceTo( "flash.display.Graphics" );
+//
+//        LocalValue<Instruction> g = cons.newLocal();
+//        cons.setLocal( g );
+//
+//        cons.callPropVoid( g, "beginFill", 0x888800 );
+//        cons.callPropVoid( g, "lineStyle", 5, 0x000088 );
+//        cons.callPropVoid( g, "moveTo", 10, 10 );
+//        cons.callPropVoid( g, "lineTo", 90, 10 );
+//        cons.callPropVoid( g, "lineTo", 90, 90 );
+//        cons.callPropVoid( g, "lineTo", 10, 90 );
+//        cons.callPropVoid( g, "lineTo", 10, 10 );
+//        cons.callPropVoid( g, "endFill" );
+//
+//        cons.trace( "J2AVM: At end of Constructor" );
+//        
+//        cons.returnVoid();    
+//        cons.analyze();
+//    }
 }

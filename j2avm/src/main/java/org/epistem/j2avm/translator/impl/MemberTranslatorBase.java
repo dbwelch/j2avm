@@ -12,10 +12,10 @@ import com.anotherbigidea.flash.avm2.model.AVM2QName;
  */
 public abstract class MemberTranslatorBase implements MemberTranslator {
 
-    private final ClassTranslator classTranslator;
-    private final String jvmName;
-    private final AVM2QName avm2Name;
-    private final AVM2QName avm2Type;
+    protected final ClassTranslator classTranslator;
+    protected final String jvmName;
+    protected final AVM2QName avm2Name;
+    protected final AVM2QName avm2Type;
     
     /** @see org.epistem.j2avm.translator.MemberTranslator#getClassTranslator() */
     public final ClassTranslator getClassTranslator() {

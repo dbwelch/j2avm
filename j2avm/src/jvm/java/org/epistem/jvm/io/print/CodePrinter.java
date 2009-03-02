@@ -109,8 +109,8 @@ public class CodePrinter implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitField(org.epistem.jvm.code.instructions.FieldAccess) */
     public void visitField( FieldAccess fieldAccess ) {
-        if( fieldAccess.isWrite ) ipw.print( "store " );
-        else ipw.print( "load " );
+        if( fieldAccess.isWrite ) ipw.print( "put " );
+        else ipw.print( "get " );
         
         if( fieldAccess.isStatic ) ipw.print( "static " );
 
@@ -228,7 +228,7 @@ public class CodePrinter implements InstructionVisitor {
         else ipw.write( "load " );
         
         if( varAccess.variable != null ) {
-            ipw.println( varAccess.variable.name );
+            ipw.println( varAccess.variable.name + " {" + varAccess.variable.type + "}" );
         }
         else {
             ipw.println( varAccess.type + "@" + varAccess.index );

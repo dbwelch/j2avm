@@ -19,9 +19,6 @@ public class MovieClip extends flash.display.Sprite   {
 		super(  );
 	}
 
-
-
-
     @SlotId( -1 ) @Getter
     public native flash.FlashArray getCurrentLabels(  );
 

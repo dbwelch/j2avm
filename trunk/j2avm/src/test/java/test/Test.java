@@ -17,6 +17,8 @@ import flash.text.TextField;
       background = 0xffeeee )
 public class Test extends MovieClip {
 
+    public static final int LINE_COLOR = 0xFF0080;
+    
     private class Painter {
         private final Graphics g;
         
@@ -27,7 +29,7 @@ public class Test extends MovieClip {
         
         private void paint( int x, int y ) {
             g.beginFill( colors[ colorIndex++ ] );
-            g.lineStyle( 1, 0x000080 );
+            g.lineStyle( 1, LINE_COLOR );
             g.moveTo( x, y );
             g.lineTo( x + 10, y );
             g.lineTo( x + 10, y + 10 );
@@ -61,6 +63,7 @@ public class Test extends MovieClip {
         field.setWidth( 150 );
         field.setHeight( 20 );
         field.setText( "Hello World" );
+        addChild( field );
         
         for( int x = 10; x < 90; x += 15 ) {
             // StringBuilder test --> trace( "x = " + x );
@@ -79,8 +82,11 @@ public class Test extends MovieClip {
         }
     }
     
+    //override in order to test whether super.getGraphics works
+    public Graphics getGraphics() { return null; }
+    
     private boolean paint( int x, int y ) {
-        new Painter( getGraphics() ).paint( x, y );
+        new Painter( super.getGraphics() ).paint( x, y );
         
         return true; //test pop instruction
     }

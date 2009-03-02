@@ -431,13 +431,14 @@ public class Analyzer extends CodeWalker<ExecutionContext> {
         public void visitVarAccess( VarAccess varAccess ) {
             int index = varAccess.index;            
                                   
-            if( varAccess.isWrite ) {                
-                context.pop( 1 );
-                context.locals.put( index, new Value( varAccess, varAccess.type ) );
+            if( varAccess.isWrite ) { 
+                Value val = context.pop();
+                context.locals.put( index, new Value( varAccess, val.type ) );
             }
             else {
+                Value val = context.locals.get( index );
                 varReads.put( varAccess, context.locals.get( index ));
-                context.push( new Value( varAccess, varAccess.type ));
+                context.push( new Value( varAccess, val.type ));
             }            
         }        
     }    

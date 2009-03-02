@@ -2,17 +2,14 @@ package org.epistem.j2avm;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.epistem.j2avm.annotations.swf.SWF;
 import org.epistem.j2avm.translator.ClassTranslator;
-import org.epistem.j2avm.translator.TranslationState;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2swf.swf.SWFFile;
 import org.epistem.j2swf.swf.code.Code;
-import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.type.ObjectType;
 
 import com.anotherbigidea.flash.structs.Color;
 
@@ -23,13 +20,6 @@ import com.anotherbigidea.flash.structs.Color;
  */
 public class TargetSWF {
 
-    private final TranslatorManager manager;
-    
-    /**
-     * Classes that have already been translated into this SWF
-     */
-    private Set<String> translatedClasses = new HashSet<String>();
-        
     /**
      * The swf model
      */
@@ -54,9 +44,9 @@ public class TargetSWF {
         throws ClassNotFoundException, IOException {
         
         this.file = new File( fileName );
-        this.manager = manager;        
 
-        ClassTranslator mainClass = manager.getClassTranslation( className );
+        ClassTranslator mainClass = manager.translatorForClass( new ObjectType( className ));
+        manager.requireClass( mainClass );
         
         //get swf params from annotation
         JavaAnnotation swfDef = mainClass.getAnnotation( SWF.class.getName() );
@@ -72,13 +62,9 @@ public class TargetSWF {
         //TODO: need way to set the script limits
         
         Code code = new Code( "test" );
-        TranslationState state = new TranslationState( manager, code, translatedClasses );
+        manager.translateRequiredClasses( code );
         
-        CodeClass avm2Class = mainClass.translate( state );
-        translatedClasses.add( className );
-        state.translateDependencies();
-        
-        swf.setMainClass( avm2Class );
+        swf.setMainClass( mainClass.getAVM2Name().toQualString() );
         swf.timeline.getFrame( 0 ).addTag( code );
     }
     

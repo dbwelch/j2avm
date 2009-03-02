@@ -1,9 +1,12 @@
 package org.epistem.j2avm.translator.impl.java;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.epistem.code.LocalValue;
 import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
-import org.epistem.j2avm.translator.TranslationState;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.impl.MethodTranslatorBase;
 import org.epistem.j2avm.util.NameUtils;
@@ -11,10 +14,14 @@ import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.j2swf.swf.code.CodeMethod;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.instructions.MethodCall;
+import org.epistem.jvm.code.instructions.New;
+import org.epistem.jvm.code.instructions.MethodCall.CallType;
 import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.ValueType;
+import org.epistem.jvm.type.VoidType;
 
+import com.anotherbigidea.flash.avm2.instruction.Instruction;
 import com.anotherbigidea.flash.avm2.model.AVM2Code;
 import com.anotherbigidea.flash.avm2.model.AVM2Name;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
@@ -27,16 +34,17 @@ import com.anotherbigidea.flash.avm2.model.AVM2QName;
  */
 public class JavaMethodTranslator extends MethodTranslatorBase {
 
+    private CodeMethod codeMethod;
+    
     JavaMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
         super( classTrans, method, makeAVM2Name( classTrans, method ) );
     }
 
     /**
-     * @see org.epistem.j2avm.translator.MethodTranslator#translateCall(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.MethodCall)
+     * @see org.epistem.j2avm.translator.MethodTranslator#translateCall(MethodTranslator, MethodCall, boolean)
      */
-    public void translateCall( MethodTranslator method, MethodCall call ) {
-        // TODO Auto-generated method stub
-
+    public void translateCall( MethodTranslator method, MethodCall call, boolean isSuper ) {
+        super.translateCall( method, call, isSuper );
     }
 
     /**
@@ -48,11 +56,11 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         
         //make sure that all referenced classes are required
         if( jvmMethod.type instanceof ObjectType ) {
-            state.requireClass( (ObjectType) jvmMethod.type );
+            classTranslator.getManager().requireClass( (ObjectType) jvmMethod.type );
         }
         for( ValueType type : jvmMethod.signature.paramTypes ) {
             if( type instanceof ObjectType ) {
-                state.requireClass( (ObjectType) type );
+                classTranslator.getManager().requireClass( (ObjectType) type );
             }            
         }
         
@@ -68,26 +76,23 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
             types[i] = NameUtils.qnameForJavaType( paramTypes[i] );
         }
         
-        CodeMethod avm2method = jvmMethod.flags.contains( MethodFlag.MethodIsStatic ) ?
-            state.codeClass.addStaticMethod( avm2name, retType, types ) :
-            state.codeClass.addInstanceMethod( avm2name, retType, isFinal, isOverride, types );
-        
-        state.codeMethod = avm2method;
-
-        //transform JVM instructions 
-        if( state.transformer != null ) {
-            jvmMethod.getCode().instructions.accept( state.transformer );
-        }
+        codeMethod = isStatic ?
+            codeClass.addStaticMethod  ( avm2Name, retType, types ) :
+            codeClass.addInstanceMethod( avm2Name, retType, isFinal, isOverride, types );
+                
+        //TODO: transform JVM instructions 
         
         //translate the instructions
-        AVM2Code code = avm2method.code();
-        if( J2AVM.TRACE_ON ) code.trace( J2AVM.TRACE_PREFIX + "method " + state.classTranslator.name + "::" + avm2name );
+        runtimeTrace( J2AVM.TRACE_PREFIX + "method " + classTranslator.getJVMType() + "::" + jvmName );
         
-        JavaBytecodeTranslator translator = new JavaBytecodeTranslator( state );
+        JavaBytecodeTranslator translator = new JavaBytecodeTranslator( this, jvmMethod );
         jvmMethod.getCode().instructions.accept( translator );        
     }
     
-    private static AVM2QName makeAVM2Name( ClassTranslator classTrans, JVMMethod method ) {
+    /**
+     * Make an AVM2 name for a Java method
+     */
+    public static AVM2QName makeAVM2Name( ClassTranslator classTrans, JVMMethod method ) {
         AVM2Namespace namespace = makeAVM2Namespace( classTrans, method );
         
         //make method name - TODO: is there a better mangling scheme ?
@@ -102,5 +107,21 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         buff.append( ")" );
         
         return new AVM2QName( namespace, buff.toString() );                 
+    }
+
+    /**
+     * @see org.epistem.j2avm.translator.MethodTranslator#getCode()
+     */
+    public CodeMethod getCode() {
+        return codeMethod;
+    }
+
+    /**
+     * @see org.epistem.j2avm.translator.MethodTranslator#runtimeTrace(java.lang.String)
+     */
+    public void runtimeTrace( String message ) {
+        if( codeMethod == null || ! J2AVM.TRACE_ON ) return;
+        
+        codeMethod.code().trace( message );
     } 
 }

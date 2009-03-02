@@ -13,15 +13,15 @@ import org.epistem.jvm.code.instructions.MethodCall;
  */
 public class FlashGetterTranslator extends FlashNativeMethodTranslator {
 
-    FlashGetterTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
+    public FlashGetterTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
         super( classTrans, method );
     }
 
-    /** @see org.epistem.j2avm.translator.impl.flash.FlashNativeMethodTranslator#translateCall(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.MethodCall) */
+    /** @see org.epistem.j2avm.translator.impl.flash.FlashNativeMethodTranslator#translateCall(MethodTranslator, MethodCall, boolean) */
     @Override
-    public void translateCall( MethodTranslator method, MethodCall call ) {
+    public void translateCall( MethodTranslator method, MethodCall call, boolean isSuper ) {
         
-        String propName = NameUtils.nameFromAccessor( method.getJVMName() );
+        String propName = NameUtils.nameFromAccessor( jvmName );
         method.runtimeTrace( "Getter: " + propName );
         method.getCode().code().getProperty( propName );
         

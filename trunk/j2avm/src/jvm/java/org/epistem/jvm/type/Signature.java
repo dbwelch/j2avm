@@ -7,6 +7,12 @@ package org.epistem.jvm.type;
  */
 public final class Signature {
 
+    /** The name of a JVM class initialization method (constructor) */
+    public static final String INITIALIZER_NAME = "<init>";
+    
+    /** The signature of a JVM class static initializer */
+    public static final Signature STATIC_INITIALIZER = new Signature( "<clinit>" );    
+    
 	/** The method name */
 	public final String name;
 	

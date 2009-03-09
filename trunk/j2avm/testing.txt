@@ -5,3 +5,7 @@ Static field reads
 Static field writes
 Super field reads
 Super field writes
+
+Virtual method lookup where there is a private method in a superclass.
+MovieClip subclass-sublass - <init> still called OK ?
+Boolean parameter and return types - especially when interacting with Flash natives

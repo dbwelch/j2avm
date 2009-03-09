@@ -1,28 +1,21 @@
 package org.epistem.j2avm.translator.impl.java;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.epistem.code.LocalValue;
 import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.impl.MethodTranslatorBase;
+import org.epistem.j2avm.translator.transformers.AVM2_ASM_Transformer;
+import org.epistem.j2avm.translator.transformers.Transformer;
 import org.epistem.j2avm.util.NameUtils;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.j2swf.swf.code.CodeMethod;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.instructions.MethodCall;
-import org.epistem.jvm.code.instructions.New;
-import org.epistem.jvm.code.instructions.MethodCall.CallType;
 import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.ValueType;
-import org.epistem.jvm.type.VoidType;
 
-import com.anotherbigidea.flash.avm2.instruction.Instruction;
-import com.anotherbigidea.flash.avm2.model.AVM2Code;
 import com.anotherbigidea.flash.avm2.model.AVM2Name;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
@@ -36,7 +29,7 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
 
     private CodeMethod codeMethod;
     
-    JavaMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
+    protected JavaMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
         super( classTrans, method, makeAVM2Name( classTrans, method ) );
     }
 
@@ -56,11 +49,11 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         
         //make sure that all referenced classes are required
         if( jvmMethod.type instanceof ObjectType ) {
-            classTranslator.getManager().requireClass( (ObjectType) jvmMethod.type );
+            classTranslator.getManager().requireClass( NameUtils.normalize( (ObjectType) jvmMethod.type ));
         }
         for( ValueType type : jvmMethod.signature.paramTypes ) {
             if( type instanceof ObjectType ) {
-                classTranslator.getManager().requireClass( (ObjectType) type );
+                classTranslator.getManager().requireClass(NameUtils.normalize( (ObjectType) type ));
             }            
         }
         
@@ -80,8 +73,10 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
             codeClass.addStaticMethod  ( avm2Name, retType, types ) :
             codeClass.addInstanceMethod( avm2Name, retType, isFinal, isOverride, types );
                 
-        //TODO: transform JVM instructions 
-        
+        //transform JVM instructions 
+        Transformer transformer = new AVM2_ASM_Transformer();
+        jvmMethod.getCode().instructions.accept( transformer );
+            
         //translate the instructions
         runtimeTrace( J2AVM.TRACE_PREFIX + "method " + classTranslator.getJVMType() + "::" + jvmName );
         

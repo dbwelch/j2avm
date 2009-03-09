@@ -44,7 +44,7 @@ public class InnerClassesAttribute extends JVMAttribute {
             int flags      = in.readUnsignedShort();
             
             InnerClass ic = 
-                new InnerClass( pool.getUTF8Value( innerName ), 
+                new InnerClass( (innerName == 0) ? null : pool.getUTF8Value( innerName ), 
                                 (outerIndex != 0) ? 
                                     ObjectType.fromName( pool.getClassName(outerIndex)) : 
                                     null,

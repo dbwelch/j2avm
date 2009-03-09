@@ -1,10 +1,7 @@
 package org.epistem.jvm.io.print;
 
 import org.epistem.io.IndentingPrintWriter;
-import org.epistem.jvm.code.ExceptionHandler;
-import org.epistem.jvm.code.InstructionList;
-import org.epistem.jvm.code.InstructionVisitor;
-import org.epistem.jvm.code.Label;
+import org.epistem.jvm.code.*;
 import org.epistem.jvm.code.analysis.ExecutionContext;
 import org.epistem.jvm.code.instructions.*;
 
@@ -238,5 +235,10 @@ public class CodePrinter implements InstructionVisitor {
     /** @see org.epistem.jvm.code.InstructionVisitor#visitLineNumber(org.epistem.jvm.code.instructions.LineNumber) */
     public void visitLineNumber( LineNumber lineNumber ) {
         ipw.println( "<" + lineNumber.lineNumber + ">" );
+    }
+
+    /** @see org.epistem.jvm.code.InstructionVisitor#visitCustom(org.epistem.jvm.code.Instruction) */
+    public void visitCustom( Instruction insn ) {
+        ipw.println( insn.toString() );        
     }   
 }

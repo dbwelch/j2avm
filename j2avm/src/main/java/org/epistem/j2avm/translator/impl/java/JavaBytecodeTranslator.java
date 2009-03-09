@@ -9,6 +9,7 @@ import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
+import org.epistem.j2avm.translator.transformers.CallbackInstruction;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.ExceptionHandler;
 import org.epistem.jvm.code.InstructionList;
@@ -61,7 +62,15 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
         }        
         return local;
     }
-    
+        
+    /** @see org.epistem.jvm.code.InstructionVisitor#visitCustom(org.epistem.jvm.code.Instruction) */
+    public void visitCustom( org.epistem.jvm.code.Instruction insn ) {
+        if( ! (insn instanceof CallbackInstruction ) ) return;
+        
+        CallbackInstruction callback = (CallbackInstruction) insn;
+        callback.generate( method );
+    }
+
     /** @see org.epistem.jvm.code.InstructionVisitor#visitArrayAccess(org.epistem.jvm.code.instructions.ArrayAccess) */
     public void visitArrayAccess( ArrayAccess arrayAccess ) {
         
@@ -89,7 +98,7 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
         MethodTranslator methodTranslator;
         try {
-            methodTranslator = owner.getMethodTranslator( call.signature );
+            methodTranslator = owner.getMethodTranslator( owner, call.signature );
         } catch( NoSuchMethodException e ) {
             throw new RuntimeException( e );
         }
@@ -309,7 +318,7 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
         ClassTranslator classTrans = manager.translatorForClass( fieldAccess.owner );
         FieldTranslator fieldTrans;
         try {
-            fieldTrans = classTrans.getFieldTranslator( fieldAccess.name );
+            fieldTrans = classTrans.getFieldTranslator( classTrans, fieldAccess.name );
         } catch( NoSuchFieldException e ) {
             throw new RuntimeException( e );
         } 

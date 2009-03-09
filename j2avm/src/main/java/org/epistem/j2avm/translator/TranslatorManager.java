@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
 import org.epistem.j2avm.annotations.runtime.Translator;
-import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.AttributeContainer;
@@ -30,6 +29,7 @@ public class TranslatorManager {
     
     private final LinkedList<ClassTranslator> translationQueue  = new LinkedList<ClassTranslator>();
     private final Collection<ClassTranslator> requiredClasses   = new HashSet<ClassTranslator>();    
+    private final Set<ClassTranslator> translated = new HashSet<ClassTranslator>();
     
     /**
      * @param loader the loader to use to find Java classes
@@ -49,14 +49,26 @@ public class TranslatorManager {
             
             System.out.println( trans.getJVMType() );
             System.out.flush();
-            trans.translateImplementation( code );
+            
+            translateClass( code, trans );
         }
+    }
+    
+    //make sure superclasses are translated first
+    private void translateClass(  Code code, ClassTranslator trans ) {
+        if( trans == null ) return;
+        if( translated.contains( trans )) return;
+        
+        translateClass( code, trans.getSuperclass() );
+        trans.translateImplementation( code );
+        translated.add( trans );
     }
     
     /**
      * Require that the given class dependency also be translated
      */
     public void requireClass( ObjectType type ) {
+        if( type.equals( ObjectType.STRING ) ) return;
         requireClass( translatorForClass( type ));
     }
     
@@ -80,19 +92,32 @@ public class TranslatorManager {
      * @return not null
      */    
     public ClassTranslator translatorForClass( ObjectType type ) {
+
+        if( type.name.startsWith( "j2avm." ) ) {
+            type = new ObjectType( type.name.substring( 6 ) );
+        }
         
         ClassTranslator trans = translators.get( type );
         if( trans != null ) return trans;
         
         try {
-            JVMClass jvmClass = loader.getClass( type );
+            JVMClass jvmClass = null;
+            
+            try { //look for a framework class implementation
+                ObjectType fwType = new ObjectType( "j2avm." + type.name );
+                jvmClass = loader.getClass( fwType ); 
+                
+            } catch( ClassNotFoundException cnfe ) {
+                jvmClass = loader.getClass( type );                
+            }
+                
             JavaAnnotation anno = findTranslatorAnnotation( loader, jvmClass.attributes );
             if( anno == null ) {
                 String name = jvmClass.name.name;
          
                 //java framework classes
                 if( name.startsWith( "java." ) || name.startsWith( "javax." )) {                    
-                    trans = new JavaFrameworkClassTranslator( this, jvmClass );
+                    throw new RuntimeException( "Framework classes need an explicit translator: " + name );
                 }
                 else {
                     //--assume a vanilla Java class
@@ -115,6 +140,8 @@ public class TranslatorManager {
             translators.put( type, trans );
             return trans;
             
+        } catch( RuntimeException e ) {
+            throw e;
         } catch( Exception e ) {
             throw new RuntimeException( e );            
         }

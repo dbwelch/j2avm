@@ -68,7 +68,7 @@ public interface ClassTranslator {
      * @param sig the JVM signature of the method
      * @throws NoSuchMethodException if the method cannot be found
      */
-    public MethodTranslator getMethodTranslator( Signature sig ) throws NoSuchMethodException;
+    public MethodTranslator getMethodTranslator( ClassTranslator owner, Signature sig ) throws NoSuchMethodException;
     
     /**
      * Get the translator for the given field - looking in superclasses
@@ -77,7 +77,7 @@ public interface ClassTranslator {
      * @param name the JVM field name
      * @throws NoSuchFieldException if the field cannot be found
      */
-    public FieldTranslator getFieldTranslator( String name ) throws NoSuchFieldException;
+    public FieldTranslator getFieldTranslator( ClassTranslator owner, String name ) throws NoSuchFieldException;
     
     /**
      * Get the JVM type

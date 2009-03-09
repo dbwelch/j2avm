@@ -1,5 +1,6 @@
 package org.epistem.j2avm.translator.impl.flash;
 
+import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
@@ -16,6 +17,8 @@ import com.anotherbigidea.flash.avm2.model.AVM2Code;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
+import flash.FlashObject;
+
 /**
  * Translator for built-in flash classes
  *
@@ -25,8 +28,6 @@ public class FlashNativeClassTranslator extends ClassTranslatorBase {
 
     public FlashNativeClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
         super( manager, jvmClass, avm2name( jvmClass ), null, null, null );
-        
-        addAllMemberTranslators();
     }
     
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultFieldTranslator(org.epistem.jvm.JVMField) */
@@ -53,6 +54,16 @@ public class FlashNativeClassTranslator extends ClassTranslatorBase {
         }
         
         return NameUtils.nameForJavaClass( jvmClass.name );
+    }
+    
+    
+    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#getSuperclass() */
+    @Override
+    public ClassTranslator getSuperclass() {
+        //make sure that Flash Object is root of hierarchy
+        if( jvmClass.name.name.equals( FlashObject.class.getName() ) ) return null;
+        
+        return super.getSuperclass();
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateImplementation(org.epistem.j2swf.swf.code.Code) */

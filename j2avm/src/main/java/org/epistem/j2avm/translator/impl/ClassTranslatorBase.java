@@ -85,7 +85,9 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         this.protectedNamespace = (protectedNamespace != null) ? 
             protectedNamespace :
             new AVM2Namespace( NamespaceKind.ProtectedNamespace, 
-                               avm2name.namespace.name + ":" + avm2name.name );  
+                               avm2name.namespace.name + ":" + avm2name.name );
+        
+        addAllMemberTranslators();
     }
     
     /**
@@ -95,13 +97,13 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         //-- fields 
         for( JVMField field : jvmClass.fields ) {
             FieldTranslator fieldTrans = FieldTranslatorBase.forField( field, this );
-            fields.put( field.name, fieldTrans );
+            if( fieldTrans != null ) fields.put( field.name, fieldTrans );
         }
         
         //-- method, constructors and static initializer
         for( JVMMethod method : jvmClass.methods ) {            
             MethodTranslator methodTrans = MethodTranslatorBase.forMethod( method, this );
-            methods.put( method.signature, methodTrans );               
+            if( methodTrans != null ) methods.put( method.signature, methodTrans );               
         }
     }
     
@@ -125,26 +127,26 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         return protectedNamespace;
     }
 
-    /** @see org.epistem.j2avm.translator.ClassTranslator#getMethodTranslator(org.epistem.jvm.type.Signature) */
-    public MethodTranslator getMethodTranslator( Signature sig ) throws NoSuchMethodException {
+    /** @see org.epistem.j2avm.translator.ClassTranslator#getMethodTranslator(ClassTranslator, Signature)*/
+    public MethodTranslator getMethodTranslator( ClassTranslator owner, Signature sig ) throws NoSuchMethodException {
         MethodTranslator mt = methods.get( sig );
         if( mt != null ) return mt;
         
         ClassTranslator superclass = getSuperclass();
-        if( superclass == null ) throw new NoSuchMethodException( jvmClass.name + "::" + sig.toString() );
+        if( superclass == null ) throw new NoSuchMethodException( owner.getAVM2Name().toQualString() + "::" + sig.toString() );
         
-        return superclass.getMethodTranslator( sig );
+        return superclass.getMethodTranslator( owner, sig );
     }
     
-    /** @see org.epistem.j2avm.translator.ClassTranslator#getFieldTranslator(java.lang.String) */
-    public FieldTranslator getFieldTranslator( String name ) throws NoSuchFieldException {
+    /** @see org.epistem.j2avm.translator.ClassTranslator#getFieldTranslator(ClassTranslator, String) */
+    public FieldTranslator getFieldTranslator( ClassTranslator owner, String name ) throws NoSuchFieldException {
         FieldTranslator ft = fields.get( name );
         if( ft != null ) return ft;
 
         ClassTranslator superclass = getSuperclass();
-        if( superclass == null ) throw new NoSuchFieldException( jvmClass.name + "::" + name );
+        if( superclass == null ) throw new NoSuchFieldException( owner.getAVM2Name().toQualString() + "::" + name );
         
-        return superclass.getFieldTranslator( name );
+        return superclass.getFieldTranslator( owner, name );
     }
 
     /** @see org.epistem.j2avm.translator.ClassTranslator#getManager() */

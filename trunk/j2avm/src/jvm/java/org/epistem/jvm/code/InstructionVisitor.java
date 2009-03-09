@@ -74,6 +74,9 @@ public interface InstructionVisitor {
     public void visitDup( Dup dup );
     public void visitSwap( Swap swap );
     
+    /** A custom instruction */
+    public void visitCustom( Instruction insn );
+    
     public void visitLineNumber( LineNumber lineNumber );
     
     public void visitHandler( ExceptionHandler handler );
@@ -118,6 +121,7 @@ public interface InstructionVisitor {
         public void visitSwitch( Switch switchBranch ) {}
         public void visitThrow( Throw throwOp ) {}
         public void visitVarAccess( VarAccess varAccess ) {}
+        public void visitCustom( Instruction insn ) {}
     }
     
     /**
@@ -276,5 +280,9 @@ public interface InstructionVisitor {
         public void visitVarAccess( VarAccess varAccess ) {
             if( delegee != null ) delegee .visitVarAccess( varAccess );
         }        
+        
+        public void visitCustom( Instruction insn ) {
+            if( delegee != null ) delegee .visitCustom( insn );
+        }
     }
 }

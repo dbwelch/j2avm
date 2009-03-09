@@ -16,13 +16,12 @@ import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.flags.ClassFlag;
-import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
 import com.anotherbigidea.flash.avm2.model.AVM2Class;
 import com.anotherbigidea.flash.avm2.model.AVM2Code;
+import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
-import flash.FlashObject;
 import flash.display.MovieClip;
 
 /**
@@ -40,6 +39,10 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         super( manager, jvmClass );
         
         addAllMemberTranslators();
+    }
+    
+    protected JavaClassTranslator(  TranslatorManager manager, JVMClass jvmClass, AVM2QName avm2name ) {
+        super( manager, jvmClass, avm2name, null, null, null );
     }
     
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultFieldTranslator(org.epistem.jvm.JVMField) */
@@ -66,15 +69,7 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         //get the superclasses
         LinkedList<String> superNames = new LinkedList<String>();
         ClassTranslator superClass = getSuperclass();
-        while( true ) {            
-            //stop when Flash root Object class is reached
-            //TODO: also stop at java.lang.Object - but rethink this
-            if( superClass.getJVMType().equals( FlashObject.class.getName() )
-             || superClass.getJVMType().equals( ObjectType.OBJECT )) {
-                superNames.addFirst( "Object" );
-                break;
-            }
-
+        while( superClass != null ) {            
             //make sure the superclass is also translated
             manager.requireClass( superClass );
             
@@ -86,7 +81,7 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         boolean isFinal = jvmClass.flags.contains( ClassFlag.IsFinal );
         boolean isIFace = jvmClass.flags.contains( ClassFlag.IsInterface );
         
-        codeClass = code.addClass( name, true, isFinal, isIFace, superclasses );
+        codeClass = code.addClass( avm2name.toQualString(), true, isFinal, isIFace, superclasses );
     
         //TODO: implemented interfaces
         //TODO: Enums

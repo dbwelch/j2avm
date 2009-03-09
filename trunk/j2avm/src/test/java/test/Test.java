@@ -55,8 +55,6 @@ public class Test extends MovieClip {
     private final TextField field;
     
     public Test() {
-        trace( "New Test" );
-
         field = new TextField();
         field.setX( 10 );
         field.setY( 150 );
@@ -66,7 +64,8 @@ public class Test extends MovieClip {
         addChild( field );
         
         for( int x = 10; x < 90; x += 15 ) {
-            // StringBuilder test --> trace( "x = " + x );
+            // StringBuilder test --> 
+            trace( "x = " + x );
             
             for( int y = 10; y < 90; y += 15 ) {
                 

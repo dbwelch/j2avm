@@ -30,12 +30,25 @@ public class NameUtils {
         if( type instanceof ArrayType  ) {
             return AVM2StandardName.TypeArray.qname;
         }
+ 
+        if( type.equals( ObjectType.STRING ) ) type = new ObjectType( "String" );
         
         if( type instanceof ObjectType ) {
-            return nameForJavaClass( (ObjectType) type );
+            return nameForJavaClass( NameUtils.normalize( (ObjectType) type ));
         }
  
         return null;
+    }
+    
+    /**
+     * Normalize a type name by removing any framework prefix
+     */
+    public static ObjectType normalize( ObjectType type ) {
+        if( type.name.startsWith( "j2avm." ) ) {
+            type = new ObjectType( type.name.substring( 6 ) );
+        }
+        
+        return type;
     }
     
     /**

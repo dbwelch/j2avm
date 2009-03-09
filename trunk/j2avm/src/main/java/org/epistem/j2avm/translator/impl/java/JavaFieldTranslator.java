@@ -3,6 +3,7 @@ package org.epistem.j2avm.translator.impl.java;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.impl.FieldTranslatorBase;
+import org.epistem.j2avm.util.NameUtils;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.attributes.ConstantValueAttribute;
@@ -21,7 +22,7 @@ import com.anotherbigidea.flash.avm2.model.AVM2Traits;
  */
 public class JavaFieldTranslator extends FieldTranslatorBase {
     
-    /*pkg*/ JavaFieldTranslator( ClassTranslator classTrans, JVMField field ) {
+    protected JavaFieldTranslator( ClassTranslator classTrans, JVMField field ) {
         super( classTrans, field );
     }
 
@@ -37,7 +38,7 @@ public class JavaFieldTranslator extends FieldTranslatorBase {
         
         //make sure field type is also translated
         if( jvmField.type instanceof ObjectType ) {
-            classTranslator.getManager().requireClass( (ObjectType) jvmField.type );
+            classTranslator.getManager().requireClass( NameUtils.normalize( (ObjectType) jvmField.type ));
         }
         
         //static final constant fields

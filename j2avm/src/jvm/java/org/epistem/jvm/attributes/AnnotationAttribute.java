@@ -93,7 +93,7 @@ public abstract class AnnotationAttribute extends JVMAttribute {
             
             case 's': {
                 int constIndex = in.readUnsignedShort();
-                value = new JavaAnnotation.StringValue( (String) pool.getConstant( constIndex ));
+                value = new JavaAnnotation.StringValue( pool.getUTF8Value( constIndex ));
                 break;
             }
             

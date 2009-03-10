@@ -14,9 +14,12 @@ import org.epistem.j2avm.translator.transformers.AVM2_ASM_Transformer;
  */
 public class AVM2_ASM {
 
-    /**
-     * Append a value to a string
-     */
+    /** Append a value to a string */
     public static native String appendInt( String s, int value );
     
+    /** Append a value to a string */
+    public static native String appendDouble( String s, double value );
+
+    /** Append a value to a string */
+    public static native String appendString( String s, String value );
 }

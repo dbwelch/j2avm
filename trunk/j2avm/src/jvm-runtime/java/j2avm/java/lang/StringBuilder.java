@@ -1,6 +1,6 @@
 package j2avm.java.lang;
 
-import static org.epistem.j2avm.asm.AVM2_ASM.appendInt;
+import static org.epistem.j2avm.asm.AVM2_ASM.*;
 
 import org.epistem.j2avm.annotations.runtime.Translator;
 import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
@@ -23,7 +23,17 @@ public class StringBuilder extends j2avm.java.lang.Object {
         s = appendInt( s, value );
         return this;
     }
-    
+
+    public StringBuilder append( double value ) {
+        s = appendDouble( s, value );
+        return this;
+    }
+
+    public StringBuilder append( String value ) {
+        s = appendString( s, value );
+        return this;
+    }
+
     public String toString() {
         return s;
     }

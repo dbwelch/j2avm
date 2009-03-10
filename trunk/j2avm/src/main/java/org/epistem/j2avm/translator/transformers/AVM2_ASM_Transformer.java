@@ -27,7 +27,8 @@ public class AVM2_ASM_Transformer extends Transformer {
     
         String name = call.signature.name;
         CallbackInstruction callback = null;
-        if( name.equals( "appendInt" ) ) callback = appendInt();
+        
+        if( name.startsWith( "append" ) ) callback = append( name );
         
         if( callback != null ) {
             call.list().insertAfter( call, callback );
@@ -35,14 +36,15 @@ public class AVM2_ASM_Transformer extends Transformer {
         }
     }
     
-    private CallbackInstruction appendInt() {
+    private CallbackInstruction append( final String name ) {
         return new CallbackInstruction() {
             @Override public void generate( MethodTranslator method ) {
-                System.out.println( "Generating appendInt" );
+                System.out.println( "Generating" + name );
                 method.getCode().code().add();                
             }
 
-            @Override public String toString() { return "avm2#appendInt"; }
+            @Override public String toString() { return "avm2#" + name ; }
         };
     }
+    
 }

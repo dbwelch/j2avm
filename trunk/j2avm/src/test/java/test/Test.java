@@ -1,10 +1,12 @@
 package test;
 
+import org.epistem.j2avm.annotations.runtime.Name;
 import org.epistem.j2avm.annotations.swf.SWF;
 
 import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.MovieClip;
+import flash.events.MouseEvent;
 import flash.text.TextField;
 
 /**
@@ -79,6 +81,13 @@ public class Test extends MovieClip {
                 if( colorIndex >= colors.length ) colorIndex = 0;
             }            
         }
+        
+        getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
+    }
+    
+    @Name("onMove")
+    void onMove( MouseEvent e ) {
+        field.setText( "" + e.getStageX() + "," + e.getStageY() );
     }
     
     //override in order to test whether super.getGraphics works

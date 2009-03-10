@@ -1,6 +1,7 @@
 package org.epistem.j2avm.translator.impl.java;
 
 import org.epistem.j2avm.J2AVM;
+import org.epistem.j2avm.annotations.runtime.Name;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
@@ -11,6 +12,7 @@ import org.epistem.j2avm.util.NameUtils;
 import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.j2swf.swf.code.CodeMethod;
 import org.epistem.jvm.JVMMethod;
+import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.code.instructions.MethodCall;
 import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
@@ -88,6 +90,18 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
      * Make an AVM2 name for a Java method
      */
     public static AVM2QName makeAVM2Name( ClassTranslator classTrans, JVMMethod method ) {
+        
+        //handle an explicit name override
+        try {
+            JavaAnnotation nameAnnot = method.attributes.annotation( Name.class.getName() );
+            if( nameAnnot != null ) {
+                String name = nameAnnot.stringValue( "value" );
+                return new AVM2QName( name );
+            }            
+        } catch( Exception ex ) {
+            throw new RuntimeException( "While looking for @Name annotation on method " + method.signature, ex );
+        }
+        
         AVM2Namespace namespace = makeAVM2Namespace( classTrans, method );
         
         //make method name - TODO: is there a better mangling scheme ?

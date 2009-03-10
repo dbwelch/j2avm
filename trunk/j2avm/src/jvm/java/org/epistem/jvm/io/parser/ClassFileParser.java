@@ -138,6 +138,10 @@ public class ClassFileParser {
 
         String name = pool.getUTF8Value( nameIdx );
             
+        if( name.equals( "click" ) ) {
+            System.out.println();
+        }
+        
         int sigIdx = in.readUnsignedShort();
         String sig = pool.getUTF8Value( sigIdx );
         

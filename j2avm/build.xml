@@ -1,22 +1,22 @@
-<project basedir="." name="J2AVM" default="all">
+<project basedir="." name="J2AVM" >
 	<property file="build.properties" />
 	
-	<!-- Build everything -->
+	<!-- Build everything - ->
 	<target name="all" 
 		    depends="clean,compile-all,include-dependencies,jar-all,jar-runtime,clean-classes">	
 	</target>
 	
-    <!-- Clean the build results -->
+    <!- - Clean the build results - ->
 	<target name="clean">
 		<delete dir="${build.dir}" />
 	</target>
 
-    <!-- Clean the compiled classes -->
+    <!- - Clean the compiled classes - ->
     <target name="clean-classes">
         <delete dir="${build.classes}" />
     </target>
 	
-    <!-- Make the complete jar -->
+    <!- - Make the complete jar - ->
     <target name="jar-all">
         <jar destfile="${j2avm.all.jar}">
             <fileset dir="${build.classes.main}" />
@@ -25,20 +25,20 @@
         </jar>        
     </target>
 	
-    <!-- Make the runtime jar -->
+    <!- - Make the runtime jar - ->
     <target name="jar-runtime">
         <jar destfile="${j2avm.runtime.jar}">
             <fileset dir="${build.classes.runtime}" />
         </jar>
     </target>
 
-    <!-- Explode the dependency jars into the main classes -->
+    <!- - Explode the dependency jars into the main classes - ->
     <target name="include-dependencies">
     	<unjar src="${asm.jar}"        dest="${build.classes.main}" />
         <unjar src="${freemarker.jar}" dest="${build.classes.main}" />
     </target>
 	
-    <!-- Compile everything -->
+    <!- - Compile everything - ->
     <target name="compile-all" depends="compile-runtime">
     	<mkdir dir="${build.classes.main}" />
         <javac
@@ -53,7 +53,7 @@
         </javac>    
     </target>
 	
-    <!-- Compile the runtime classes -->
+    <!- - Compile the runtime classes - ->
     <target name="compile-runtime">
         <mkdir dir="${build.classes.runtime}" />
         <javac
@@ -65,5 +65,5 @@
             <src path="src/annotations/java" />
             <src path="src/flash9/java" />        
         </javac>    
-    </target>   	
+    </target>   	-->
 </project>

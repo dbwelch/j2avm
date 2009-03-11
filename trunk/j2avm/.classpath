@@ -9,9 +9,10 @@
 	<classpathentry kind="src" path="src/generator/java"/>
 	<classpathentry kind="src" path="src/jvm/java"/>
 	<classpathentry kind="src" path="src/jvm-runtime/java"/>
+	<classpathentry kind="src" path="src/server/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/freemarker-2.3.14.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/j2swf"/>
 	<classpathentry kind="lib" path="/j2swf/lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker-2.3.15.jar"/>
 	<classpathentry kind="output" path="eclipse-build"/>
 </classpath>

@@ -1,6 +1,24 @@
 <project basedir="." name="J2AVM" >
 	<property file="build.properties" />
 	
+	<taskdef name     ="generate-swf-source" 
+		     classname="org.epistem.j2avm.generator.FlashNativeGeneratorTask" >
+		<classpath>
+			<path location="eclipse-build" />
+			<path location="../j2swf/eclipse-build" />
+		</classpath>
+	</taskdef>
+	
+	<!-- Generate Java sources for Flash 10 runtime -->
+    <target name="generate-flash-10">
+        <delete dir="src/flash10/java" />
+        <mkdir  dir="src/flash10/java" />
+        <generate-swf-source 
+            dir="src/flash10/java"
+            swf="DO-NOT-CHECK-IN/library10.swf"
+        />
+    </target>
+	
 	<!-- Build everything - ->
 	<target name="all" 
 		    depends="clean,compile-all,include-dependencies,jar-all,jar-runtime,clean-classes">	

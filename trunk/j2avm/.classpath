@@ -13,6 +13,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/j2swf"/>
 	<classpathentry kind="lib" path="/j2swf/lib/ant.jar"/>
-	<classpathentry kind="lib" path="lib/freemarker-2.3.15.jar"/>
 	<classpathentry kind="output" path="eclipse-build"/>
 </classpath>

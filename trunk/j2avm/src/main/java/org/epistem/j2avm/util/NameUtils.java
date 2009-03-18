@@ -2,6 +2,8 @@ package org.epistem.j2avm.util;
 
 import org.epistem.jvm.type.*;
 
+import com.anotherbigidea.flash.avm2.model.AVM2GenericName;
+import com.anotherbigidea.flash.avm2.model.AVM2Name;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 import com.anotherbigidea.flash.avm2.model.AVM2StandardName;
 
@@ -15,7 +17,7 @@ public class NameUtils {
     /**
      * Get the AVM2 QName corresponding to a Java type
      */
-    public static AVM2QName qnameForJavaType( JVMType type ) {
+    public static AVM2Name qnameForJavaType( JVMType type ) {
 
         if( type == VoidType.VOID         ) return AVM2StandardName.TypeVoid.qname; 
         if( type == PrimitiveType.BYTE    ) return AVM2StandardName.TypeInt.qname;
@@ -28,6 +30,13 @@ public class NameUtils {
         if( type == PrimitiveType.DOUBLE  ) return AVM2StandardName.TypeNumber.qname;
 
         if( type instanceof ArrayType  ) {
+            ArrayType arr = (ArrayType) type;
+            if( arr.dimensionCount == 1 ) {
+                AVM2Name typeParam = qnameForJavaType( arr.elementType );
+                AVM2Name vector    = new AVM2QName( "__AS3__.vec.Vector" );
+                return new AVM2GenericName( vector, typeParam );
+            }
+            
             return AVM2StandardName.TypeArray.qname;
         }
  

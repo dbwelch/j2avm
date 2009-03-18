@@ -16,7 +16,7 @@ public @interface SWF {
     int width()  default 400;
     int height() default 450;
     int frameRate() default 12;
-    int version() default 9;
+    int version() default 10;
     int background() default 0xffffff;
     boolean compressed() default false;    
 }

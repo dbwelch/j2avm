@@ -10,6 +10,7 @@ import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.transformers.CallbackInstruction;
+import org.epistem.j2avm.util.NameUtils;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.ExceptionHandler;
 import org.epistem.jvm.code.InstructionList;
@@ -418,9 +419,28 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     public void visitNewArray( NewArray newArray ) {        
         if( newArray.dimensionCount > 1 ) throw new RuntimeException( "Multi-dim arrays UNIMPLEMENTED" ); // TODO: multi-dim arrays
         
-        code.findPropStrict( "Array" );
+        /*
+              findpropstrict Qname:PackageNamespace(__AS3__.vec)::Vector
+              getproperty Multiname:{ PackageNamespace(__AS3__.vec) }::Vector
+              getlex int
+              makegeneric 1
+              pushbyte <length>
+              pushtrue
+              construct 2
+              coerce Qname:PackageNamespace(__AS3__.vec)::Vector.<int>
+         */
+        
+        AVM2QName vector    = new AVM2QName( "__AS3__.vec.Vector" );
+        AVM2Name  typeParam = NameUtils.qnameForJavaType( newArray.type.elementType );
+        
+        code.findPropStrict( vector );
+        code.getProperty( vector );
+        code.getLex( typeParam );
+        code.makeGeneric( 1 );
         code.swap();
-        code.constructProp( "Array", 1 );
+        code.pushBoolean( true );
+        code.construct( 2 );
+        code.coerceTo( new AVM2GenericName( vector, typeParam ) );
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitNop(org.epistem.jvm.code.instructions.Nop) */

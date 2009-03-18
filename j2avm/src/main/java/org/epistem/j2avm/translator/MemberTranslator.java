@@ -2,6 +2,7 @@ package org.epistem.j2avm.translator;
 
 import org.epistem.j2swf.swf.code.CodeClass;
 
+import com.anotherbigidea.flash.avm2.model.AVM2Name;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
 /**
@@ -36,5 +37,5 @@ public interface MemberTranslator {
     /**
      * Get the AVM2 type for the member 
      */
-    public AVM2QName getAVM2Type();
+    public AVM2Name getAVM2Type();
 }

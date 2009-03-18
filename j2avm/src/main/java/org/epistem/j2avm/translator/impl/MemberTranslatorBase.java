@@ -3,6 +3,7 @@ package org.epistem.j2avm.translator.impl;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MemberTranslator;
 
+import com.anotherbigidea.flash.avm2.model.AVM2Name;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
 /**
@@ -15,7 +16,7 @@ public abstract class MemberTranslatorBase implements MemberTranslator {
     protected final ClassTranslator classTranslator;
     protected final String jvmName;
     protected final AVM2QName avm2Name;
-    protected final AVM2QName avm2Type;
+    protected final AVM2Name avm2Type;
     
     /** @see org.epistem.j2avm.translator.MemberTranslator#getClassTranslator() */
     public final ClassTranslator getClassTranslator() {
@@ -33,14 +34,14 @@ public abstract class MemberTranslatorBase implements MemberTranslator {
     }
 
     /** @see org.epistem.j2avm.translator.MemberTranslator#getAVM2Type() */
-    public final AVM2QName getAVM2Type() {
+    public final AVM2Name getAVM2Type() {
         return avm2Type;
     }
 
     protected MemberTranslatorBase( ClassTranslator classTranslator, 
                                     String jvmName,
                                     AVM2QName avm2Name,
-                                    AVM2QName avm2Type ) {
+                                    AVM2Name avm2Type ) {
         this.classTranslator = classTranslator;
         this.jvmName         = jvmName;
         this.avm2Name        = avm2Name;

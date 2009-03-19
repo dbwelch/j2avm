@@ -405,8 +405,10 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitMonitor(org.epistem.jvm.code.instructions.Monitor) */
     public void visitMonitor( Monitor monitor ) {
-        throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
+        //TODO: is there some value that can be implemented here ?
         
+        //just pop the object
+        code.pop();
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitNew(org.epistem.jvm.code.instructions.New) */

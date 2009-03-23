@@ -21,14 +21,26 @@ public class Test extends MovieClip {
 
     public static final int LINE_COLOR = 0xFF0080;
     
-    private class Painter {
-        private final Graphics g;
+    public interface GUser extends FooBar {
+        public static final String WELCOME_MESSAGE = "Hello World !!";
+        
+        public void useGraphics( Graphics g );
+    }
+    
+    public interface FooBar {}
+    
+    private class Painter implements GUser {
+        private Graphics g;
         
         private Painter( Graphics g ) {
-            this.g = g;
             trace( "New Painter" );
         }
-        
+
+        public void useGraphics( Graphics g ) {
+            trace( "Using graphics: " + g );
+            this.g = g;
+        }
+
         private void paint( int x, int y ) {
             g.beginFill( colors[ colorIndex++ ] );
             g.lineStyle( 1, LINE_COLOR );
@@ -39,6 +51,10 @@ public class Test extends MovieClip {
             g.lineTo( x, y );
             g.endFill();
         }
+    }
+    
+    public static enum Foo {
+        Red, Green, Blue        
     }
     
     private int[] colors = {
@@ -56,13 +72,15 @@ public class Test extends MovieClip {
 
     private final TextField field;
     
+    //private Foo foo;
+    
     public Test() {
         field = new TextField();
         field.setX( 10 );
         field.setY( 150 );
         field.setWidth( 150 );
         field.setHeight( 20 );
-        field.setText( "Hello World" );
+        field.setText( GUser.WELCOME_MESSAGE );
         addChild( field );
         
         for( int x = 10; x < 90; x += 15 ) {
@@ -94,7 +112,11 @@ public class Test extends MovieClip {
     public Graphics getGraphics() { return null; }
     
     private boolean paint( int x, int y ) {
-        new Painter( super.getGraphics() ).paint( x, y );
+        Painter p = new Painter( super.getGraphics() );
+        if( p instanceof FooBar ) {
+            p.useGraphics( super.getGraphics() );
+        }
+        p.paint( x, y );
         
         return true; //test pop instruction
     }

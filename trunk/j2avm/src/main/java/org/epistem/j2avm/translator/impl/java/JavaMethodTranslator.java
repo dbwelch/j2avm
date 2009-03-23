@@ -1,5 +1,6 @@
 package org.epistem.j2avm.translator.impl.java;
 
+import org.epistem.code.LocalValue;
 import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.annotations.runtime.Name;
 import org.epistem.j2avm.translator.ClassTranslator;
@@ -18,9 +19,8 @@ import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.ValueType;
 
-import com.anotherbigidea.flash.avm2.model.AVM2Name;
-import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
-import com.anotherbigidea.flash.avm2.model.AVM2QName;
+import com.anotherbigidea.flash.avm2.instruction.Instruction;
+import com.anotherbigidea.flash.avm2.model.*;
 
 /**
  * Generic translator for Java methods
@@ -47,7 +47,7 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
      */
     public void translateImplementation( CodeClass codeClass ) {
         
-        jvmMethod.analyzer(); //make sure analysis has taken place
+        if( ! isAbstract ) jvmMethod.analyzer(); //make sure analysis has taken place
         
         //make sure that all referenced classes are required
         if( jvmMethod.type instanceof ObjectType ) {
@@ -68,22 +68,61 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         ValueType[] paramTypes = jvmMethod.signature.paramTypes;
         AVM2Name[] types = new AVM2Name[ paramTypes.length ];
         for( int i = 0; i < paramTypes.length; i++ ) {
-            types[i] = NameUtils.qnameForJavaType( paramTypes[i] );
+            
+            //if the parameter type is java-lang-Object then that parameter
+            //should also accept anything descended from FlashObject
+            if( paramTypes[i].equals( ObjectType.OBJECT ) ) {
+                types[i] = AVM2StandardName.TypeObject.qname;                
+            }
+            else {
+                types[i] = NameUtils.qnameForJavaType( paramTypes[i] );
+            }
         }
         
-        codeMethod = isStatic ?
-            codeClass.addStaticMethod  ( avm2Name, retType, types ) :
-            codeClass.addInstanceMethod( avm2Name, retType, isFinal, isOverride, types );
+        if( isStatic ) {
+            codeMethod = codeClass.addStaticMethod  ( avm2Name, retType, types );
+        }
+        else if( isAbstract ) {
+            codeMethod = codeClass.addAbstractMethod( avm2Name, retType, isOverride, types );
+        }
+        else {
+            codeMethod = codeClass.addInstanceMethod( avm2Name, retType, isFinal, isOverride, types );
+        }
                 
-        //transform JVM instructions 
-        Transformer transformer = new AVM2_ASM_Transformer();
-        jvmMethod.getCode().instructions.accept( transformer );
+        if( ! isAbstract ) {
+            //transform JVM instructions
+            Transformer transformer = new AVM2_ASM_Transformer();
+            jvmMethod.getCode().instructions.accept( transformer );
             
-        //translate the instructions
-        runtimeTrace( J2AVM.TRACE_PREFIX + "method " + classTranslator.getJVMType() + "::" + jvmName );
+            //translate the instructions
+            runtimeTrace( J2AVM.TRACE_PREFIX + "method " + classTranslator.getJVMType() + "::" + jvmName );
+            
+            _HACK_coerceArgsToAny();
+            
+            JavaBytecodeTranslator translator = new JavaBytecodeTranslator( this, jvmMethod );
+            jvmMethod.getCode().instructions.accept( translator );
+        }
+    }
+    
+    /**
+     * TODO: FIX THIS
+     * Temporary hack to coerce all args to ANY to avoid AVM2 verifier 
+     * problems. 
+     */
+    private void _HACK_coerceArgsToAny() {
+        //NOTE: analyzer will insert a kill after each getLocal and AVM2Code
+        // inserts a coerce_a before each set
         
-        JavaBytecodeTranslator translator = new JavaBytecodeTranslator( this, jvmMethod );
-        jvmMethod.getCode().instructions.accept( translator );        
+        AVM2Code code = getCode().code();
+        for( LocalValue<Instruction> param : code.paramValues ) {
+            code.getLocal( param );
+            code.setLocal( param );
+        }
+        
+        if( ! isStatic ) {
+            code.getLocal( code.thisValue );
+            code.setLocal( code.thisValue );            
+        }
     }
     
     /**

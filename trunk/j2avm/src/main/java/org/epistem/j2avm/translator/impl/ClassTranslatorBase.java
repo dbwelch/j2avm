@@ -1,5 +1,7 @@
 package org.epistem.j2avm.translator.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +46,7 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
      * @param jvmClass the class to translate
      */
     protected ClassTranslatorBase( TranslatorManager manager, JVMClass jvmClass ) {
-        this( manager, jvmClass, null, null, null, null );
+        this( manager, jvmClass, null, null, null, null );        
     }
     
     /**
@@ -158,6 +160,17 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
     public ClassTranslator getSuperclass() {
         if( jvmClass.superclassName == null ) return null;        
         return manager.translatorForClass( jvmClass.superclassName );
+    }
+
+    /** @see org.epistem.j2avm.translator.ClassTranslator#getInterfaces() */
+    public Collection<ClassTranslator> getInterfaces() {
+        Collection<ClassTranslator> ifaces = new ArrayList<ClassTranslator>();
+            
+        for( ObjectType ifType : jvmClass.interfaces ) {
+            ifaces.add( manager.translatorForClass( ifType ) );
+        }
+        
+        return ifaces;
     }
 
     /** @see org.epistem.j2avm.translator.ClassTranslator#getAnnotation(java.lang.String) */

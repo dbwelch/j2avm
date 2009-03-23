@@ -31,14 +31,16 @@ public abstract class MethodTranslatorBase extends MemberTranslatorBase
 
     protected final JVMMethod jvmMethod;    
     protected final boolean isStatic;
+    protected final boolean isAbstract;
     
     protected MethodTranslatorBase( ClassTranslatorBase classTrans, JVMMethod method, AVM2QName avm2name ) { 
         super( classTrans, 
                method.name, 
                avm2name, 
                NameUtils.qnameForJavaType( method.type ) );
-        this.jvmMethod = method;    
-        this.isStatic  = jvmMethod.flags.contains( MethodFlag.MethodIsStatic );
+        this.jvmMethod  = method;    
+        this.isStatic   = jvmMethod.flags.contains( MethodFlag.MethodIsStatic );
+        this.isAbstract = jvmMethod.flags.contains( MethodFlag.MethodIsAbstract );
     }
         
     /**

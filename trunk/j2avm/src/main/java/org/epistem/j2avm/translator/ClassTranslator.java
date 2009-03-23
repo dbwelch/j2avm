@@ -1,5 +1,7 @@
 package org.epistem.j2avm.translator;
 
+import java.util.Collection;
+
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.code.instructions.InstanceOf;
@@ -60,6 +62,12 @@ public interface ClassTranslator {
      * @return null if there is no superclass
      */
     public ClassTranslator getSuperclass();
+    
+    /**
+     * Get the implemented interfaces
+     * @return empty collection if none
+     */
+    public Collection<ClassTranslator> getInterfaces();
     
     /**
      * Get the translator for the given method - looking in superclasses

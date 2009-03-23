@@ -22,4 +22,7 @@ public class AVM2_ASM {
 
     /** Append a value to a string */
     public static native String appendString( String s, String value );
+
+    /** Append a value to a string */
+    public static native String appendObject( String s, Object value );
 }

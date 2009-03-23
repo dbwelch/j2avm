@@ -34,6 +34,11 @@ public class StringBuilder extends j2avm.java.lang.Object {
         return this;
     }
 
+    public StringBuilder append( java.lang.Object object ) {
+        s = appendObject( s, object );
+        return this;
+    }
+    
     public String toString() {
         return s;
     }

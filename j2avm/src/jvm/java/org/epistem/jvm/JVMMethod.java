@@ -36,6 +36,8 @@ public class JVMMethod extends JVMMember<MethodFlag> {
      */
     public Analyzer analyzer() {
         if( analyzer == null ) {
+            if( flags.contains( MethodFlag.MethodIsAbstract ) ) return null;
+            
             analyzer = new Analyzer( this );
         }
         
@@ -66,7 +68,7 @@ public class JVMMethod extends JVMMember<MethodFlag> {
     /**
      * Get the code attribute
      * 
-     * @return null if this method has no code (is native or an interface)
+     * @return null if this method has no code (is native or abstract)
      */
     public CodeAttribute getCode() {
        return attributes.forClass( CodeAttribute.class ); 

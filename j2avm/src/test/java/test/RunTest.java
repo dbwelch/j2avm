@@ -17,7 +17,7 @@ public class RunTest {
     public static void main( String[] args ) throws Exception {
         
         ClassLoaderLoader loader = ClassLoaderLoader.forLoader( RunTest.class.getClassLoader()); 
-        //loader.getClass( new ObjectType( "test.Test" ) ).dump( IndentingPrintWriter.SYSOUT );
+        //loader.getClass( new ObjectType( "test.Test$Painter" ) ).dump( IndentingPrintWriter.SYSOUT );
         
         J2AVM.translate( "test.Test", "eclipse-build/test.swf", loader );
         

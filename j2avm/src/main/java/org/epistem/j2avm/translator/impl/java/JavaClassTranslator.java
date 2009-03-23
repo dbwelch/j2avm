@@ -4,16 +4,10 @@ import java.util.LinkedList;
 
 import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.translator.ClassTranslator;
-import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
-import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2swf.swf.code.Code;
-import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMClass;
-import org.epistem.jvm.JVMField;
-import org.epistem.jvm.JVMMethod;
-import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.flags.ClassFlag;
 import org.epistem.jvm.type.Signature;
@@ -29,43 +23,22 @@ import flash.display.MovieClip;
  *
  * @author nickmain
  */
-public class JavaClassTranslator extends ClassTranslatorBase implements ClassTranslator {
+public class JavaClassTranslator extends JavaTranslator {
 
     private static final Signature NO_ARG_CONTRUCTOR = new Signature( "<init>" );
     
-    private CodeClass codeClass;
-    
-    public JavaClassTranslator(  TranslatorManager manager, JVMClass jvmClass ) {
-        super( manager, jvmClass );
-        
-        addAllMemberTranslators();
+    public JavaClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
+        super( manager, jvmClass );        
     }
     
     protected JavaClassTranslator(  TranslatorManager manager, JVMClass jvmClass, AVM2QName avm2name ) {
-        super( manager, jvmClass, avm2name, null, null, null );
-    }
-    
-    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultFieldTranslator(org.epistem.jvm.JVMField) */
-    @Override
-    public FieldTranslator defaultFieldTranslator( JVMField field ) {
-        return new JavaFieldTranslator( this, field );
-    }
-
-    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultMethodTranslator(org.epistem.jvm.JVMMethod) */
-    @Override
-    public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
-        return new JavaMethodTranslator( this, method );
+        super( manager, jvmClass, avm2name );
     }
 
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateImplementation(org.epistem.j2swf.swf.code.Code) */
     public void translateImplementation( Code code ) {
         J2AVM.log.info( "Translating class " + name );
         
-        // TODO Auto-generated method stub
-        
-        //TODO: implemented interfaces
-        //TODO: Enums
-
         //get the superclasses
         LinkedList<String> superNames = new LinkedList<String>();
         ClassTranslator superClass = getSuperclass();
@@ -79,19 +52,11 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         String[] superclasses = superNames.toArray( new String[ superNames.size() ] );
         
         boolean isFinal = jvmClass.flags.contains( ClassFlag.IsFinal );
-        boolean isIFace = jvmClass.flags.contains( ClassFlag.IsInterface );
         
-        codeClass = code.addClass( avm2name.toQualString(), true, isFinal, isIFace, superclasses );
-    
-        //TODO: implemented interfaces
-        //TODO: Enums
-        
-        for( FieldTranslator field : fields.values() ) {
-            field.translateImplementation( codeClass );
-        }
-        for( MethodTranslator method : methods.values() ) {            
-            method.translateImplementation( codeClass );
-        }
+        codeClass = code.addClass( avm2name.toQualString(), true, isFinal, false, superclasses );
+
+        translateMembers();
+        addImplementedInterfaces();
         
         //-- Constructor
         makeConstructor();
@@ -118,18 +83,7 @@ public class JavaClassTranslator extends ClassTranslatorBase implements ClassTra
         //The <init> method will be called later in the same manner as
         //normal JVM instantiation
     }
-    
-    /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.InstanceOf) */
-    public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn ) {
-        method.getCode().code().isType( avm2name );
-    }
 
-    /** @see org.epistem.j2avm.translator.ClassTranslator#translateStaticPush(org.epistem.j2avm.translator.MethodTranslator) */
-    public void translateStaticPush( MethodTranslator method ) {
-        // TODO this would be the place to implement ClassLoader support ?
-        
-        method.getCode().code().getLex( avm2name );
-    }
 
     /**
      * Make the constructor. 

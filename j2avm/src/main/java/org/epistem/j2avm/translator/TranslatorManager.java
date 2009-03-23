@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
 import org.epistem.j2avm.annotations.runtime.Translator;
-import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
+import org.epistem.j2avm.translator.impl.java.JavaTranslator;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.AttributeContainer;
 import org.epistem.jvm.JVMClass;
@@ -54,12 +54,17 @@ public class TranslatorManager {
         }
     }
     
-    //make sure superclasses are translated first
-    private void translateClass(  Code code, ClassTranslator trans ) {
+    //make sure superclasses and interfaces are translated first
+    private void translateClass( Code code, ClassTranslator trans ) {
         if( trans == null ) return;
         if( translated.contains( trans )) return;
         
         translateClass( code, trans.getSuperclass() );
+        
+        for( ClassTranslator ifTrans : trans.getInterfaces() ) {
+            translateClass( code, ifTrans );
+        }
+        
         trans.translateImplementation( code );
         translated.add( trans );
     }
@@ -121,7 +126,7 @@ public class TranslatorManager {
                 }
                 else {
                     //--assume a vanilla Java class
-                    trans = new JavaClassTranslator( this, jvmClass );
+                    trans = JavaTranslator.forClass( jvmClass, this );
                 }
             }
             else {

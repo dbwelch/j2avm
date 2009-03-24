@@ -3,7 +3,9 @@ package org.epistem.j2avm.generator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.epistem.io.IndentingPrintWriter;
@@ -87,21 +89,23 @@ public class FlashNativeGenerator {
             
             System.out.println( clazz.name.toQualString() );
             
-//            if( trait instanceof AVM2MethodSlot ) {
-//                AVM2MethodSlot methodSlot = (AVM2MethodSlot) trait;
-//                AVM2Method     method     = methodSlot.method;
-//                
-//                String name = trait.name.name; 
-//                
-//                
-//                templateMethod( name, method.returnType, method.paramTypes, 
-//                                method.paramNames, method.defaultValues.size(),
-//                                isProtected, methodSlot.isFinal, 
-//                                ! clazz.isInterface );
-//            }
-//            else if( trait instanceof AVM2Slot ) {
-//                //TODO:
-//            }
+            if( trait instanceof AVM2MethodSlot ) {
+                AVM2MethodSlot methodSlot = (AVM2MethodSlot) trait;
+                AVM2Method     method     = methodSlot.method;
+                
+                String name = trait.name.name; 
+                
+                
+                templateMethod( name, method.returnType, method.paramTypes, 
+                                method.paramNames, method.defaultValues.size(),
+                                isProtected, methodSlot.isFinal, 
+                                ! clazz.isInterface );
+            }
+            else if( trait instanceof AVM2Slot ) {
+                
+                
+                //TODO:
+            }
         }
         
         templateEndClass();
@@ -111,11 +115,36 @@ public class FlashNativeGenerator {
      * Make a Java type name from an AVM2 type
      */
     private String typeToString( AVM2Name type ) {
-        String pack = type.namespace.name;
+        
+        if( type == null ) return "Object"; //any
+        
+        if( type instanceof AVM2GenericName ) {
+            AVM2GenericName gen = (AVM2GenericName) type;
+            return typeToString( gen.typeParams[0] ) + "[]";
+        }
+        
+        String pack = null;
+        
+        if( type.namespace == null ) {
+            List<AVM2Namespace> nss = new ArrayList<AVM2Namespace>( type.namespaceSet );
+            Collections.reverse( nss );
+            for( AVM2Namespace ns : nss ) {
+                if( ns.kind == NamespaceKind.PackageNamespace && ns.name.length() > 0 ) {
+                    pack = ns.name;
+                    break;
+                }
+            }
+        }
+        else {
+            pack = type.namespace.name;
+        }
+        
         String name = type.name;
         
+        //System.out.println( type );
         if( pack.length() != 0 ) return pack + "." + name;
         
+        if( name.equals( "void"     ) ) return "void";
         if( name.equals( "int"      ) ) return "int";
         if( name.equals( "uint"     ) ) return "int";
         if( name.equals( "String"   ) ) return "String";
@@ -214,7 +243,7 @@ public class FlashNativeGenerator {
         boolean first = true;
         for( AVM2Name ifname : clazz.interfaces ) {
             if( first ) {
-                ifaces.append( " implements" );
+                ifaces.append( " implements " );
                 first = false;
             }
             else ifaces.append( "," );

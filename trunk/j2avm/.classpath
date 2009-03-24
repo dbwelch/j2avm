@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/flash10/java"/>
 	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="src" path="src/generator/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/annotations/java"/>
-	<classpathentry kind="src" path="src/flash9/java"/>
 	<classpathentry kind="src" path="src/generator/java"/>
 	<classpathentry kind="src" path="src/jvm/java"/>
 	<classpathentry kind="src" path="src/jvm-runtime/java"/>

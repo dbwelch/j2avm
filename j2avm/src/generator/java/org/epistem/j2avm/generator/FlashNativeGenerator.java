@@ -12,6 +12,7 @@ import org.epistem.io.IndentingPrintWriter;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
+import com.anotherbigidea.flash.avm2.MethodInfoFlags;
 import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.model.*;
 import com.anotherbigidea.flash.avm2.utils.AVM2ABCFileLoader;
@@ -24,6 +25,9 @@ import com.anotherbigidea.flash.avm2.utils.AVM2ABCFileLoader;
  */
 public class FlashNativeGenerator {
 
+    private static final AVM2Namespace BUILT_IN = 
+        new AVM2Namespace( NamespaceKind.Namespace, "http://adobe.com/AS3/2006/builtin" );
+    
     private IndentingPrintWriter out;
        
     private Collection<AVM2ABCFile> abcFiles;
@@ -50,8 +54,14 @@ public class FlashNativeGenerator {
         for( AVM2ABCFile abcFile : abcFiles ) {        
             for( AVM2Class clazz : abcFile.classes.values() ) {
                 String filename = clazz.name.name + ".java";
-                if( clazz.name.namespace.name.length() == 0 ) continue;
-                File pkgDir = new File( dir, clazz.name.namespace.name.replace( '.', '/' ) );
+                File pkgDir = null;
+                if( clazz.name.namespace.name.length() == 0 ) {
+                    pkgDir = new File( dir, "flash" );
+                    filename = "Flash" + filename;
+                }
+                else {
+                   pkgDir = new File( dir, clazz.name.namespace.name.replace( '.', '/' ) );
+                }
                 pkgDir.mkdirs();
                 
                 FileWriter fw = new FileWriter( new File( pkgDir, filename ) );
@@ -76,39 +86,129 @@ public class FlashNativeGenerator {
         templateStartClass( clazz );
     
         //TODO: static constants
-        //TODO: static getters / setters
-        //TODO: static methods
         
         //TODO: constructor
-        //TODO: getters / setters
 
+        for( AVM2Trait trait : clazz.staticTraits.traits ) {
+            processTrait( trait, clazz, true );            
+        }
+        
         for( AVM2Trait trait : clazz.traits.traits ) {
-            boolean isPublic = trait.name.namespace.equals( AVM2Namespace.publicNamespace );
-            boolean isProtected = trait.name.namespace.kind == NamespaceKind.ProtectedNamespace;
-            if( ! ( isProtected || isPublic )) continue;
-            
-            System.out.println( clazz.name.toQualString() );
-            
-            if( trait instanceof AVM2MethodSlot ) {
-                AVM2MethodSlot methodSlot = (AVM2MethodSlot) trait;
-                AVM2Method     method     = methodSlot.method;
-                
-                String name = trait.name.name; 
-                
-                
-                templateMethod( name, method.returnType, method.paramTypes, 
-                                method.paramNames, method.defaultValues.size(),
-                                isProtected, methodSlot.isFinal, 
-                                ! clazz.isInterface );
-            }
-            else if( trait instanceof AVM2Slot ) {
-                
-                
-                //TODO:
-            }
+            processTrait( trait, clazz, false );
         }
         
         templateEndClass();
+    }
+     
+    private void processTrait( AVM2Trait trait, AVM2Class clazz, boolean isStatic ) {
+        
+        if( clazz.name.name.equals( "Object" ) ) {
+            System.out.println( trait.name );
+        }
+        
+        boolean isDate = clazz.name.name.equals( "Date" ) 
+                      && clazz.name.namespace.equals( AVM2Namespace.publicNamespace );
+        
+        boolean isPublic = trait.name.namespace.equals( AVM2Namespace.publicNamespace )
+                        || trait.name.namespace.equals( BUILT_IN );
+        boolean isProtected = trait.name.namespace.kind == NamespaceKind.ProtectedNamespace;
+        if( ! ( isProtected || isPublic )) return;
+        
+        boolean isFinal = false;
+        boolean isOverride = false;
+        if( trait instanceof AVM2MethodSlot ) {
+            isFinal    = ((AVM2MethodSlot) trait).isFinal;
+            isOverride = ((AVM2MethodSlot) trait).isOverride;
+        }
+        
+        //System.out.println( clazz.name.toQualString() );
+        
+        if( trait instanceof AVM2Getter ) {
+            if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
+            
+            AVM2Getter getter = (AVM2Getter) trait;
+            String   name = getter.name.name;
+            AVM2Name type = getter.getMethod().returnType;
+
+            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride );                
+        }
+        else if( trait instanceof AVM2Setter ) {
+            if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
+            
+            AVM2Setter setter = (AVM2Setter) trait;
+            String   name = setter.name.name;
+            AVM2Name type = setter.getMethod().paramTypes.get( 0 );
+
+            templateSetter( name, type, isStatic, isProtected, isFinal, isOverride );
+        }
+        else if( trait instanceof AVM2MethodSlot ) {
+            AVM2MethodSlot methodSlot = (AVM2MethodSlot) trait;
+            AVM2Method     method     = methodSlot.method;
+            
+            String name = trait.name.name; 
+            
+            
+            templateMethod( name, method.returnType, method.paramTypes, 
+                            method.paramNames, method.defaultValues.size(),
+                            isStatic, isProtected, methodSlot.isFinal, 
+                            ! clazz.isInterface, methodSlot.isOverride );
+        }
+        else if( trait instanceof AVM2Slot ) {
+            if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
+            
+            AVM2Slot slot = (AVM2Slot) trait;
+            String   name = slot.name.name;
+            AVM2Name type = slot.type;
+
+            if( isStatic & slot.isConstant & slot.value != null ) {
+                templateConstant( name, type, slot.value, isProtected );
+                return;
+            }
+            
+            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride );
+            templateSetter( name, type, isStatic, isProtected, isFinal, isOverride );
+        }
+    }
+    
+    /**
+     * Template for a static constant
+     */
+    private void templateConstant( String name, AVM2Name type, 
+                                   AVM2DefaultValue value, boolean isProtected ) {
+
+        if( name.equals( "MAX_VALUE" ) && type.name.equals( "uint" )) {
+            out.println();
+            out.print( "public static final long " + name + " = " );
+            out.print( ((Number) value.value ).longValue() );
+            out.println( "L;" );
+            return;
+        }
+        
+        String visibility = isProtected ? "protected" : "public"; 
+        out.println();
+        out.print( visibility + " static final " + typeToString( type ) 
+                     + " " + name + " = " );
+        
+        switch( value.valueKind ) {
+            case CONSTANT_Utf8:   out.writeDoubleQuotedString( (String) value.value ); break;     
+            case CONSTANT_Int:    out.print( value.value ); break;
+            case CONSTANT_UInt:   out.print( value.value ); break;
+            case CONSTANT_Double: out.print( numStr( value.value )); break;
+            case CONSTANT_False:  out.print( "false" ); break;
+            case CONSTANT_True:   out.print( "true" ); break;
+            case CONSTANT_Null:   out.print( "null" ); break;
+        }
+        out.println( ";" );
+    }
+    
+    private String numStr( Object value ) {
+        String valueStr = value.toString();
+        
+        if( valueStr.equals( "Infinity"  ) ) return "Double.POSITIVE_INFINITY";
+        if( valueStr.equals( "-Infinity" ) ) return "Double.NEGATIVE_INFINITY";
+        if( valueStr.equals( "NaN"       ) ) return "Double.NaN";
+
+        return valueStr;
     }
     
     /**
@@ -150,13 +250,8 @@ public class FlashNativeGenerator {
         if( name.equals( "String"   ) ) return "String";
         if( name.equals( "Number"   ) ) return "double";
         if( name.equals( "Boolean"  ) ) return "boolean";
-        if( name.equals( "Object"   ) ) return "flash.FlashObject";
-        if( name.equals( "Array"    ) ) return "flash.FlashArray";
-        if( name.equals( "Error"    ) ) return "flash.FlashError";
-        if( name.equals( "Function" ) ) return "flash.FlashFunction";
-        if( name.equals( "Date"     ) ) return "flash.FlashDate";
-        
-        return "flash." + name;
+
+        return "flash.Flash" + name;
     }
 
 
@@ -167,12 +262,17 @@ public class FlashNativeGenerator {
                                  List<AVM2Name> paramTypes,
                                  List<String>   paramNames,
                                  int optionalParamCount,
-                                 boolean isProtected , boolean isFinal, boolean isNative ) {
+                                 boolean isStatic, boolean isProtected , 
+                                 boolean isFinal, boolean isNative, boolean isOverride ) {
 
-        String visibility = isProtected ? " protected" : " public";
+        String visibility = isProtected ? "protected" : "public";
         String strRetType = typeToString( returnType );
+        String strStatic  = isStatic ? " static" : "";
         String strFinal   = isFinal  ? " final" : "";
         String strNative  = isNative ? " native" : "";
+        
+        if( paramTypes == null ) paramTypes = Collections.emptyList();
+        if( paramNames == null ) paramNames = Collections.emptyList();
         
         String[] pTypes = new String[ paramTypes.size() ];
         String[] pNames = new String[ pTypes.length ];
@@ -207,7 +307,9 @@ public class FlashNativeGenerator {
         
         for( int i = 0; i < paramStrings.length; i++ ) {
             out.println();
-            out.println( visibility + strFinal + strNative + " " + strRetType + " " + name + "(" + paramStrings[i] + ");" );            
+            if( isOverride ) out.println( "@Override" );
+            out.println( visibility + strStatic + strFinal + strNative 
+                         + " " + strRetType + " " + name + "(" + paramStrings[i] + ");" );            
         }
     }
 
@@ -218,6 +320,45 @@ public class FlashNativeGenerator {
         
     }
 
+    /**
+     * Generate a setter method
+     * @param name the property name
+     * @param type the property type
+     */
+    private void templateSetter( String name, AVM2Name type, boolean isStatic, 
+                                 boolean isProtected, boolean isFinal, boolean isOverride ) {
+        
+        if( name.length() == 1 ) name = name.toUpperCase();
+        else name = name.substring( 0, 1 ).toUpperCase() + name.substring( 1 );
+        
+        name = "set" + name;
+        List<AVM2Name> params = Collections.singletonList( type );
+        List<String>   pnames = Collections.singletonList( name );
+        
+        out.println();
+        out.print( "@Setter" );
+        templateMethod( name, AVM2StandardName.TypeVoid.qname, 
+                        params, pnames, 0, isStatic, isProtected, isFinal, true, isOverride );
+    }
+
+    /**
+     * Generate a getter method
+     * @param name the property name
+     * @param type the property type
+     */
+    private void templateGetter( String name, AVM2Name type, boolean isStatic, 
+                                 boolean isProtected, boolean isFinal, boolean isOverride ) {
+        
+        if( name.length() == 1 ) name = name.toUpperCase();
+        else name = name.substring( 0, 1 ).toUpperCase() + name.substring( 1 );
+        
+        name = "get" + name;
+        
+        out.println();
+        out.print( "@Getter" );
+        templateMethod( name, type, null, null, 0, isStatic, isProtected, isFinal, true, isOverride );
+    }
+    
     /**
      * Template for a method signature
      */
@@ -253,17 +394,24 @@ public class FlashNativeGenerator {
             ifaces.append( typeToString( ifname ) );
         }
         
+        String pkg = clazz.name.namespace.name;
+        
         String isFinal = clazz.isFinal ? " final" : "";
         String nature  = clazz.isInterface ? " interface" : " class";
-        String name    = new ObjectType( typeToString( clazz.name ) ).simpleName;
+        String name    = clazz.name.name;
         String supername = (clazz.superclass == null) ? 
                               "" :
                               " extends " + typeToString( clazz.superclass );
+
+        if( pkg.length() == 0 ) {
+            pkg = "flash";
+            name = "Flash" + name;
+        }
         
         out.println( "//---------------------------------------------------------------------------" );
         out.println( "// THIS FILE WAS AUTOMATICALLY GENERATED - HAND ALTERATIONS MAY BE LOST" );
         out.println( "//---------------------------------------------------------------------------" );
-        out.println( "package " + clazz.name.namespace.name + ";" );
+        out.println( "package " + pkg + ";" );
         out.println();
         out.println( "import org.epistem.j2avm.annotations.runtime.*;" );
         out.println();

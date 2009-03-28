@@ -1,0 +1,25 @@
+//---------------------------------------------------------------------------
+// THIS FILE WAS AUTOMATICALLY GENERATED - HAND ALTERATIONS MAY BE LOST
+//---------------------------------------------------------------------------
+package flash.display;
+
+import org.epistem.j2avm.annotations.runtime.*;
+
+@FlashNativeClass
+public class Shader extends flash.FlashObject {
+
+    @Setter
+    public native void setByteCode( flash.utils.ByteArray setByteCode );
+
+    @Setter
+    public native void setData( flash.display.ShaderData setData );
+
+    @Getter
+    public native String getPrecisionHint( );
+
+    @Getter
+    public native flash.display.ShaderData getData( );
+
+    @Setter
+    public native void setPrecisionHint( String setPrecisionHint );
+}

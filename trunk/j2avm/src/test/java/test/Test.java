@@ -3,6 +3,8 @@ package test;
 import org.epistem.j2avm.annotations.runtime.Name;
 import org.epistem.j2avm.annotations.swf.SWF;
 
+import static flash.Flash.*;
+import flash.FlashDate;
 import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.MovieClip;
@@ -105,11 +107,12 @@ public class Test extends MovieClip {
     
     @Name("onMove")
     void onMove( MouseEvent e ) {
-        field.setText( "" + e.getStageX() + "," + e.getStageY() );
+        double now = new FlashDate().getTime();
+        field.setText( "" + now + " " + e.getStageX() + "," + e.getStageY() );
     }
     
     //override in order to test whether super.getGraphics works
-    public Graphics getGraphics() { return null; }
+    //public Graphics getGraphics() { return null; }
     
     private boolean paint( int x, int y ) {
         Painter p = new Painter( super.getGraphics() );

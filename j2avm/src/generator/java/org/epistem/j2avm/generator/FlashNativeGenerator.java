@@ -9,10 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.epistem.io.IndentingPrintWriter;
-import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
-import com.anotherbigidea.flash.avm2.MethodInfoFlags;
 import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.model.*;
 import com.anotherbigidea.flash.avm2.utils.AVM2ABCFileLoader;
@@ -31,7 +29,6 @@ public class FlashNativeGenerator {
     private IndentingPrintWriter out;
        
     private Collection<AVM2ABCFile> abcFiles;
-    private File dir;
     
     /**
      * Read a SWF file
@@ -49,8 +46,7 @@ public class FlashNativeGenerator {
      * @param dir the destination directory
      */
     public void generateJava( File dir ) throws IOException {
-        this.dir = dir;
-
+        
         for( AVM2ABCFile abcFile : abcFiles ) {        
             for( AVM2Class clazz : abcFile.classes.values() ) {
                 String filename = clazz.name.name + ".java";
@@ -85,10 +81,33 @@ public class FlashNativeGenerator {
                 
         templateStartClass( clazz );
     
-        //TODO: static constants
+        generateConstructors:
+        if( ! clazz.isInterface ) {
+            AVM2Method cons = clazz.constructor;
+    
+            String pkg = clazz.name.namespace.name;
+            String name    = clazz.name.name;
+            if( pkg.length() == 0 ) name = "Flash" + name;
         
-        //TODO: constructor
-
+            if( name.equals( "FlashDate" ) ) {
+                generateDateConstructors();                
+                break generateConstructors;
+            }
+            
+            templateMethod( name, null, cons.paramTypes, 
+                            cons.paramNames, cons.defaultValues.size(),
+                            false, false, false, false, false, true );
+            
+            //cheat - create a no-arg protected constructor so that we don't have
+            // to make a valid super call in the sub-class constructors
+            if( cons.paramTypes.size() > 0 
+             && cons.defaultValues.size() < cons.paramTypes.size() ) {
+                out.println();
+                out.println( "/** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */" );
+                out.println( "protected " + name + "() {}" );
+            }
+        }
+        
         for( AVM2Trait trait : clazz.staticTraits.traits ) {
             processTrait( trait, clazz, true );            
         }
@@ -100,6 +119,19 @@ public class FlashNativeGenerator {
         templateEndClass();
     }
      
+    //Date is a special case
+    private void generateDateConstructors() {
+        out.println( "public FlashDate() {}" );
+        out.println( "public FlashDate( double millis ) {}" );
+        out.println( "public FlashDate( String date ) {}" );
+        out.println( "public FlashDate( double year, double month, double date, double hour, double minute, double second, double millisecond ) {}" );
+        out.println( "public FlashDate( double year, double month, double date, double hour, double minute, double second ) {}" );
+        out.println( "public FlashDate( double year, double month, double date, double hour, double minute ) {}" );
+        out.println( "public FlashDate( double year, double month, double date, double hour ) {}" );
+        out.println( "public FlashDate( double year, double month, double date ) {}" );
+        out.println( "public FlashDate( double year, double month ) {}" );
+    }
+    
     private void processTrait( AVM2Trait trait, AVM2Class clazz, boolean isStatic ) {
         
         if( clazz.name.name.equals( "Object" ) ) {
@@ -147,11 +179,10 @@ public class FlashNativeGenerator {
             
             String name = trait.name.name; 
             
-            
             templateMethod( name, method.returnType, method.paramTypes, 
                             method.paramNames, method.defaultValues.size(),
                             isStatic, isProtected, methodSlot.isFinal, 
-                            ! clazz.isInterface, methodSlot.isOverride );
+                            ! clazz.isInterface, methodSlot.isOverride, false );
         }
         else if( trait instanceof AVM2Slot ) {
             if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
@@ -263,13 +294,15 @@ public class FlashNativeGenerator {
                                  List<String>   paramNames,
                                  int optionalParamCount,
                                  boolean isStatic, boolean isProtected , 
-                                 boolean isFinal, boolean isNative, boolean isOverride ) {
+                                 boolean isFinal, boolean isNative, boolean isOverride,
+                                 boolean isConstructor ) {
 
         String visibility = isProtected ? "protected" : "public";
-        String strRetType = typeToString( returnType );
+        String strRetType = isConstructor ? "" : typeToString( returnType );
         String strStatic  = isStatic ? " static" : "";
         String strFinal   = isFinal  ? " final" : "";
         String strNative  = isNative ? " native" : "";
+        String body = isNative ? ";" : " {}";
         
         if( paramTypes == null ) paramTypes = Collections.emptyList();
         if( paramNames == null ) paramNames = Collections.emptyList();
@@ -309,7 +342,7 @@ public class FlashNativeGenerator {
             out.println();
             if( isOverride ) out.println( "@Override" );
             out.println( visibility + strStatic + strFinal + strNative 
-                         + " " + strRetType + " " + name + "(" + paramStrings[i] + ");" );            
+                         + " " + strRetType + " " + name + "(" + paramStrings[i] + ")" + body );            
         }
     }
 
@@ -338,7 +371,8 @@ public class FlashNativeGenerator {
         out.println();
         out.print( "@Setter" );
         templateMethod( name, AVM2StandardName.TypeVoid.qname, 
-                        params, pnames, 0, isStatic, isProtected, isFinal, true, isOverride );
+                        params, pnames, 0, isStatic, 
+                        isProtected, isFinal, true, isOverride, false );
     }
 
     /**
@@ -356,7 +390,8 @@ public class FlashNativeGenerator {
         
         out.println();
         out.print( "@Getter" );
-        templateMethod( name, type, null, null, 0, isStatic, isProtected, isFinal, true, isOverride );
+        templateMethod( name, type, null, null, 0, isStatic, 
+                        isProtected, isFinal, true, isOverride, false );
     }
     
     /**
@@ -407,7 +442,7 @@ public class FlashNativeGenerator {
             pkg = "flash";
             name = "Flash" + name;
         }
-        
+
         out.println( "//---------------------------------------------------------------------------" );
         out.println( "// THIS FILE WAS AUTOMATICALLY GENERATED - HAND ALTERATIONS MAY BE LOST" );
         out.println( "//---------------------------------------------------------------------------" );

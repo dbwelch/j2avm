@@ -24,7 +24,7 @@ public abstract class Enum<E extends Enum<E>>
         return ordinal;
     }
 
-    protected Enum(String name, int ordinal) {
+    protected Enum( String name, int ordinal ) {
         this.name = name;
         this.ordinal = ordinal;
     }
@@ -33,15 +33,7 @@ public abstract class Enum<E extends Enum<E>>
         return name;
     }
 
-    public final boolean equals(Object other) {
-        return this == other;
-    }
-
-    public final int hashCode() {
-        return super.hashCode();
-    }
-
-    public final int compareTo(E o) {
+    public final int compareTo( E o ) {
         Enum other = (Enum)o;
         Enum self = this;
         if (self.getClass() != other.getClass() && // optimization
@@ -50,12 +42,12 @@ public abstract class Enum<E extends Enum<E>>
         return self.ordinal - other.ordinal;
     }
 
+    /* TODO
     public final Class<E> getDeclaringClass() {
-        Class clazz = getClass();
-        Class zuper = clazz.getSuperclass();
-        return (zuper == Enum.class) ? clazz : zuper;
+        return null;
     }
-
+    */
+    
     public static <T extends Enum<T>> T valueOf(Class<T> enumType,
                                                 String name) {
         T result = enumType.enumConstantDirectory().get(name);
@@ -66,6 +58,4 @@ public abstract class Enum<E extends Enum<E>>
         throw new IllegalArgumentException(
             "No enum const " + enumType +"." + name);
     }
-
-    protected final void finalize() { }
 }

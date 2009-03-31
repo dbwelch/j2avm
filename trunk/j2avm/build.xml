@@ -11,7 +11,7 @@
 	
 	<!-- Generate Java sources for Flash 10 runtime -->
     <target name="generate-flash-10">
-        <delete dir="src/flash10/java" />
+        <!-- delete dir="src/flash10/java" / -->
         <mkdir  dir="src/flash10/java" />
         <generate-swf-source 
             dir="src/flash10/java"

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GradientType extends flash.FlashObject {
 
+    public  GradientType( ) {}
+
     public static final String LINEAR = "linear";
 
     public static final String RADIAL = "radial";

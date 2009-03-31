@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class SoundMixer extends flash.FlashObject {
 
+    public  SoundMixer( ) {}
+
     @Setter
     public static final native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
 

@@ -8,6 +8,19 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ContextMenuEvent extends flash.events.Event {
 
+    public  ContextMenuEvent( String type, boolean bubbles, boolean cancelable, flash.display.InteractiveObject mouseTarget, flash.display.InteractiveObject contextMenuOwner ) {}
+
+    public  ContextMenuEvent( String type, boolean bubbles, boolean cancelable, flash.display.InteractiveObject mouseTarget ) {}
+
+    public  ContextMenuEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  ContextMenuEvent( String type, boolean bubbles ) {}
+
+    public  ContextMenuEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected ContextMenuEvent() {}
+
     public static final String MENU_ITEM_SELECT = "menuItemSelect";
 
     public static final String MENU_SELECT = "menuSelect";

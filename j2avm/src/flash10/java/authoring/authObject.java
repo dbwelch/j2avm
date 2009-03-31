@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class authObject extends flash.FlashObject {
 
+    public  authObject( int key ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected authObject() {}
+
     @Setter
     public static final native void setOffScreenSurfaceRenderingEnabled( boolean setOffScreenSurfaceRenderingEnabled );
 

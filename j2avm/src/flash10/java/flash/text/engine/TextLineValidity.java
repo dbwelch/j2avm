@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextLineValidity extends flash.FlashObject {
 
+    public  TextLineValidity( ) {}
+
     public static final String STATIC = "static";
 
     public static final String INVALID = "invalid";

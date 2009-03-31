@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class DisplacementMapFilterMode extends flash.FlashObject {
 
+    public  DisplacementMapFilterMode( ) {}
+
     public static final String COLOR = "color";
 
     public static final String IGNORE = "ignore";

@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FlashError extends flash.FlashObject {
 
+    public  FlashError( Object message, Object id ) {}
+
+    public  FlashError( Object message ) {}
+
+    public  FlashError( ) {}
+
     public static final native Object throwError( flash.FlashClass type, int index );
 
     public static final native String getErrorMessage( int index );

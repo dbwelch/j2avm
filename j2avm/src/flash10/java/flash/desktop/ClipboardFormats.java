@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ClipboardFormats extends flash.FlashObject {
 
+    public  ClipboardFormats( ) {}
+
     public static final String TEXT_FORMAT = "air:text";
 
     public static final String HTML_FORMAT = "air:html";

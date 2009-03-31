@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ObjectInput extends flash.FlashObject implements flash.utils.IDataInput {
 
+    public  ObjectInput( ) {}
+
     public native int readUnsignedInt( );
 
     public native int readByte( );

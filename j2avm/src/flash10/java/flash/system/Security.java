@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Security extends flash.FlashObject {
 
+    public  Security( ) {}
+
     public static final native void showSettings( String panel );
 
     public static final native void showSettings( );

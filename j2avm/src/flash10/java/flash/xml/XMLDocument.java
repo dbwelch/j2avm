@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class XMLDocument extends flash.xml.XMLNode {
 
+    public  XMLDocument( String source ) {}
+
+    public  XMLDocument( ) {}
+
     public native flash.xml.XMLNode createElement( String name );
 
     @Getter

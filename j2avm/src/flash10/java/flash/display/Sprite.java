@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Sprite extends flash.display.DisplayObjectContainer {
 
+    public  Sprite( ) {}
+
     @Getter
     public native flash.display.DisplayObject getDropTarget( );
 

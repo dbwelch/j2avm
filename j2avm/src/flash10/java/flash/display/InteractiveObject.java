@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class InteractiveObject extends flash.display.DisplayObject {
 
+    public  InteractiveObject( ) {}
+
     @Getter
     public native flash.accessibility.AccessibilityImplementation getAccessibilityImplementation( );
 

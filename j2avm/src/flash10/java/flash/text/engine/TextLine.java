@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextLine extends flash.display.DisplayObjectContainer {
 
+    public  TextLine( ) {}
+
     public static final int MAX_LINE_WIDTH = 1000000;
 
     @Getter

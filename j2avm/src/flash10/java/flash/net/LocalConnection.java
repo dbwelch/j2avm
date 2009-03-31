@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class LocalConnection extends flash.events.EventDispatcher {
 
+    public  LocalConnection( ) {}
+
     @Getter
     public native String getDomain( );
 

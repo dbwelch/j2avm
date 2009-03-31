@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Bitmap extends flash.display.DisplayObject {
 
+    public  Bitmap( flash.display.BitmapData bitmapData, String pixelSnapping, boolean smoothing ) {}
+
+    public  Bitmap( flash.display.BitmapData bitmapData, String pixelSnapping ) {}
+
+    public  Bitmap( flash.display.BitmapData bitmapData ) {}
+
+    public  Bitmap( ) {}
+
     @Setter
     public native void setBitmapData( flash.display.BitmapData setBitmapData );
 

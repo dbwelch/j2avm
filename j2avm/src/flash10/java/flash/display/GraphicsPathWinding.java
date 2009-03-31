@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsPathWinding extends flash.FlashObject {
 
+    public  GraphicsPathWinding( ) {}
+
     public static final String EVEN_ODD = "evenOdd";
 
     public static final String NON_ZERO = "nonZero";

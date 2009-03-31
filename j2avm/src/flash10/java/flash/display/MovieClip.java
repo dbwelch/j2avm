@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class MovieClip extends flash.display.Sprite {
 
+    public  MovieClip( ) {}
+
     @Getter
     public native String getCurrentFrameLabel( );
 

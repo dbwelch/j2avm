@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BreakOpportunity extends flash.FlashObject {
 
+    public  BreakOpportunity( ) {}
+
     public static final String ALL = "all";
 
     public static final String AUTO = "auto";

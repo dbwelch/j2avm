@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TriangleCulling extends flash.FlashObject {
 
+    public  TriangleCulling( ) {}
+
     public static final String NEGATIVE = "negative";
 
     public static final String NONE = "none";

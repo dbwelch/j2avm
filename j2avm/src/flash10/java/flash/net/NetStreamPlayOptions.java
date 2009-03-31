@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class NetStreamPlayOptions extends flash.events.EventDispatcher {
 
+    public  NetStreamPlayOptions( ) {}
+
     @Getter
     public native String getOldStreamName( );
 

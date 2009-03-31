@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class StackFrame extends flash.FlashObject {
 
+    public  StackFrame( ) {}
+
     public native String toString( );
 
     @Getter

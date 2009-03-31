@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class SharedObject extends flash.events.EventDispatcher {
 
+    public  SharedObject( ) {}
+
     @Setter
     public static final native void setDefaultObjectEncoding( int setDefaultObjectEncoding );
 

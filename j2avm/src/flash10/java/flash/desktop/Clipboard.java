@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Clipboard extends flash.FlashObject {
 
+    public  Clipboard( ) {}
+
     @Getter
     public static final native flash.desktop.Clipboard getGeneralClipboard( );
 

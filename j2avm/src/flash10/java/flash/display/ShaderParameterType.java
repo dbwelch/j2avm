@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ShaderParameterType extends flash.FlashObject {
 
+    public  ShaderParameterType( ) {}
+
     public static final String INT2 = "int2";
 
     public static final String INT3 = "int3";

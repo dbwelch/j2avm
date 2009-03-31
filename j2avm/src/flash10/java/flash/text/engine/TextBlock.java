@@ -8,6 +8,26 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextBlock extends flash.FlashObject {
 
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation, String baselineZero, int bidiLevel, boolean applyNonLinearFontScaling, flash.text.engine.FontDescription baselineFontDescription, double baselineFontSize ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation, String baselineZero, int bidiLevel, boolean applyNonLinearFontScaling, flash.text.engine.FontDescription baselineFontDescription ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation, String baselineZero, int bidiLevel, boolean applyNonLinearFontScaling ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation, String baselineZero, int bidiLevel ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation, String baselineZero ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier, String lineRotation ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops, flash.text.engine.TextJustifier textJustifier ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content, flash.text.engine.TabStop[] tabStops ) {}
+
+    public  TextBlock( flash.text.engine.ContentElement content ) {}
+
+    public  TextBlock( ) {}
+
     @Getter
     public native flash.text.engine.TextJustifier getTextJustifier( );
 

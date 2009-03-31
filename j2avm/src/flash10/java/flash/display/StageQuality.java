@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class StageQuality extends flash.FlashObject {
 
+    public  StageQuality( ) {}
+
     public static final String BEST = "best";
 
     public static final String LOW = "low";

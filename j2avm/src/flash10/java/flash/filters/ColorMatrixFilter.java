@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ColorMatrixFilter extends flash.filters.BitmapFilter {
 
+    public  ColorMatrixFilter( flash.FlashArray matrix ) {}
+
+    public  ColorMatrixFilter( ) {}
+
     @Getter
     public native flash.FlashArray getMatrix( );
 

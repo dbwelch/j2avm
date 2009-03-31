@@ -8,6 +8,26 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ConvolutionFilter extends flash.filters.BitmapFilter {
 
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor, double bias, boolean preserveAlpha, boolean clamp, int color, double alpha ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor, double bias, boolean preserveAlpha, boolean clamp, int color ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor, double bias, boolean preserveAlpha, boolean clamp ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor, double bias, boolean preserveAlpha ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor, double bias ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix, double divisor ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY, flash.FlashArray matrix ) {}
+
+    public  ConvolutionFilter( double matrixX, double matrixY ) {}
+
+    public  ConvolutionFilter( double matrixX ) {}
+
+    public  ConvolutionFilter( ) {}
+
     @Getter
     public native flash.FlashArray getMatrix( );
 

@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Vector$double extends flash.FlashObject {
 
+    public  Vector$double( int length, boolean fixed ) {}
+
+    public  Vector$double( int length ) {}
+
+    public  Vector$double( ) {}
+
     public native double shift( );
 
     public native __AS3__.vec.Vector$double reverse( );

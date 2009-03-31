@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ShaderPrecision extends flash.FlashObject {
 
+    public  ShaderPrecision( ) {}
+
     public static final String FAST = "fast";
 
     public static final String FULL = "full";

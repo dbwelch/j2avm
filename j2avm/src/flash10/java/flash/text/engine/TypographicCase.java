@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TypographicCase extends flash.FlashObject {
 
+    public  TypographicCase( ) {}
+
     public static final String LOWERCASE = "lowercase";
 
     public static final String CAPS = "caps";

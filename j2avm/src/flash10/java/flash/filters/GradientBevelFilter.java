@@ -8,6 +8,30 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GradientBevelFilter extends flash.filters.BitmapFilter {
 
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX, double blurY, double strength, int quality, String type, boolean knockout ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX, double blurY, double strength, int quality, String type ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX, double blurY, double strength, int quality ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX, double blurY, double strength ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX, double blurY ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, double blurX ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors, flash.FlashArray alphas ) {}
+
+    public  GradientBevelFilter( double distance, double angle, flash.FlashArray colors ) {}
+
+    public  GradientBevelFilter( double distance, double angle ) {}
+
+    public  GradientBevelFilter( double distance ) {}
+
+    public  GradientBevelFilter( ) {}
+
     @Setter
     public native void setColors( flash.FlashArray setColors );
 

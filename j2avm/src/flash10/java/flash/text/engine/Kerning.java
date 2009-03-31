@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Kerning extends flash.FlashObject {
 
+    public  Kerning( ) {}
+
     public static final String AUTO = "auto";
 
     public static final String ON = "on";

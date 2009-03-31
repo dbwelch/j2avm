@@ -8,6 +8,21 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ShaderEvent extends flash.events.Event {
 
+    public  ShaderEvent( String type, boolean bubbles, boolean cancelable, flash.display.BitmapData bitmap, flash.utils.ByteArray array, double[] vector ) {}
+
+    public  ShaderEvent( String type, boolean bubbles, boolean cancelable, flash.display.BitmapData bitmap, flash.utils.ByteArray array ) {}
+
+    public  ShaderEvent( String type, boolean bubbles, boolean cancelable, flash.display.BitmapData bitmap ) {}
+
+    public  ShaderEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  ShaderEvent( String type, boolean bubbles ) {}
+
+    public  ShaderEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected ShaderEvent() {}
+
     public static final String COMPLETE = "complete";
 
     @Setter

@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Vector3D extends flash.FlashObject {
 
+    public  Vector3D( double x, double y, double z, double w ) {}
+
+    public  Vector3D( double x, double y, double z ) {}
+
+    public  Vector3D( double x, double y ) {}
+
+    public  Vector3D( double x ) {}
+
+    public  Vector3D( ) {}
+
     public static final native double distance( flash.geom.Vector3D pt1, flash.geom.Vector3D pt2 );
 
     public static final native double angleBetween( flash.geom.Vector3D a, flash.geom.Vector3D b );

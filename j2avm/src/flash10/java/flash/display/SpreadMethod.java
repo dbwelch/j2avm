@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class SpreadMethod extends flash.FlashObject {
 
+    public  SpreadMethod( ) {}
+
     public static final String PAD = "pad";
 
     public static final String REPEAT = "repeat";

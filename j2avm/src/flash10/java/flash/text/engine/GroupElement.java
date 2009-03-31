@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GroupElement extends flash.text.engine.ContentElement {
 
+    public  GroupElement( flash.text.engine.ContentElement[] elements, flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror, String textRotation ) {}
+
+    public  GroupElement( flash.text.engine.ContentElement[] elements, flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror ) {}
+
+    public  GroupElement( flash.text.engine.ContentElement[] elements, flash.text.engine.ElementFormat elementFormat ) {}
+
+    public  GroupElement( flash.text.engine.ContentElement[] elements ) {}
+
+    public  GroupElement( ) {}
+
     public native flash.text.engine.ContentElement getElementAt( int index );
 
     public native flash.text.engine.ContentElement getElementAtCharIndex( int charIndex );

@@ -7,4 +7,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public class EOFError extends flash.errors.IOError {
+
+    public  EOFError( String message, int id ) {}
+
+    public  EOFError( String message ) {}
+
+    public  EOFError( ) {}
 }

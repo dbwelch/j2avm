@@ -8,6 +8,24 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ColorTransform extends flash.FlashObject {
 
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier, double alphaMultiplier, double redOffset, double greenOffset, double blueOffset, double alphaOffset ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier, double alphaMultiplier, double redOffset, double greenOffset, double blueOffset ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier, double alphaMultiplier, double redOffset, double greenOffset ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier, double alphaMultiplier, double redOffset ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier, double alphaMultiplier ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier, double blueMultiplier ) {}
+
+    public  ColorTransform( double redMultiplier, double greenMultiplier ) {}
+
+    public  ColorTransform( double redMultiplier ) {}
+
+    public  ColorTransform( ) {}
+
     @Getter
     public native int getColor( );
 

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Endian extends flash.FlashObject {
 
+    public  Endian( ) {}
+
     public static final String BIG_ENDIAN = "bigEndian";
 
     public static final String LITTLE_ENDIAN = "littleEndian";

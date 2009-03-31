@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextFormatDisplay extends flash.FlashObject {
 
+    public  TextFormatDisplay( ) {}
+
     public static final String INLINE = "inline";
 
     public static final String BLOCK = "block";

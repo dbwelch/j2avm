@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class XMLNode extends flash.FlashObject {
 
+    public  XMLNode( int type, String value ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected XMLNode() {}
+
     @Getter
     public native flash.xml.XMLNode getPreviousSibling( );
 

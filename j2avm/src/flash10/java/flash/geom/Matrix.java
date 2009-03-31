@@ -8,6 +8,20 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Matrix extends flash.FlashObject {
 
+    public  Matrix( double a, double b, double c, double d, double tx, double ty ) {}
+
+    public  Matrix( double a, double b, double c, double d, double tx ) {}
+
+    public  Matrix( double a, double b, double c, double d ) {}
+
+    public  Matrix( double a, double b, double c ) {}
+
+    public  Matrix( double a, double b ) {}
+
+    public  Matrix( double a ) {}
+
+    public  Matrix( ) {}
+
     @Getter
     public native double getA( );
 

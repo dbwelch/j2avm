@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class LineScaleMode extends flash.FlashObject {
 
+    public  LineScaleMode( ) {}
+
     public static final String HORIZONTAL = "horizontal";
 
     public static final String VERTICAL = "vertical";

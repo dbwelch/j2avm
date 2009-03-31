@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ContextMenu extends flash.events.EventDispatcher {
 
+    public  ContextMenu( ) {}
+
     @Setter
     public native void setBuiltInItems( flash.ui.ContextMenuBuiltInItems setBuiltInItems );
 

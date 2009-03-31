@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class DigitCase extends flash.FlashObject {
 
+    public  DigitCase( ) {}
+
     public static final String LINING = "lining";
 
     public static final String DEFAULT = "default";

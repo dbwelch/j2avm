@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ID3Info extends flash.FlashObject {
 
+    public  ID3Info( ) {}
+
     @Getter
     public native String getSongName( );
 

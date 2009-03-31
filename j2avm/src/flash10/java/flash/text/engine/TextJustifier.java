@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class TextJustifier extends flash.FlashObject {
 
+    public  TextJustifier( String locale, String lineJustification ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected TextJustifier() {}
+
     public static final native flash.text.engine.TextJustifier getJustifierForLocale( String locale );
 
     @Setter

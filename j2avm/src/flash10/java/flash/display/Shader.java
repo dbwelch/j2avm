@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Shader extends flash.FlashObject {
 
+    public  Shader( flash.utils.ByteArray code ) {}
+
+    public  Shader( ) {}
+
     @Setter
     public native void setByteCode( flash.utils.ByteArray setByteCode );
 

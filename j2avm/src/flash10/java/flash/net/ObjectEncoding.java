@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ObjectEncoding extends flash.FlashObject {
 
+    public  ObjectEncoding( ) {}
+
     public static final int DEFAULT = 3;
 
     public static final int AMF0 = 0;

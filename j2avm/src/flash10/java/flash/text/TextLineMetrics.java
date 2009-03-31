@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class TextLineMetrics extends flash.FlashObject {
 
+    public  TextLineMetrics( double x, double width, double height, double ascent, double descent, double leading ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected TextLineMetrics() {}
+
     @Getter
     public native double getAscent( );
 

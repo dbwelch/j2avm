@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsSolidFill extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsFill {
 
+    public  GraphicsSolidFill( int color, double alpha ) {}
+
+    public  GraphicsSolidFill( int color ) {}
+
+    public  GraphicsSolidFill( ) {}
+
     @Getter
     public native int getColor( );
 

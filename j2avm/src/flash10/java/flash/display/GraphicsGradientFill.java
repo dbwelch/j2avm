@@ -8,6 +8,24 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsGradientFill extends flash.FlashObject implements flash.display.IGraphicsFill,flash.display.IGraphicsData {
 
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, Object matrix, Object spreadMethod, String interpolationMethod, double focalPointRatio ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, Object matrix, Object spreadMethod, String interpolationMethod ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, Object matrix, Object spreadMethod ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios, Object matrix ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas, flash.FlashArray ratios ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors, flash.FlashArray alphas ) {}
+
+    public  GraphicsGradientFill( String type, flash.FlashArray colors ) {}
+
+    public  GraphicsGradientFill( String type ) {}
+
+    public  GraphicsGradientFill( ) {}
+
     @Getter
     public native flash.geom.Matrix getMatrix( );
 

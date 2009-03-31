@@ -6,7 +6,13 @@ package flash.net;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public class Socket extends flash.events.EventDispatcher implements flash.utils.IDataInput,flash.utils.IDataOutput {
+public class Socket extends flash.events.EventDispatcher implements flash.utils.IDataOutput,flash.utils.IDataInput {
+
+    public  Socket( String host, int port ) {}
+
+    public  Socket( String host ) {}
+
+    public  Socket( ) {}
 
     public native void writeUTFBytes( String value );
 

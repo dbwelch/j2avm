@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class XMLUI extends flash.FlashObject {
 
+    public  XMLUI( ) {}
+
     public static final native void accept( );
 
     public static final native void cancel( );

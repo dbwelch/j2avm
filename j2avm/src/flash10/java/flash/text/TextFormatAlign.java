@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextFormatAlign extends flash.FlashObject {
 
+    public  TextFormatAlign( ) {}
+
     public static final String JUSTIFY = "justify";
 
     public static final String CENTER = "center";

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class PerspectiveProjection extends flash.FlashObject {
 
+    public  PerspectiveProjection( ) {}
+
     @Getter
     public native flash.geom.Point getProjectionCenter( );
 

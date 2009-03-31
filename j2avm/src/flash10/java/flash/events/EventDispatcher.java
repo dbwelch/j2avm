@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class EventDispatcher extends flash.FlashObject implements flash.events.IEventDispatcher {
 
+    public  EventDispatcher( flash.events.IEventDispatcher target ) {}
+
+    public  EventDispatcher( ) {}
+
     public native boolean dispatchEvent( flash.events.Event event );
 
     public native boolean willTrigger( String type );

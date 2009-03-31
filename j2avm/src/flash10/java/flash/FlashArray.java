@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FlashArray extends flash.FlashObject {
 
+    public  FlashArray( ) {}
+
     public static final int CASEINSENSITIVE = 1;
 
     public static final int length = 1;

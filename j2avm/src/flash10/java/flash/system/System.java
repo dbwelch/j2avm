@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class System extends flash.FlashObject {
 
+    public  System( ) {}
+
     @Getter
     public static final native flash.system.IME getIme( );
 

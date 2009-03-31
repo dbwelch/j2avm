@@ -8,6 +8,19 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class SampleDataEvent extends flash.events.Event {
 
+    public  SampleDataEvent( String type, boolean bubbles, boolean cancelable, double theposition, flash.utils.ByteArray thedata ) {}
+
+    public  SampleDataEvent( String type, boolean bubbles, boolean cancelable, double theposition ) {}
+
+    public  SampleDataEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  SampleDataEvent( String type, boolean bubbles ) {}
+
+    public  SampleDataEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected SampleDataEvent() {}
+
     public static final String SAMPLE_DATA = "sampleData";
 
     @Setter

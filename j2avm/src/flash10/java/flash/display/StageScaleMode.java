@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class StageScaleMode extends flash.FlashObject {
 
+    public  StageScaleMode( ) {}
+
     public static final String EXACT_FIT = "exactFit";
 
     public static final String NO_BORDER = "noBorder";

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class URLLoaderDataFormat extends flash.FlashObject {
 
+    public  URLLoaderDataFormat( ) {}
+
     public static final String BINARY = "binary";
 
     public static final String VARIABLES = "variables";

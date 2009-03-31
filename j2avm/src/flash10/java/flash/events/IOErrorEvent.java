@@ -8,6 +8,17 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class IOErrorEvent extends flash.events.ErrorEvent {
 
+    public  IOErrorEvent( String type, boolean bubbles, boolean cancelable, String text ) {}
+
+    public  IOErrorEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  IOErrorEvent( String type, boolean bubbles ) {}
+
+    public  IOErrorEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected IOErrorEvent() {}
+
     public static final String DISK_ERROR = "diskError";
 
     public static final String NETWORK_ERROR = "networkError";

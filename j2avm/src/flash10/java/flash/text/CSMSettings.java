@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class CSMSettings extends flash.FlashObject {
 
+    public  CSMSettings( double fontSize, double insideCutoff, double outsideCutoff ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected CSMSettings() {}
+
     @Getter
     public native double getFontSize( );
 

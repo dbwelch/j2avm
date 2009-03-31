@@ -8,6 +8,13 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Timer extends flash.events.EventDispatcher {
 
+    public  Timer( double delay, int repeatCount ) {}
+
+    public  Timer( double delay ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected Timer() {}
+
     @Getter
     public native double getDelay( );
 

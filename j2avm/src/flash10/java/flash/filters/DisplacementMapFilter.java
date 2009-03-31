@@ -8,6 +8,26 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class DisplacementMapFilter extends flash.filters.BitmapFilter {
 
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY, double scaleX, double scaleY, String mode, int color, double alpha ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY, double scaleX, double scaleY, String mode, int color ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY, double scaleX, double scaleY, String mode ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY, double scaleX, double scaleY ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY, double scaleX ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX, int componentY ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint, int componentX ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap, flash.geom.Point mapPoint ) {}
+
+    public  DisplacementMapFilter( flash.display.BitmapData mapBitmap ) {}
+
+    public  DisplacementMapFilter( ) {}
+
     @Getter
     public native int getComponentY( );
 

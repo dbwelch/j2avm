@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FontType extends flash.FlashObject {
 
+    public  FontType( ) {}
+
     public static final String DEVICE = "device";
 
     public static final String EMBEDDED = "embedded";

@@ -7,4 +7,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public class MemoryError extends flash.FlashError {
+
+    public  MemoryError( String message, int id ) {}
+
+    public  MemoryError( String message ) {}
+
+    public  MemoryError( ) {}
 }

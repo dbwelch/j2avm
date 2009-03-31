@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Trace extends flash.FlashObject {
 
+    public  Trace( ) {}
+
     public static final int METHODS_AND_LINES_WITH_ARGS = 4;
 
     public static final int METHODS_AND_LINES = 3;

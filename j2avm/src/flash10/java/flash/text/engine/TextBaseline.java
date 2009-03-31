@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextBaseline extends flash.FlashObject {
 
+    public  TextBaseline( ) {}
+
     public static final String DESCENT = "descent";
 
     public static final String IDEOGRAPHIC_BOTTOM = "ideographicBottom";

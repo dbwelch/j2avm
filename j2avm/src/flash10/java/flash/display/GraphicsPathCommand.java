@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsPathCommand extends flash.FlashObject {
 
+    public  GraphicsPathCommand( ) {}
+
     public static final int LINE_TO = 2;
 
     public static final int MOVE_TO = 1;

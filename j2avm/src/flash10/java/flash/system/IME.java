@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class IME extends flash.events.EventDispatcher {
 
+    public  IME( ) {}
+
     public static final native void setCompositionString( String composition );
 
     @Getter

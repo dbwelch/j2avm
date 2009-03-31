@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Transform extends flash.FlashObject {
 
+    public  Transform( flash.display.DisplayObject displayObject ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected Transform() {}
+
     @Getter
     public native flash.geom.Matrix getMatrix( );
 

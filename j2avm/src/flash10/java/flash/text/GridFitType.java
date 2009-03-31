@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GridFitType extends flash.FlashObject {
 
+    public  GridFitType( ) {}
+
     public static final String SUBPIXEL = "subpixel";
 
     public static final String NONE = "none";

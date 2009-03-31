@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class PrintJob extends flash.events.EventDispatcher {
 
+    public  PrintJob( ) {}
+
     @Getter
     public native String getOrientation( );
 

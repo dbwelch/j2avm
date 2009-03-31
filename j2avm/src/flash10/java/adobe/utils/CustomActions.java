@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class CustomActions extends flash.FlashObject {
 
+    public  CustomActions( ) {}
+
     public static final native void installActions( String name, String data );
 
     public static final native void uninstallActions( String name );

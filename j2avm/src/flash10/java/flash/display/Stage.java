@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Stage extends flash.display.DisplayObjectContainer {
 
+    public  Stage( ) {}
+
     @Setter
     @Override
     public native void setTabIndex( int setTabIndex );

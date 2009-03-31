@@ -7,4 +7,6 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public final class Vector extends flash.FlashObject {
+
+    public  Vector( ) {}
 }

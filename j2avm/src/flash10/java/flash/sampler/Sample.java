@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Sample extends flash.FlashObject {
 
+    public  Sample( ) {}
+
     @Getter
     public native flash.FlashArray getStack( );
 

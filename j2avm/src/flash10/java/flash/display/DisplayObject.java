@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class DisplayObject extends flash.events.EventDispatcher implements flash.display.IBitmapDrawable {
 
+    public  DisplayObject( ) {}
+
     @Getter
     public native boolean getVisible( );
 

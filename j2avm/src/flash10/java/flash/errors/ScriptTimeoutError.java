@@ -7,4 +7,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public class ScriptTimeoutError extends flash.FlashError {
+
+    public  ScriptTimeoutError( String message, int id ) {}
+
+    public  ScriptTimeoutError( String message ) {}
+
+    public  ScriptTimeoutError( ) {}
 }

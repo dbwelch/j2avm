@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class MouseCursor extends flash.FlashObject {
 
+    public  MouseCursor( ) {}
+
     public static final String BUTTON = "button";
 
     public static final String HAND = "hand";

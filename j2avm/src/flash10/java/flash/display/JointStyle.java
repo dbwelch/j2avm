@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class JointStyle extends flash.FlashObject {
 
+    public  JointStyle( ) {}
+
     public static final String MITER = "miter";
 
     public static final String BEVEL = "bevel";

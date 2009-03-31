@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class PrintJobOptions extends flash.FlashObject {
 
+    public  PrintJobOptions( boolean printAsBitmap ) {}
+
+    public  PrintJobOptions( ) {}
+
     @Getter
     public native boolean getPrintAsBitmap( );
 

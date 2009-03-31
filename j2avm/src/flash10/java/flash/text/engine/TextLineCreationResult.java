@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextLineCreationResult extends flash.FlashObject {
 
+    public  TextLineCreationResult( ) {}
+
     public static final String EMERGENCY = "emergency";
 
     public static final String SUCCESS = "success";

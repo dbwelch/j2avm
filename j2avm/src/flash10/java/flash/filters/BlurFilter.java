@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BlurFilter extends flash.filters.BitmapFilter {
 
+    public  BlurFilter( double blurX, double blurY, int quality ) {}
+
+    public  BlurFilter( double blurX, double blurY ) {}
+
+    public  BlurFilter( double blurX ) {}
+
+    public  BlurFilter( ) {}
+
     @Getter
     public native double getBlurX( );
 

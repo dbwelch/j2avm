@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class URLRequest extends flash.FlashObject {
 
+    public  URLRequest( String url ) {}
+
+    public  URLRequest( ) {}
+
     @Getter
     public native String getMethod( );
 

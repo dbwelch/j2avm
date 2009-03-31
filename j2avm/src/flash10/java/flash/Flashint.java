@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Flashint extends flash.FlashObject {
 
+    public  Flashint( Object value ) {}
+
+    public  Flashint( ) {}
+
     public static final int MIN_VALUE = -2147483648;
 
     public static final int length = 1;

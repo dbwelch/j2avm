@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextFieldAutoSize extends flash.FlashObject {
 
+    public  TextFieldAutoSize( ) {}
+
     public static final String CENTER = "center";
 
     public static final String LEFT = "left";

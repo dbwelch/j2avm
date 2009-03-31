@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Keyboard extends flash.FlashObject {
 
+    public  Keyboard( ) {}
+
     public static final int ESCAPE = 27;
 
     public static final int RIGHT = 39;

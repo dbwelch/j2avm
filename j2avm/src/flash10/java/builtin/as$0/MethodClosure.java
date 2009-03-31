@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class MethodClosure extends flash.FlashFunction {
 
+    public  MethodClosure( ) {}
+
     @Getter
     @Override
     public native Object getPrototype( );

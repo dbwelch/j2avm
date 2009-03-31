@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BitmapFilterType extends flash.FlashObject {
 
+    public  BitmapFilterType( ) {}
+
     public static final String OUTER = "outer";
 
     public static final String INNER = "inner";

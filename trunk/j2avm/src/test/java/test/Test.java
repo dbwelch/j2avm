@@ -16,7 +16,7 @@ import flash.text.TextField;
  *
  * @author nickmain
  */
-@SWF( width  = 200, 
+@SWF( width  = 500, 
       height = 200,
       background = 0xffeeee )
 public class Test extends MovieClip {
@@ -73,6 +73,7 @@ public class Test extends MovieClip {
     protected int colorIndex = 0;
 
     private final TextField field;
+    private final TextField field2;
     
     //private Foo foo;
     
@@ -84,6 +85,15 @@ public class Test extends MovieClip {
         field.setHeight( 20 );
         field.setText( GUser.WELCOME_MESSAGE );
         addChild( field );
+
+        field2 = new TextField();
+        field2.setX( 300 );
+        field2.setY( 10 );
+        field2.setWidth( 190 );
+        field2.setHeight( 180 );
+        field2.setText( "Hashcode test -->\n" );
+        field2.setBorder( true );
+        addChild( field2 );
         
         for( int x = 10; x < 90; x += 15 ) {
             // StringBuilder test --> 
@@ -101,10 +111,10 @@ public class Test extends MovieClip {
                 if( colorIndex >= colors.length ) colorIndex = 0;
             }            
         }
-        
+    
         getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
     }
-    
+
     @Name("onMove")
     void onMove( MouseEvent e ) {
         double now = new FlashDate().getTime();

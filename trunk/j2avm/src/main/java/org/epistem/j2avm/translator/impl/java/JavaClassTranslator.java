@@ -25,7 +25,8 @@ import flash.display.MovieClip;
  */
 public class JavaClassTranslator extends JavaTranslator {
 
-    private static final Signature NO_ARG_CONTRUCTOR = new Signature( "<init>" );
+    public static final String INIT_NAME = "<init>";
+    public static final Signature NO_ARG_CONTRUCTOR = new Signature( INIT_NAME );
     
     public JavaClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
         super( manager, jvmClass );        
@@ -57,13 +58,10 @@ public class JavaClassTranslator extends JavaTranslator {
 
         translateMembers();
         addImplementedInterfaces();
-        
-        //-- Constructor
+                
+        //-- constructor
         makeConstructor();
         
-        //TODO: static initializer
-        //TODO: constructor
-
         
         //TODO: class annotations
         //TODO: field annotations
@@ -84,7 +82,6 @@ public class JavaClassTranslator extends JavaTranslator {
         //normal JVM instantiation
     }
 
-
     /**
      * Make the constructor. 
      * 
@@ -101,7 +98,7 @@ public class JavaClassTranslator extends JavaTranslator {
      * Flash native code then the init methods will not be called. TODO: need 
      * to figure out a way to address this
      */
-    public void makeConstructor() {
+    private void makeConstructor() {
         AVM2Class avm2class = codeClass.avm2class;
         AVM2Code cons = AVM2Code.startNoArgConstructor( avm2class );
         
@@ -126,6 +123,7 @@ public class JavaClassTranslator extends JavaTranslator {
         cons.returnVoid();
         cons.analyze();
     }
+    
     
     
 //    private void THIS_IS_ONLY_FOR_DEV_PURPOSES( AVM2Code cons ) {

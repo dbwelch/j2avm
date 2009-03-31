@@ -35,4 +35,18 @@ public final class Flash {
     public static FlashFunction delegate( String name ) {
         return null;
     }
+    
+    //TODO @Translator(  )
+    public static native Object getProperty( String name );
+
+    /**
+     * Set an object property - only works on dynamic (non-sealed) objects
+     * 
+     * @param target the object to set the property on
+     * @param name the property name
+     * @param value 
+     */
+    //TODO @Translator(  )
+    public static native void setProperty( Object target, String name, Object value );
+
 }

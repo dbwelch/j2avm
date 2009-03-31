@@ -7,6 +7,7 @@ import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.impl.MethodTranslatorBase;
+import org.epistem.j2avm.translator.impl.flash.FlashNativeClassTranslator;
 import org.epistem.j2avm.translator.transformers.AVM2_ASM_Transformer;
 import org.epistem.j2avm.translator.transformers.Transformer;
 import org.epistem.j2avm.util.NameUtils;
@@ -29,7 +30,7 @@ import com.anotherbigidea.flash.avm2.model.*;
  */
 public class JavaMethodTranslator extends MethodTranslatorBase {
 
-    private CodeMethod codeMethod;
+    protected CodeMethod codeMethod;
     
     protected JavaMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
         super( classTrans, method, makeAVM2Name( classTrans, method ) );
@@ -61,10 +62,19 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         
         AVM2Name retType = NameUtils.qnameForJavaType( jvmMethod.type );
 
-        //TODO: determine override status
-        boolean isOverride = false;
         boolean isFinal = jvmMethod.flags.contains( MethodFlag.MethodIsFinal );
-
+        boolean isOverride = false;
+        
+        ClassTranslator superTrans = classTranslator.getSuperclass();
+        if( superTrans != null && ! (superTrans instanceof FlashNativeClassTranslator )) {
+            try {
+                superTrans.getMethodTranslator( superTrans, this.jvmMethod.signature );
+                isOverride = true;
+            } catch( NoSuchMethodException nsme ) {
+                //not an override
+            }
+        }
+        
         ValueType[] paramTypes = jvmMethod.signature.paramTypes;
         AVM2Name[] types = new AVM2Name[ paramTypes.length ];
         for( int i = 0; i < paramTypes.length; i++ ) {
@@ -171,5 +181,5 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         if( codeMethod == null || ! J2AVM.TRACE_ON ) return;
         
         codeMethod.code().trace( message );
-    } 
+    }
 }

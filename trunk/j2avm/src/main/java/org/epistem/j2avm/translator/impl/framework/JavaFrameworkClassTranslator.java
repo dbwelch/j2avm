@@ -5,6 +5,7 @@ import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
+import org.epistem.j2avm.translator.impl.java.JavaStaticInitMethodTranslator;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
@@ -55,6 +56,10 @@ public class JavaFrameworkClassTranslator extends JavaClassTranslator {
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultMethodTranslator(org.epistem.jvm.JVMMethod) */
     @Override
     public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
+        if( method.name.equals( "<clinit>" ) ) {
+            return new JavaStaticInitMethodTranslator( this, method );
+        }
+        
         return new JavaFrameworkMethodTranslator( this, method );
     }
 

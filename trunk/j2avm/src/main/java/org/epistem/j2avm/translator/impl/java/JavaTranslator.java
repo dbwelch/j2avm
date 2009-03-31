@@ -51,6 +51,10 @@ public abstract class JavaTranslator extends ClassTranslatorBase {
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultMethodTranslator(org.epistem.jvm.JVMMethod) */
     @Override
     public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
+        if( method.name.equals( "<clinit>" ) ) {
+            return new JavaStaticInitMethodTranslator( this, method );
+        }
+        
         return new JavaMethodTranslator( this, method );
     }
     

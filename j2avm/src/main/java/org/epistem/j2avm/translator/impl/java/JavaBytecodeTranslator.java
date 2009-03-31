@@ -124,9 +124,22 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCheckCast(org.epistem.jvm.code.instructions.CheckCast) */
-    public void visitCheckCast( CheckCast cast ) {
-        throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
+    public void visitCheckCast( CheckCast cast ) {       
+        if( cast.type instanceof ArrayType ) {
+            throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
+        }        
         
+        AVM2QName type = new AVM2QName( cast.type.name );
+        code.dup();
+        code.isType( type );
+        code.iftrue( "" + cast.toString() );
+        code.pop();
+        code.getLex( "TypeError" );
+        code.pushString( "Cannot cast to " + cast.type );
+        code.construct( 1 );
+        code.throwException();
+        code.target( "" + cast.toString() );
+        code.label();
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitConditional(org.epistem.jvm.code.instructions.ConditionalBranch) */

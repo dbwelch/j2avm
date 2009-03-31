@@ -34,12 +34,7 @@ public abstract class Enum<E extends Enum<E>>
     }
 
     public final int compareTo( E o ) {
-        Enum other = (Enum)o;
-        Enum self = this;
-        if (self.getClass() != other.getClass() && // optimization
-            self.getDeclaringClass() != other.getDeclaringClass())
-            throw new ClassCastException();
-        return self.ordinal - other.ordinal;
+        return ordinal - other.ordinal;
     }
 
     /* TODO

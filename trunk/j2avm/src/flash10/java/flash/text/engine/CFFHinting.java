@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class CFFHinting extends flash.FlashObject {
 
+    public  CFFHinting( ) {}
+
     public static final String NONE = "none";
 
     public static final String HORIZONTAL_STEM = "horizontalStem";

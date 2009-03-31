@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextDisplayMode extends flash.FlashObject {
 
+    public  TextDisplayMode( ) {}
+
     public static final String DEFAULT = "default";
 
     public static final String CRT = "crt";

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BitmapDataChannel extends flash.FlashObject {
 
+    public  BitmapDataChannel( ) {}
+
     public static final int RED = 1;
 
     public static final int GREEN = 2;

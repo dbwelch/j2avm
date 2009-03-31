@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsTrianglePath extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsPath {
 
+    public  GraphicsTrianglePath( double[] vertices, int[] indices, double[] uvtData, String culling ) {}
+
+    public  GraphicsTrianglePath( double[] vertices, int[] indices, double[] uvtData ) {}
+
+    public  GraphicsTrianglePath( double[] vertices, int[] indices ) {}
+
+    public  GraphicsTrianglePath( double[] vertices ) {}
+
+    public  GraphicsTrianglePath( ) {}
+
     @Getter
     public native String getCulling( );
 

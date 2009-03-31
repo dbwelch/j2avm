@@ -8,6 +8,13 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class NetStream extends flash.events.EventDispatcher {
 
+    public  NetStream( flash.net.NetConnection connection, String peerID ) {}
+
+    public  NetStream( flash.net.NetConnection connection ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected NetStream() {}
+
     public static final String CONNECT_TO_FMS = "connectToFMS";
 
     public static final String DIRECT_CONNECTIONS = "directConnections";

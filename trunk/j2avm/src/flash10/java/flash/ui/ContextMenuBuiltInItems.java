@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ContextMenuBuiltInItems extends flash.FlashObject {
 
+    public  ContextMenuBuiltInItems( ) {}
+
     @Getter
     public native boolean getLoop( );
 

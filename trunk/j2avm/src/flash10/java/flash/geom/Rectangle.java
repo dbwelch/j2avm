@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Rectangle extends flash.FlashObject {
 
+    public  Rectangle( double x, double y, double width, double height ) {}
+
+    public  Rectangle( double x, double y, double width ) {}
+
+    public  Rectangle( double x, double y ) {}
+
+    public  Rectangle( double x ) {}
+
+    public  Rectangle( ) {}
+
     public native boolean containsPoint( flash.geom.Point point );
 
     @Getter

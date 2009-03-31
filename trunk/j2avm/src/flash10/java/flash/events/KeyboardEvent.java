@@ -8,6 +8,27 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class KeyboardEvent extends flash.events.Event {
 
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode, int keyCode, int keyLocation, boolean ctrlKey, boolean altKey, boolean shiftKey ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode, int keyCode, int keyLocation, boolean ctrlKey, boolean altKey ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode, int keyCode, int keyLocation, boolean ctrlKey ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode, int keyCode, int keyLocation ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode, int keyCode ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable, int charCode ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  KeyboardEvent( String type, boolean bubbles ) {}
+
+    public  KeyboardEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected KeyboardEvent() {}
+
     public static final String KEY_DOWN = "keyDown";
 
     public static final String KEY_UP = "keyUp";

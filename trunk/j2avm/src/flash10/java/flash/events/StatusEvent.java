@@ -8,6 +8,19 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class StatusEvent extends flash.events.Event {
 
+    public  StatusEvent( String type, boolean bubbles, boolean cancelable, String code, String level ) {}
+
+    public  StatusEvent( String type, boolean bubbles, boolean cancelable, String code ) {}
+
+    public  StatusEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  StatusEvent( String type, boolean bubbles ) {}
+
+    public  StatusEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected StatusEvent() {}
+
     public static final String STATUS = "status";
 
     @Getter

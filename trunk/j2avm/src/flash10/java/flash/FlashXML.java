@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FlashXML extends flash.FlashObject {
 
+    public  FlashXML( Object value ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FlashXML() {}
+
     public static final native flash.FlashObject settings( );
 
     @Setter

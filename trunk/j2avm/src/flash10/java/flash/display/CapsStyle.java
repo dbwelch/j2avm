@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class CapsStyle extends flash.FlashObject {
 
+    public  CapsStyle( ) {}
+
     public static final String NONE = "none";
 
     public static final String SQUARE = "square";

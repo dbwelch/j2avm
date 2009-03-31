@@ -8,6 +8,24 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GlowFilter extends flash.filters.BitmapFilter {
 
+    public  GlowFilter( int color, double alpha, double blurX, double blurY, double strength, int quality, boolean inner, boolean knockout ) {}
+
+    public  GlowFilter( int color, double alpha, double blurX, double blurY, double strength, int quality, boolean inner ) {}
+
+    public  GlowFilter( int color, double alpha, double blurX, double blurY, double strength, int quality ) {}
+
+    public  GlowFilter( int color, double alpha, double blurX, double blurY, double strength ) {}
+
+    public  GlowFilter( int color, double alpha, double blurX, double blurY ) {}
+
+    public  GlowFilter( int color, double alpha, double blurX ) {}
+
+    public  GlowFilter( int color, double alpha ) {}
+
+    public  GlowFilter( int color ) {}
+
+    public  GlowFilter( ) {}
+
     @Getter
     public native double getStrength( );
 

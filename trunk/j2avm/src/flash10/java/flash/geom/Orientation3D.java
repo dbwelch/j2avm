@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Orientation3D extends flash.FlashObject {
 
+    public  Orientation3D( ) {}
+
     public static final String AXIS_ANGLE = "axisAngle";
 
     public static final String EULER_ANGLES = "eulerAngles";

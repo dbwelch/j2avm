@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FlashXMLList extends flash.FlashObject {
 
+    public  FlashXMLList( Object value ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FlashXMLList() {}
+
     public static final Object length = 1;
 
     @Override

@@ -8,6 +8,17 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ContextMenuItem extends flash.events.EventDispatcher {
 
+    public  ContextMenuItem( String caption, boolean separatorBefore, boolean enabled, boolean visible ) {}
+
+    public  ContextMenuItem( String caption, boolean separatorBefore, boolean enabled ) {}
+
+    public  ContextMenuItem( String caption, boolean separatorBefore ) {}
+
+    public  ContextMenuItem( String caption ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected ContextMenuItem() {}
+
     @Getter
     public native boolean getEnabled( );
 

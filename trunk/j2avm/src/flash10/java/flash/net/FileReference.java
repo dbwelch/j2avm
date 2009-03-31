@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FileReference extends flash.events.EventDispatcher {
 
+    public  FileReference( ) {}
+
     public native void upload( flash.net.URLRequest request, String uploadDataFieldName, boolean testUpload );
 
     public native void upload( flash.net.URLRequest request, String uploadDataFieldName );

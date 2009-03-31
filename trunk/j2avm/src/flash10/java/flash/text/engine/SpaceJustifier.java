@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class SpaceJustifier extends flash.text.engine.TextJustifier {
 
+    public  SpaceJustifier( String locale, String lineJustification, boolean letterSpacing ) {}
+
+    public  SpaceJustifier( String locale, String lineJustification ) {}
+
+    public  SpaceJustifier( String locale ) {}
+
+    public  SpaceJustifier( ) {}
+
     @Setter
     public native void setLetterSpacing( boolean setLetterSpacing );
 

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class JustificationStyle extends flash.FlashObject {
 
+    public  JustificationStyle( ) {}
+
     public static final String PUSH_IN_KINSOKU = "pushInKinsoku";
 
     public static final String PRIORITIZE_LEAST_ADJUSTMENT = "prioritizeLeastAdjustment";

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Capabilities extends flash.FlashObject {
 
+    public  Capabilities( ) {}
+
     @Getter
     public static final native boolean getHasTLS( );
 

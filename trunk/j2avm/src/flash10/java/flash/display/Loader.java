@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Loader extends flash.display.DisplayObjectContainer {
 
+    public  Loader( ) {}
+
     @Getter
     public native flash.display.LoaderInfo getContentLoaderInfo( );
 

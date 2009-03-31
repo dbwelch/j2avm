@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class LoaderContext extends flash.FlashObject {
 
+    public  LoaderContext( boolean checkPolicyFile, flash.system.ApplicationDomain applicationDomain, flash.system.SecurityDomain securityDomain ) {}
+
+    public  LoaderContext( boolean checkPolicyFile, flash.system.ApplicationDomain applicationDomain ) {}
+
+    public  LoaderContext( boolean checkPolicyFile ) {}
+
+    public  LoaderContext( ) {}
+
     @Getter
     public native flash.system.ApplicationDomain getApplicationDomain( );
 

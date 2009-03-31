@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class LoaderInfo extends flash.events.EventDispatcher {
 
+    public  LoaderInfo( ) {}
+
     public static final native flash.display.LoaderInfo getLoaderInfoByDefinition( flash.FlashObject object );
 
     @Override

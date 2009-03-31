@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class XMLTag extends flash.FlashObject {
 
+    public  XMLTag( ) {}
+
     @Getter
     public native String getValue( );
 

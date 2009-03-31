@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ExternalInterface extends flash.FlashObject {
 
+    public  ExternalInterface( ) {}
+
     public static final native void addCallback( String functionName, flash.FlashFunction closure );
 
     @Getter

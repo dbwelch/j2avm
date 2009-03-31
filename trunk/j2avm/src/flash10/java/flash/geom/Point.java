@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Point extends flash.FlashObject {
 
+    public  Point( double x, double y ) {}
+
+    public  Point( double x ) {}
+
+    public  Point( ) {}
+
     public static final native flash.geom.Point interpolate( flash.geom.Point pt1, flash.geom.Point pt2, double f );
 
     public static final native double distance( flash.geom.Point pt1, flash.geom.Point pt2 );

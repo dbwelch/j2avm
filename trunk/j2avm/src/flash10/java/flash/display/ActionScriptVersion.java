@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ActionScriptVersion extends flash.FlashObject {
 
+    public  ActionScriptVersion( ) {}
+
     public static final int ACTIONSCRIPT2 = 2;
 
     public static final int ACTIONSCRIPT3 = 3;

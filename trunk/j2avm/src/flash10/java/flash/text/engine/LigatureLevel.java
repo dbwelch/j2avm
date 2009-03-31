@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class LigatureLevel extends flash.FlashObject {
 
+    public  LigatureLevel( ) {}
+
     public static final String UNCOMMON = "uncommon";
 
     public static final String NONE = "none";

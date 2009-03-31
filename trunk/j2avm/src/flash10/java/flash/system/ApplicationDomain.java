@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ApplicationDomain extends flash.FlashObject {
 
+    public  ApplicationDomain( flash.system.ApplicationDomain parentDomain ) {}
+
+    public  ApplicationDomain( ) {}
+
     @Getter
     public static final native flash.system.ApplicationDomain getCurrentDomain( );
 

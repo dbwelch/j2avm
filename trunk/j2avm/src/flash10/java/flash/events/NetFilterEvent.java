@@ -8,6 +8,19 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class NetFilterEvent extends flash.events.Event {
 
+    public  NetFilterEvent( String type, boolean bubbles, boolean cancelable, flash.utils.ByteArray header, flash.utils.ByteArray data ) {}
+
+    public  NetFilterEvent( String type, boolean bubbles, boolean cancelable, flash.utils.ByteArray header ) {}
+
+    public  NetFilterEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  NetFilterEvent( String type, boolean bubbles ) {}
+
+    public  NetFilterEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected NetFilterEvent() {}
+
     @Getter
     public native flash.utils.ByteArray getData( );
 

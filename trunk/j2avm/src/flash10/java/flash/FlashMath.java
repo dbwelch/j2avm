@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FlashMath extends flash.FlashObject {
 
+    public  FlashMath( ) {}
+
     public static final native double abs( double x );
 
     public static final native double random( );

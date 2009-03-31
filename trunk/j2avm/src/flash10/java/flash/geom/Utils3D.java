@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Utils3D extends flash.FlashObject {
 
+    public  Utils3D( ) {}
+
     public static final native flash.geom.Matrix3D pointTowards( double percent, flash.geom.Matrix3D mat, flash.geom.Vector3D pos, flash.geom.Vector3D at, flash.geom.Vector3D up );
 
     public static final native flash.geom.Matrix3D pointTowards( double percent, flash.geom.Matrix3D mat, flash.geom.Vector3D pos, flash.geom.Vector3D at );

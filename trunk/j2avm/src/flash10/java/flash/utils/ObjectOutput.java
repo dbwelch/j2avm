@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ObjectOutput extends flash.FlashObject implements flash.utils.IDataOutput {
 
+    public  ObjectOutput( ) {}
+
     public native void writeMultiByte( String value, String charSet );
 
     public native void writeUTFBytes( String value );

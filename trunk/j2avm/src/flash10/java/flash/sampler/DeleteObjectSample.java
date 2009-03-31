@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class DeleteObjectSample extends flash.sampler.Sample {
 
+    public  DeleteObjectSample( ) {}
+
     @Getter
     public native double getSize( );
 

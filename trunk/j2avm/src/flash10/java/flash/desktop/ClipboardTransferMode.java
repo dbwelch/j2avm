@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ClipboardTransferMode extends flash.FlashObject {
 
+    public  ClipboardTransferMode( ) {}
+
     public static final String ORIGINAL_PREFERRED = "originalPreferred";
 
     public static final String CLONE_ONLY = "cloneOnly";

@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Vector$uint extends flash.FlashObject {
 
+    public  Vector$uint( int length, boolean fixed ) {}
+
+    public  Vector$uint( int length ) {}
+
+    public  Vector$uint( ) {}
+
     public native int shift( );
 
     public native __AS3__.vec.Vector$uint reverse( );

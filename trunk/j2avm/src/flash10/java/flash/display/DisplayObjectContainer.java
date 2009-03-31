@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class DisplayObjectContainer extends flash.display.InteractiveObject {
 
+    public  DisplayObjectContainer( ) {}
+
     @Getter
     public native boolean getMouseChildren( );
 

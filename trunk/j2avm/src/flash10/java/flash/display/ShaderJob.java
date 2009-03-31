@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ShaderJob extends flash.events.EventDispatcher {
 
+    public  ShaderJob( flash.display.Shader shader, flash.FlashObject target, int width, int height ) {}
+
+    public  ShaderJob( flash.display.Shader shader, flash.FlashObject target, int width ) {}
+
+    public  ShaderJob( flash.display.Shader shader, flash.FlashObject target ) {}
+
+    public  ShaderJob( flash.display.Shader shader ) {}
+
+    public  ShaderJob( ) {}
+
     public native void start( boolean waitForCompletion );
 
     public native void start( );

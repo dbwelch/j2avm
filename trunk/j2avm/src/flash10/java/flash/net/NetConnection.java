@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class NetConnection extends flash.events.EventDispatcher {
 
+    public  NetConnection( ) {}
+
     @Setter
     public static final native void setDefaultObjectEncoding( int setDefaultObjectEncoding );
 

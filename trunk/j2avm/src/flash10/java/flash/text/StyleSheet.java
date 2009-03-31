@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class StyleSheet extends flash.events.EventDispatcher {
 
+    public  StyleSheet( ) {}
+
     public native flash.text.TextFormat transform( flash.FlashObject formatObject );
 
     public native void clear( );

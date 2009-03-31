@@ -6,7 +6,23 @@ package flash.display;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public final class GraphicsStroke extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsStroke {
+public final class GraphicsStroke extends flash.FlashObject implements flash.display.IGraphicsStroke,flash.display.IGraphicsData {
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting, String scaleMode, String caps, String joints, double miterLimit, flash.display.IGraphicsFill fill ) {}
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting, String scaleMode, String caps, String joints, double miterLimit ) {}
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting, String scaleMode, String caps, String joints ) {}
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting, String scaleMode, String caps ) {}
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting, String scaleMode ) {}
+
+    public  GraphicsStroke( double thickness, boolean pixelHinting ) {}
+
+    public  GraphicsStroke( double thickness ) {}
+
+    public  GraphicsStroke( ) {}
 
     @Getter
     public native String getCaps( );

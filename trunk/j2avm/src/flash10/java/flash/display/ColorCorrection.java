@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ColorCorrection extends flash.FlashObject {
 
+    public  ColorCorrection( ) {}
+
     public static final String DEFAULT = "default";
 
     public static final String ON = "on";

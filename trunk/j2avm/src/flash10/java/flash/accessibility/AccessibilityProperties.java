@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class AccessibilityProperties extends flash.FlashObject {
 
+    public  AccessibilityProperties( ) {}
+
     @Getter
     public native String getShortcut( );
 

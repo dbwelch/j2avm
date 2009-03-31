@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Sound extends flash.events.EventDispatcher {
 
+    public  Sound( flash.net.URLRequest stream, flash.media.SoundLoaderContext context ) {}
+
+    public  Sound( flash.net.URLRequest stream ) {}
+
+    public  Sound( ) {}
+
     public native double extract( flash.utils.ByteArray target, double length, double startPosition );
 
     public native double extract( flash.utils.ByteArray target, double length );

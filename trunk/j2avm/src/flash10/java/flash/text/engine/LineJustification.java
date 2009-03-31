@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class LineJustification extends flash.FlashObject {
 
+    public  LineJustification( ) {}
+
     public static final String ALL_BUT_LAST = "allButLast";
 
     public static final String UNJUSTIFIED = "unjustified";

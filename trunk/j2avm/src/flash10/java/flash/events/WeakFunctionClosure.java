@@ -7,4 +7,6 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public class WeakFunctionClosure extends flash.FlashObject {
+
+    public  WeakFunctionClosure( ) {}
 }

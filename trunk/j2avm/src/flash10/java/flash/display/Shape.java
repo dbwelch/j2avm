@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Shape extends flash.display.DisplayObject {
 
+    public  Shape( ) {}
+
     @Getter
     public native flash.display.Graphics getGraphics( );
 }

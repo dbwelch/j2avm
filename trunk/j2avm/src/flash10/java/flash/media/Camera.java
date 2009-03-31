@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Camera extends flash.events.EventDispatcher {
 
+    public  Camera( ) {}
+
     @Getter
     public static final native flash.FlashArray getNames( );
 

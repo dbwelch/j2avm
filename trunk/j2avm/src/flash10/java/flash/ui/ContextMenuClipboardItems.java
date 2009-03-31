@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ContextMenuClipboardItems extends flash.FlashObject {
 
+    public  ContextMenuClipboardItems( ) {}
+
     @Getter
     public native boolean getCut( );
 

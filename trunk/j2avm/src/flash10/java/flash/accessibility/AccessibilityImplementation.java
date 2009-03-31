@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class AccessibilityImplementation extends flash.FlashObject {
 
+    public  AccessibilityImplementation( ) {}
+
     public native boolean isLabeledBy( flash.geom.Rectangle labelBounds );
 
     public native String get_accName( int childID );

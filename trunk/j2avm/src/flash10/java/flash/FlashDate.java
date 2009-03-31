@@ -7,6 +7,15 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public final class FlashDate extends flash.FlashObject {
+    public FlashDate() {}
+    public FlashDate( double millis ) {}
+    public FlashDate( String date ) {}
+    public FlashDate( double year, double month, double date, double hour, double minute, double second, double millisecond ) {}
+    public FlashDate( double year, double month, double date, double hour, double minute, double second ) {}
+    public FlashDate( double year, double month, double date, double hour, double minute ) {}
+    public FlashDate( double year, double month, double date, double hour ) {}
+    public FlashDate( double year, double month, double date ) {}
+    public FlashDate( double year, double month ) {}
 
     public static final native double UTC( Object year, Object month, Object date, Object hours, Object minutes, Object seconds, Object ms );
 

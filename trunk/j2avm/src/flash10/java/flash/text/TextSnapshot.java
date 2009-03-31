@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class TextSnapshot extends flash.FlashObject {
 
+    public  TextSnapshot( ) {}
+
     public native boolean getSelected( int beginIndex, int endIndex );
 
     public native String getText( int beginIndex, int endIndex, boolean includeLineEndings );

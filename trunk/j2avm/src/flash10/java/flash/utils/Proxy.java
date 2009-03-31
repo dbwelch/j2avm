@@ -7,4 +7,6 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public class Proxy extends flash.FlashObject {
+
+    public  Proxy( ) {}
 }

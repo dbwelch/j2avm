@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextRenderer extends flash.FlashObject {
 
+    public  TextRenderer( ) {}
+
     @Setter
     public static final native void setMaxLevel( int setMaxLevel );
 

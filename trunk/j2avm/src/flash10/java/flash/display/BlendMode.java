@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BlendMode extends flash.FlashObject {
 
+    public  BlendMode( ) {}
+
     public static final String ADD = "add";
 
     public static final String ERASE = "erase";

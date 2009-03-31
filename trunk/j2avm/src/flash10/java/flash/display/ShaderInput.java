@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ShaderInput extends flash.FlashObject {
 
+    public  ShaderInput( ) {}
+
     @Getter
     public native int getChannels( );
 

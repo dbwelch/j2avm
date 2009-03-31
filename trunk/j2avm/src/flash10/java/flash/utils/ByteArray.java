@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ByteArray extends flash.FlashObject implements flash.utils.IDataOutput,flash.utils.IDataInput {
 
+    public  ByteArray( ) {}
+
     @Getter
     public static final native int getDefaultObjectEncoding( );
 

@@ -8,6 +8,20 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FontDescription extends flash.FlashObject {
 
+    public  FontDescription( String fontName, String fontWeight, String fontPosture, String fontLookup, String renderingMode, String cffHinting ) {}
+
+    public  FontDescription( String fontName, String fontWeight, String fontPosture, String fontLookup, String renderingMode ) {}
+
+    public  FontDescription( String fontName, String fontWeight, String fontPosture, String fontLookup ) {}
+
+    public  FontDescription( String fontName, String fontWeight, String fontPosture ) {}
+
+    public  FontDescription( String fontName, String fontWeight ) {}
+
+    public  FontDescription( String fontName ) {}
+
+    public  FontDescription( ) {}
+
     public static final native boolean isFontCompatible( String fontName, String fontWeight, String fontPosture );
 
     @Setter

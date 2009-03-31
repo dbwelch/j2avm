@@ -8,6 +8,17 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class SyncEvent extends flash.events.Event {
 
+    public  SyncEvent( String type, boolean bubbles, boolean cancelable, flash.FlashArray changeList ) {}
+
+    public  SyncEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  SyncEvent( String type, boolean bubbles ) {}
+
+    public  SyncEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected SyncEvent() {}
+
     public static final String SYNC = "sync";
 
     @Setter

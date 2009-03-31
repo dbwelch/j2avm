@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class StageAlign extends flash.FlashObject {
 
+    public  StageAlign( ) {}
+
     public static final String LEFT = "L";
 
     public static final String BOTTOM_RIGHT = "BR";

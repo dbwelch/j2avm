@@ -8,6 +8,15 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class BitmapData extends flash.FlashObject implements flash.display.IBitmapDrawable {
 
+    public  BitmapData( int width, int height, boolean transparent, int fillColor ) {}
+
+    public  BitmapData( int width, int height, boolean transparent ) {}
+
+    public  BitmapData( int width, int height ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected BitmapData() {}
+
     public native void copyPixels( flash.display.BitmapData sourceBitmapData, flash.geom.Rectangle sourceRect, flash.geom.Point destPoint, flash.display.BitmapData alphaBitmapData, flash.geom.Point alphaPoint, boolean mergeAlpha );
 
     public native void copyPixels( flash.display.BitmapData sourceBitmapData, flash.geom.Rectangle sourceRect, flash.geom.Point destPoint, flash.display.BitmapData alphaBitmapData, flash.geom.Point alphaPoint );

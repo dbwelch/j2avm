@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextLineMirrorRegion extends flash.FlashObject {
 
+    public  TextLineMirrorRegion( ) {}
+
     @Getter
     public native flash.text.engine.TextLine getTextLine( );
 

@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Mouse extends flash.FlashObject {
 
+    public  Mouse( ) {}
+
     public static final native void hide( );
 
     @Setter

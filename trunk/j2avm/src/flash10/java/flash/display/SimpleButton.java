@@ -8,6 +8,16 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class SimpleButton extends flash.display.InteractiveObject {
 
+    public  SimpleButton( flash.display.DisplayObject upState, flash.display.DisplayObject overState, flash.display.DisplayObject downState, flash.display.DisplayObject hitTestState ) {}
+
+    public  SimpleButton( flash.display.DisplayObject upState, flash.display.DisplayObject overState, flash.display.DisplayObject downState ) {}
+
+    public  SimpleButton( flash.display.DisplayObject upState, flash.display.DisplayObject overState ) {}
+
+    public  SimpleButton( flash.display.DisplayObject upState ) {}
+
+    public  SimpleButton( ) {}
+
     @Getter
     public native boolean getEnabled( );
 

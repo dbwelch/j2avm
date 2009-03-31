@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class IMEConversionMode extends flash.FlashObject {
 
+    public  IMEConversionMode( ) {}
+
     public static final String ALPHANUMERIC_HALF = "ALPHANUMERIC_HALF";
 
     public static final String KOREAN = "KOREAN";

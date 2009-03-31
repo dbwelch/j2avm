@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class ProductManager extends flash.events.EventDispatcher {
 
+    public  ProductManager( String name ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected ProductManager() {}
+
     public native boolean launch( String parameters );
 
     public native boolean launch( );

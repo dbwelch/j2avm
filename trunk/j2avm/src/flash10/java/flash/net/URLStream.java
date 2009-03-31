@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class URLStream extends flash.events.EventDispatcher implements flash.utils.IDataInput {
 
+    public  URLStream( ) {}
+
     public native int readUnsignedInt( );
 
     public native double readDouble( );

@@ -8,6 +8,20 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicElement extends flash.text.engine.ContentElement {
 
+    public  GraphicElement( flash.display.DisplayObject graphic, double elementWidth, double elementHeight, flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror, String textRotation ) {}
+
+    public  GraphicElement( flash.display.DisplayObject graphic, double elementWidth, double elementHeight, flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror ) {}
+
+    public  GraphicElement( flash.display.DisplayObject graphic, double elementWidth, double elementHeight, flash.text.engine.ElementFormat elementFormat ) {}
+
+    public  GraphicElement( flash.display.DisplayObject graphic, double elementWidth, double elementHeight ) {}
+
+    public  GraphicElement( flash.display.DisplayObject graphic, double elementWidth ) {}
+
+    public  GraphicElement( flash.display.DisplayObject graphic ) {}
+
+    public  GraphicElement( ) {}
+
     @Setter
     public native void setGraphic( flash.display.DisplayObject setGraphic );
 

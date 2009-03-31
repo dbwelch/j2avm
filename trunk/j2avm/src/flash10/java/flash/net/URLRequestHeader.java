@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class URLRequestHeader extends flash.FlashObject {
 
+    public  URLRequestHeader( String name, String value ) {}
+
+    public  URLRequestHeader( String name ) {}
+
+    public  URLRequestHeader( ) {}
+
     @Getter
     public native String getValue( );
 

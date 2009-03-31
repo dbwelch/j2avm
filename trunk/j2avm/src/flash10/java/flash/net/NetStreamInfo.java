@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class NetStreamInfo extends flash.FlashObject {
 
+    public  NetStreamInfo( double curBPS, double byteCount, double maxBPS, double audioBPS, double audioByteCount, double videoBPS, double videoByteCount, double dataBPS, double dataByteCount, double playbackBPS, double droppedFrames, double audioBufferByteLength, double videoBufferByteLength, double dataBufferByteLength, double audioBufferLength, double videoBufferLength, double dataBufferLength, double srtt, double audioLossRate ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected NetStreamInfo() {}
+
     @Getter
     public native double getVideoBufferByteLength( );
 

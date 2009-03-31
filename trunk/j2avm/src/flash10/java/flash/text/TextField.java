@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class TextField extends flash.display.InteractiveObject {
 
+    public  TextField( ) {}
+
     public static final native boolean isFontCompatible( String fontName, String fontStyle );
 
     @Setter

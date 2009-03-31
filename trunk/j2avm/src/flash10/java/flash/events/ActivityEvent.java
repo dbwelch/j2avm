@@ -8,6 +8,17 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ActivityEvent extends flash.events.Event {
 
+    public  ActivityEvent( String type, boolean bubbles, boolean cancelable, boolean activating ) {}
+
+    public  ActivityEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  ActivityEvent( String type, boolean bubbles ) {}
+
+    public  ActivityEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected ActivityEvent() {}
+
     public static final String ACTIVITY = "activity";
 
     @Getter

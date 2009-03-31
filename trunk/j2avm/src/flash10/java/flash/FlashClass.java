@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FlashClass extends flash.FlashObject {
 
+    public  FlashClass( ) {}
+
     public static final int length = 1;
 
     @Getter

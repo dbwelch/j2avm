@@ -8,6 +8,30 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class DropShadowFilter extends flash.filters.BitmapFilter {
 
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY, double strength, int quality, boolean inner, boolean knockout, boolean hideObject ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY, double strength, int quality, boolean inner, boolean knockout ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY, double strength, int quality, boolean inner ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY, double strength, int quality ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY, double strength ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX, double blurY ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha, double blurX ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color, double alpha ) {}
+
+    public  DropShadowFilter( double distance, double angle, int color ) {}
+
+    public  DropShadowFilter( double distance, double angle ) {}
+
+    public  DropShadowFilter( double distance ) {}
+
+    public  DropShadowFilter( ) {}
+
     @Getter
     public native boolean getHideObject( );
 

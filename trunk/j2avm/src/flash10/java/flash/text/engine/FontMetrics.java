@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FontMetrics extends flash.FlashObject {
 
+    public  FontMetrics( flash.geom.Rectangle emBox, double strikethroughOffset, double strikethroughThickness, double underlineOffset, double underlineThickness, double subscriptOffset, double subscriptScale, double superscriptOffset, double superscriptScale ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FontMetrics() {}
+
     @Getter
     public native double getStrikethroughThickness( );
 

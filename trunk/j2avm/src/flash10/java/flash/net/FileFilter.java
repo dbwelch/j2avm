@@ -8,6 +8,13 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class FileFilter extends flash.FlashObject {
 
+    public  FileFilter( String description, String extension, String macType ) {}
+
+    public  FileFilter( String description, String extension ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FileFilter() {}
+
     @Setter
     public native void setMacType( String setMacType );
 

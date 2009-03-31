@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Video extends flash.display.DisplayObject {
 
+    public  Video( int width, int height ) {}
+
+    public  Video( int width ) {}
+
+    public  Video( ) {}
+
     @Getter
     public native int getVideoHeight( );
 

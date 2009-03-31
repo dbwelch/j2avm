@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ShaderFilter extends flash.filters.BitmapFilter {
 
+    public  ShaderFilter( flash.display.Shader shader ) {}
+
+    public  ShaderFilter( ) {}
+
     @Getter
     public native int getRightExtension( );
 

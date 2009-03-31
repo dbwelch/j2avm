@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class SoundLoaderContext extends flash.FlashObject {
 
+    public  SoundLoaderContext( double bufferTime, boolean checkPolicyFile ) {}
+
+    public  SoundLoaderContext( double bufferTime ) {}
+
+    public  SoundLoaderContext( ) {}
+
     @Getter
     public native double getBufferTime( );
 

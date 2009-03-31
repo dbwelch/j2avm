@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class ContentElement extends flash.FlashObject {
 
+    public  ContentElement( flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror, String textRotation ) {}
+
+    public  ContentElement( flash.text.engine.ElementFormat elementFormat, flash.events.EventDispatcher eventMirror ) {}
+
+    public  ContentElement( flash.text.engine.ElementFormat elementFormat ) {}
+
+    public  ContentElement( ) {}
+
     public static final int GRAPHIC_ELEMENT = 65007;
 
     @Getter

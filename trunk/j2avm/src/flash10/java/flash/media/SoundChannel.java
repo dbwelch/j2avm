@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class SoundChannel extends flash.events.EventDispatcher {
 
+    public  SoundChannel( ) {}
+
     public native void stop( );
 
     @Getter

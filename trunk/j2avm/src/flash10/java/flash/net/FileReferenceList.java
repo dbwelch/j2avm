@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FileReferenceList extends flash.events.EventDispatcher {
 
+    public  FileReferenceList( ) {}
+
     public native boolean browse( flash.FlashArray typeFilter );
 
     public native boolean browse( );

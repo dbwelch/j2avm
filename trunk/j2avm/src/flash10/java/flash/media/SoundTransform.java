@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class SoundTransform extends flash.FlashObject {
 
+    public  SoundTransform( double vol, double panning ) {}
+
+    public  SoundTransform( double vol ) {}
+
+    public  SoundTransform( ) {}
+
     @Setter
     public native void setPan( double setPan );
 

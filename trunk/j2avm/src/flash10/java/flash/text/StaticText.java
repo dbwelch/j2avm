@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class StaticText extends flash.display.DisplayObject {
 
+    public  StaticText( ) {}
+
     @Getter
     public native String getText( );
 }

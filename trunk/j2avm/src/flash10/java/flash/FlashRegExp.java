@@ -8,6 +8,11 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FlashRegExp extends flash.FlashObject {
 
+    public  FlashRegExp( Object pattern, Object options ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FlashRegExp() {}
+
     public static final int length = 1;
 
     public native Object exec( String s );

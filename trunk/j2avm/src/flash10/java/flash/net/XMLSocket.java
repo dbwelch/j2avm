@@ -8,6 +8,12 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class XMLSocket extends flash.events.EventDispatcher {
 
+    public  XMLSocket( String host, int port ) {}
+
+    public  XMLSocket( String host ) {}
+
+    public  XMLSocket( ) {}
+
     @Getter
     public native int getTimeout( );
 

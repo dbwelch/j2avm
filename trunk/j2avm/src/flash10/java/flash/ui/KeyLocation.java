@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class KeyLocation extends flash.FlashObject {
 
+    public  KeyLocation( ) {}
+
     public static final int NUM_PAD = 3;
 
     public static final int LEFT = 1;

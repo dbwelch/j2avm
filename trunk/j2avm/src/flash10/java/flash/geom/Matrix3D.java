@@ -8,6 +8,10 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Matrix3D extends flash.FlashObject {
 
+    public  Matrix3D( double[] v ) {}
+
+    public  Matrix3D( ) {}
+
     public static final native flash.geom.Matrix3D interpolate( flash.geom.Matrix3D thisMat, flash.geom.Matrix3D toMat, double percent );
 
     public native void transpose( );

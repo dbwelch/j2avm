@@ -8,6 +8,32 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class BevelFilter extends flash.filters.BitmapFilter {
 
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX, double blurY, double strength, int quality, String type, boolean knockout ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX, double blurY, double strength, int quality, String type ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX, double blurY, double strength, int quality ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX, double blurY, double strength ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX, double blurY ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha, double blurX ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor, double shadowAlpha ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha, int shadowColor ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor, double highlightAlpha ) {}
+
+    public  BevelFilter( double distance, double angle, int highlightColor ) {}
+
+    public  BevelFilter( double distance, double angle ) {}
+
+    public  BevelFilter( double distance ) {}
+
+    public  BevelFilter( ) {}
+
     @Getter
     public native double getStrength( );
 

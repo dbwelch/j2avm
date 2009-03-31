@@ -8,6 +8,27 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class MouseEvent extends flash.events.Event {
 
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject, boolean ctrlKey, boolean altKey, boolean shiftKey, boolean buttonDown, int delta ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject, boolean ctrlKey, boolean altKey, boolean shiftKey, boolean buttonDown ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject, boolean ctrlKey, boolean altKey, boolean shiftKey ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject, boolean ctrlKey, boolean altKey ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject, boolean ctrlKey ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY, flash.display.InteractiveObject relatedObject ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX, double localY ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable, double localX ) {}
+
+    public  MouseEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected MouseEvent() {}
+
     public static final String MOUSE_WHEEL = "mouseWheel";
 
     public static final String MOUSE_MOVE = "mouseMove";

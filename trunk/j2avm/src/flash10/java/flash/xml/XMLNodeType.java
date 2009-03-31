@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class XMLNodeType extends flash.FlashObject {
 
+    public  XMLNodeType( ) {}
+
     public static final int DOCUMENT_TYPE_NODE = 10;
 
     public static final int ELEMENT_NODE = 1;

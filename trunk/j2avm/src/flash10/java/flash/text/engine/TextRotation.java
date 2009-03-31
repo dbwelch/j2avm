@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class TextRotation extends flash.FlashObject {
 
+    public  TextRotation( ) {}
+
     public static final String ROTATE_180 = "rotate180";
 
     public static final String ROTATE_270 = "rotate270";

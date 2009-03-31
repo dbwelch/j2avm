@@ -8,6 +8,14 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class GraphicsPath extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsPath {
 
+    public  GraphicsPath( int[] commands, double[] data, String winding ) {}
+
+    public  GraphicsPath( int[] commands, double[] data ) {}
+
+    public  GraphicsPath( int[] commands ) {}
+
+    public  GraphicsPath( ) {}
+
     public native void wideLineTo( double x, double y );
 
     @Setter

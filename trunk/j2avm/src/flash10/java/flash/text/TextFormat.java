@@ -8,6 +8,34 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class TextFormat extends flash.FlashObject {
 
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target, String align, flash.FlashObject leftMargin, flash.FlashObject rightMargin, flash.FlashObject indent, flash.FlashObject leading ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target, String align, flash.FlashObject leftMargin, flash.FlashObject rightMargin, flash.FlashObject indent ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target, String align, flash.FlashObject leftMargin, flash.FlashObject rightMargin ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target, String align, flash.FlashObject leftMargin ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target, String align ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url, String target ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline, String url ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic, flash.FlashObject underline ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold, flash.FlashObject italic ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color, flash.FlashObject bold ) {}
+
+    public  TextFormat( String font, flash.FlashObject size, flash.FlashObject color ) {}
+
+    public  TextFormat( String font, flash.FlashObject size ) {}
+
+    public  TextFormat( String font ) {}
+
+    public  TextFormat( ) {}
+
     @Getter
     public native flash.FlashObject getSize( );
 

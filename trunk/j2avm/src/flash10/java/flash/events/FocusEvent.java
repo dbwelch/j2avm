@@ -8,6 +8,21 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class FocusEvent extends flash.events.Event {
 
+    public  FocusEvent( String type, boolean bubbles, boolean cancelable, flash.display.InteractiveObject relatedObject, boolean shiftKey, int keyCode ) {}
+
+    public  FocusEvent( String type, boolean bubbles, boolean cancelable, flash.display.InteractiveObject relatedObject, boolean shiftKey ) {}
+
+    public  FocusEvent( String type, boolean bubbles, boolean cancelable, flash.display.InteractiveObject relatedObject ) {}
+
+    public  FocusEvent( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  FocusEvent( String type, boolean bubbles ) {}
+
+    public  FocusEvent( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected FocusEvent() {}
+
     public static final String MOUSE_FOCUS_CHANGE = "mouseFocusChange";
 
     public static final String FOCUS_OUT = "focusOut";

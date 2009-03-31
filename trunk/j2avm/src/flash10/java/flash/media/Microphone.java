@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Microphone extends flash.events.EventDispatcher {
 
+    public  Microphone( ) {}
+
     public static final native flash.media.Microphone getMicrophone( int index );
 
     public static final native flash.media.Microphone getMicrophone( );

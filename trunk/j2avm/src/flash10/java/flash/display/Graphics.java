@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class Graphics extends flash.FlashObject {
 
+    public  Graphics( ) {}
+
     public native void drawTriangles( double[] vertices, int[] indices, double[] uvtData, String culling );
 
     public native void drawTriangles( double[] vertices, int[] indices, double[] uvtData );

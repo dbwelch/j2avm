@@ -8,6 +8,15 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public class Event extends flash.FlashObject {
 
+    public  Event( String type, boolean bubbles, boolean cancelable ) {}
+
+    public  Event( String type, boolean bubbles ) {}
+
+    public  Event( String type ) {}
+
+    /** DO NOT CALL THIS CONSTRUCTOR - IT IS A FICTION */
+    protected Event() {}
+
     public static final String CANCEL = "cancel";
 
     public static final String ENTER_FRAME = "enterFrame";

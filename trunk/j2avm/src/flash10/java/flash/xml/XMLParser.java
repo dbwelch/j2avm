@@ -8,6 +8,8 @@ import org.epistem.j2avm.annotations.runtime.*;
 @FlashNativeClass
 public final class XMLParser extends flash.FlashObject {
 
+    public  XMLParser( ) {}
+
     public native int getNext( flash.xml.XMLTag tag );
 
     public native void startParse( String source, boolean ignoreWhite );

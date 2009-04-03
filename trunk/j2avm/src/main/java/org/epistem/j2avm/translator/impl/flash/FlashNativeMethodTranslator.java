@@ -28,7 +28,7 @@ public class FlashNativeMethodTranslator extends MethodTranslatorBase {
     public void translateCall( MethodTranslator method, MethodCall call, boolean isSuper ) {
         if( call.signature.name.equals( Signature.INITIALIZER_NAME ) ) {
             if( call.signature.paramTypes.length > 0 ) {
-                throw new RuntimeException( "LIMITATION: Can only call no-arg constructor of Flash native class" ); //TODO: 
+                throw new RuntimeException( "LIMITATION: Can only call no-arg constructor of Flash native class: " + call.owner ); //TODO: 
             }
             
             //drop this call - the Flash object has already been created

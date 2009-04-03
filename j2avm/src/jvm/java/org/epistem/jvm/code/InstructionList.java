@@ -140,12 +140,30 @@ public final class InstructionList {
     public void accept( InstructionVisitor visitor ) {
         visitor.visitStart( this );
     
-        for( Instruction i = first; i != null; i = i.next ) {    
+        Instruction i = first;
+        while( i != null ) {    
             if( i.context != null && !( i instanceof LineNumber ) ) {
                 //visitor.visitContext( i.context );
             }
             
+            Instruction prev = i.prev;
+            Instruction next = i.next;            
             i.accept( visitor );
+            
+            //since i may have been removed and other instructions
+            //inserted in its place...
+            if( i.next == next ) {
+                i = next;
+                continue;
+            }
+        
+            //continue with the new instruction(s)
+            if( prev == null ) {
+                i = first;
+                continue;
+            }
+            
+            i = prev.next;
         }        
         
         visitor.visitHandlers();        
@@ -155,6 +173,6 @@ public final class InstructionList {
         
         visitor.visitEnd();
     }
-    
+        
     //TODO: variables
 }

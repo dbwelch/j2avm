@@ -2,6 +2,7 @@ package test;
 
 import org.epistem.j2avm.annotations.runtime.Name;
 import org.epistem.j2avm.annotations.swf.SWF;
+import org.epistem.j2avm.asm.AVM2_ASM;
 
 import static flash.Flash.*;
 import flash.FlashDate;
@@ -10,6 +11,7 @@ import flash.display.Graphics;
 import flash.display.MovieClip;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.utils.Dictionary;
 
 /**
  * A simple test case
@@ -113,6 +115,13 @@ public class Test extends MovieClip {
         }
     
         getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
+        
+        Dictionary dict = new Dictionary( );
+        Object obj = new Object();
+        AVM2_ASM.setPublicProperty( dict, obj, "hellow" );
+        AVM2_ASM.getPublicProperty( dict, obj );
+        Object val = AVM2_ASM.popObject();
+        trace( val );
     }
 
     @Name("onMove")

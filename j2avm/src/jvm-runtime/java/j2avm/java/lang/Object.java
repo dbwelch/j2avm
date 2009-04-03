@@ -15,7 +15,7 @@ import static flash.Flash.*;
 @Translator( JavaFrameworkClassTranslator.class )
 public class Object extends FlashObject {
 
-    private static final Dictionary hashes = new Dictionary( true );
+   // private static final Dictionary hashes = new Dictionary( true );
     private static int nextHash = 1;
     
     static {
@@ -31,7 +31,7 @@ public class Object extends FlashObject {
     /** @see java.lang.Object#hashCode() */
     public int hashCode() {
         
-        hashes.
+     //   hashes.
         
         // TODO Auto-generated method stub
         return super.hashCode();

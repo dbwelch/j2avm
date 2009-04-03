@@ -9,6 +9,8 @@ import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.instructions.MethodCall;
 
+import com.anotherbigidea.flash.avm2.model.AVM2QName;
+
 /**
  * Generic translator for Java methods
  *
@@ -17,7 +19,7 @@ import org.epistem.jvm.code.instructions.MethodCall;
 public class JavaStaticInitMethodTranslator extends JavaMethodTranslator {
 
     public JavaStaticInitMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
-        super( classTrans, method );
+        super( classTrans, method, new AVM2QName( JavaClassTranslator.CLINIT_NAME ) );
     }
 
     /**
@@ -30,21 +32,21 @@ public class JavaStaticInitMethodTranslator extends JavaMethodTranslator {
     /**
      * @see org.epistem.j2avm.translator.MemberTranslator#translateImplementation(org.epistem.j2swf.swf.code.CodeClass)
      */
-    public void translateImplementation( CodeClass codeClass ) {
-        
-        codeMethod = codeClass.addStaticInitializer();
-        
-        jvmMethod.analyzer(); //make sure analysis has taken place
-        
-        //transform JVM instructions
-        Transformer transformer = new AVM2_ASM_Transformer();
-        jvmMethod.getCode().instructions.accept( transformer );
-        
-        //translate the instructions
-        runtimeTrace( J2AVM.TRACE_PREFIX + " " + classTranslator.getJVMType() + "::<clinit>" );
-                
-        JavaBytecodeTranslator translator = new JavaBytecodeTranslator( this, jvmMethod );
-        jvmMethod.getCode().instructions.accept( translator );
-        
-    }
+//    public void translateImplementation( CodeClass codeClass ) {
+//        
+//        codeMethod = codeClass.addStaticInitializer();
+//        
+//        jvmMethod.analyzer(); //make sure analysis has taken place
+//        
+//        //transform JVM instructions
+//        Transformer transformer = new AVM2_ASM_Transformer();
+//        jvmMethod.getCode().instructions.accept( transformer );
+//        
+//        //translate the instructions
+//        runtimeTrace( J2AVM.TRACE_PREFIX + " " + classTranslator.getJVMType() + "::<clinit>" );
+//                
+//        JavaBytecodeTranslator translator = new JavaBytecodeTranslator( this, jvmMethod );
+//        jvmMethod.getCode().instructions.accept( translator );
+//        
+//    }
 }

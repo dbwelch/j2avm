@@ -27,7 +27,7 @@ public class JavaInterfaceTranslator extends JavaTranslator {
     public void translateImplementation( Code code ) {
         J2AVM.log.info( "Translating interface " + name );
         
-        codeClass = code.addClass( avm2name.toQualString(), true, false, true );
+        codeClass = code.addClass( avm2name.toQualString(), null, true, false, true );
         translateMembers();
         addImplementedInterfaces();
  

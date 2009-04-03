@@ -36,6 +36,10 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         super( classTrans, method, makeAVM2Name( classTrans, method ) );
     }
 
+    protected JavaMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method, AVM2QName avm2name ) {
+        super( classTrans, method, avm2name );
+    }
+
     /**
      * @see org.epistem.j2avm.translator.MethodTranslator#translateCall(MethodTranslator, MethodCall, boolean)
      */

@@ -27,6 +27,8 @@ public class JavaClassTranslator extends JavaTranslator {
 
     public static final String INIT_NAME = "<init>";
     public static final Signature NO_ARG_CONTRUCTOR = new Signature( INIT_NAME );
+    public static final String CLINIT_NAME = "<clinit>";
+    public static final Signature STATIC_INIT = new Signature( CLINIT_NAME );
     
     public JavaClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
         super( manager, jvmClass );        
@@ -54,7 +56,9 @@ public class JavaClassTranslator extends JavaTranslator {
         
         boolean isFinal = jvmClass.flags.contains( ClassFlag.IsFinal );
         
-        codeClass = code.addClass( avm2name.toQualString(), true, isFinal, false, superclasses );
+        String initName = methods.containsKey( STATIC_INIT ) ? CLINIT_NAME : null;
+        
+        codeClass = code.addClass( avm2name.toQualString(), initName, true, isFinal, false, superclasses );
 
         translateMembers();
         addImplementedInterfaces();
@@ -123,31 +127,4 @@ public class JavaClassTranslator extends JavaTranslator {
         cons.returnVoid();
         cons.analyze();
     }
-    
-    
-    
-//    private void THIS_IS_ONLY_FOR_DEV_PURPOSES( AVM2Code cons ) {
-//        
-//        cons.trace( "J2AVM: In Constructor" );
-//        cons.getLocal( cons.thisValue );
-//        cons.getProperty( "graphics" );
-//        cons.coerceTo( "flash.display.Graphics" );
-//
-//        LocalValue<Instruction> g = cons.newLocal();
-//        cons.setLocal( g );
-//
-//        cons.callPropVoid( g, "beginFill", 0x888800 );
-//        cons.callPropVoid( g, "lineStyle", 5, 0x000088 );
-//        cons.callPropVoid( g, "moveTo", 10, 10 );
-//        cons.callPropVoid( g, "lineTo", 90, 10 );
-//        cons.callPropVoid( g, "lineTo", 90, 90 );
-//        cons.callPropVoid( g, "lineTo", 10, 90 );
-//        cons.callPropVoid( g, "lineTo", 10, 10 );
-//        cons.callPropVoid( g, "endFill" );
-//
-//        cons.trace( "J2AVM: At end of Constructor" );
-//        
-//        cons.returnVoid();    
-//        cons.analyze();
-//    }
 }

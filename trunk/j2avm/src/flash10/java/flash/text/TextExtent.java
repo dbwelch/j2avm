@@ -17,35 +17,35 @@ public class TextExtent extends flash.FlashObject {
     public native double getAscent( );
 
     @Setter
-    public native void setAscent( double setAscent );
+    public native void setAscent( double ascent );
 
     @Getter
     public native double getWidth( );
 
     @Setter
-    public native void setWidth( double setWidth );
+    public native void setWidth( double width );
 
     @Getter
     public native double getHeight( );
 
     @Setter
-    public native void setHeight( double setHeight );
+    public native void setHeight( double height );
 
     @Getter
     public native double getTextFieldWidth( );
 
     @Setter
-    public native void setTextFieldWidth( double setTextFieldWidth );
+    public native void setTextFieldWidth( double textFieldWidth );
 
     @Getter
     public native double getDescent( );
 
     @Setter
-    public native void setDescent( double setDescent );
+    public native void setDescent( double descent );
 
     @Getter
     public native double getTextFieldHeight( );
 
     @Setter
-    public native void setTextFieldHeight( double setTextFieldHeight );
+    public native void setTextFieldHeight( double textFieldHeight );
 }

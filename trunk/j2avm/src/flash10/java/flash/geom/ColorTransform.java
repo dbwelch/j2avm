@@ -33,22 +33,22 @@ public class ColorTransform extends flash.FlashObject {
     public native double getRedOffset( );
 
     @Setter
-    public native void setRedOffset( double setRedOffset );
+    public native void setRedOffset( double redOffset );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int newColor );
 
     @Getter
     public native double getGreenMultiplier( );
 
     @Setter
-    public native void setGreenMultiplier( double setGreenMultiplier );
+    public native void setGreenMultiplier( double greenMultiplier );
 
     @Getter
     public native double getBlueOffset( );
 
     @Setter
-    public native void setBlueOffset( double setBlueOffset );
+    public native void setBlueOffset( double blueOffset );
 
     public native String toString( );
 
@@ -56,13 +56,13 @@ public class ColorTransform extends flash.FlashObject {
     public native double getAlphaOffset( );
 
     @Setter
-    public native void setAlphaOffset( double setAlphaOffset );
+    public native void setAlphaOffset( double alphaOffset );
 
     @Getter
     public native double getRedMultiplier( );
 
     @Setter
-    public native void setRedMultiplier( double setRedMultiplier );
+    public native void setRedMultiplier( double redMultiplier );
 
     public native void concat( flash.geom.ColorTransform second );
 
@@ -70,17 +70,17 @@ public class ColorTransform extends flash.FlashObject {
     public native double getBlueMultiplier( );
 
     @Setter
-    public native void setBlueMultiplier( double setBlueMultiplier );
+    public native void setBlueMultiplier( double blueMultiplier );
 
     @Getter
     public native double getGreenOffset( );
 
     @Setter
-    public native void setGreenOffset( double setGreenOffset );
+    public native void setGreenOffset( double greenOffset );
 
     @Getter
     public native double getAlphaMultiplier( );
 
     @Setter
-    public native void setAlphaMultiplier( double setAlphaMultiplier );
+    public native void setAlphaMultiplier( double alphaMultiplier );
 }

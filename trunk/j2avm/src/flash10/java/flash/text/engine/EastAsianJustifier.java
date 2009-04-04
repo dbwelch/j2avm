@@ -20,7 +20,7 @@ public final class EastAsianJustifier extends flash.text.engine.TextJustifier {
     public native flash.text.engine.TextJustifier clone( );
 
     @Setter
-    public native void setJustificationStyle( String setJustificationStyle );
+    public native void setJustificationStyle( String value );
 
     @Getter
     public native String getJustificationStyle( );

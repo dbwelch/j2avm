@@ -33,5 +33,5 @@ public class DataEvent extends flash.events.TextEvent {
     public native flash.events.Event clone( );
 
     @Setter
-    public native void setData( String setData );
+    public native void setData( String value );
 }

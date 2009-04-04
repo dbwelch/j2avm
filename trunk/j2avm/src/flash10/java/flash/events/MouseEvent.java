@@ -56,7 +56,7 @@ public class MouseEvent extends flash.events.Event {
     public native boolean getButtonDown( );
 
     @Setter
-    public native void setIsRelatedObjectInaccessible( boolean setIsRelatedObjectInaccessible );
+    public native void setIsRelatedObjectInaccessible( boolean value );
 
     public native void updateAfterEvent( );
 
@@ -70,16 +70,16 @@ public class MouseEvent extends flash.events.Event {
     public native double getLocalY( );
 
     @Setter
-    public native void setRelatedObject( flash.display.InteractiveObject setRelatedObject );
+    public native void setRelatedObject( flash.display.InteractiveObject value );
 
     @Setter
-    public native void setLocalX( double setLocalX );
+    public native void setLocalX( double value );
 
     @Getter
     public native double getStageY( );
 
     @Setter
-    public native void setLocalY( double setLocalY );
+    public native void setLocalY( double value );
 
     @Override
     public native flash.events.Event clone( );
@@ -88,13 +88,13 @@ public class MouseEvent extends flash.events.Event {
     public native double getStageX( );
 
     @Setter
-    public native void setCtrlKey( boolean setCtrlKey );
+    public native void setCtrlKey( boolean value );
 
     @Override
     public native String toString( );
 
     @Setter
-    public native void setButtonDown( boolean setButtonDown );
+    public native void setButtonDown( boolean value );
 
     @Getter
     public native boolean getCtrlKey( );
@@ -103,13 +103,13 @@ public class MouseEvent extends flash.events.Event {
     public native boolean getAltKey( );
 
     @Setter
-    public native void setDelta( int setDelta );
+    public native void setDelta( int value );
 
     @Setter
-    public native void setShiftKey( boolean setShiftKey );
+    public native void setShiftKey( boolean value );
 
     @Setter
-    public native void setAltKey( boolean setAltKey );
+    public native void setAltKey( boolean value );
 
     @Getter
     public native boolean getShiftKey( );

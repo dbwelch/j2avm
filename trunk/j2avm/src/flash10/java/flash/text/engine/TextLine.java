@@ -43,11 +43,11 @@ public final class TextLine extends flash.display.DisplayObjectContainer {
     public native Object getUserData( );
 
     @Setter
-    public native void setUserData( Object setUserData );
+    public native void setUserData( Object userData );
 
-    @Setter
     @Override
-    public native void setTabEnabled( boolean setTabEnabled );
+    @Setter
+    public native void setTabEnabled( boolean enabled );
 
     @Getter
     public native double getTextWidth( );
@@ -55,9 +55,9 @@ public final class TextLine extends flash.display.DisplayObjectContainer {
     @Getter
     public native double getAscent( );
 
-    @Setter
     @Override
-    public native void setContextMenu( flash.ui.ContextMenu setContextMenu );
+    @Setter
+    public native void setContextMenu( flash.ui.ContextMenu cm );
 
     public native int getAtomIndexAtCharIndex( int charIndex );
 
@@ -71,11 +71,11 @@ public final class TextLine extends flash.display.DisplayObjectContainer {
     public native flash.geom.Rectangle getAtomBounds( int atomIndex );
 
     @Setter
-    public native void setValidity( String setValidity );
+    public native void setValidity( String value );
 
-    @Setter
     @Override
-    public native void setTabChildren( boolean setTabChildren );
+    @Setter
+    public native void setTabChildren( boolean enable );
 
     @Getter
     public native int getTextBlockBeginIndex( );
@@ -94,15 +94,15 @@ public final class TextLine extends flash.display.DisplayObjectContainer {
     @Getter
     public native double getSpecifiedWidth( );
 
-    @Setter
     @Override
-    public native void setFocusRect( flash.FlashObject setFocusRect );
+    @Setter
+    public native void setFocusRect( flash.FlashObject focusRect );
 
     public native String getAtomTextRotation( int atomIndex );
 
-    @Setter
     @Override
-    public native void setTabIndex( int setTabIndex );
+    @Setter
+    public native void setTabIndex( int index );
 
     @Getter
     public native int getRawTextLength( );

@@ -17,7 +17,7 @@ public final class SpaceJustifier extends flash.text.engine.TextJustifier {
     public  SpaceJustifier( ) {}
 
     @Setter
-    public native void setLetterSpacing( boolean setLetterSpacing );
+    public native void setLetterSpacing( boolean value );
 
     @Override
     public native flash.text.engine.TextJustifier clone( );

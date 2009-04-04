@@ -25,7 +25,7 @@ public final class FontDescription extends flash.FlashObject {
     public static final native boolean isFontCompatible( String fontName, String fontWeight, String fontPosture );
 
     @Setter
-    public native void setFontLookup( String setFontLookup );
+    public native void setFontLookup( String value );
 
     @Getter
     public native String getFontWeight( );
@@ -37,19 +37,19 @@ public final class FontDescription extends flash.FlashObject {
     public native boolean getLocked( );
 
     @Setter
-    public native void setFontWeight( String setFontWeight );
+    public native void setFontWeight( String value );
 
     @Getter
     public native String getRenderingMode( );
 
     @Setter
-    public native void setCffHinting( String setCffHinting );
+    public native void setCffHinting( String value );
 
     @Setter
-    public native void setFontPosture( String setFontPosture );
+    public native void setFontPosture( String value );
 
     @Setter
-    public native void setFontName( String setFontName );
+    public native void setFontName( String value );
 
     @Getter
     public native String getCffHinting( );
@@ -61,10 +61,10 @@ public final class FontDescription extends flash.FlashObject {
     public native String getFontName( );
 
     @Setter
-    public native void setLocked( boolean setLocked );
+    public native void setLocked( boolean value );
 
     public native flash.text.engine.FontDescription clone( );
 
     @Setter
-    public native void setRenderingMode( String setRenderingMode );
+    public native void setRenderingMode( String value );
 }

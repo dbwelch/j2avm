@@ -20,7 +20,7 @@ public class Sprite extends flash.display.DisplayObjectContainer {
     public native flash.display.Sprite getHitArea( );
 
     @Setter
-    public native void setButtonMode( boolean setButtonMode );
+    public native void setButtonMode( boolean value );
 
     @Getter
     public native flash.display.Graphics getGraphics( );
@@ -29,7 +29,7 @@ public class Sprite extends flash.display.DisplayObjectContainer {
     public native boolean getUseHandCursor( );
 
     @Setter
-    public native void setHitArea( flash.display.Sprite setHitArea );
+    public native void setHitArea( flash.display.Sprite value );
 
     @Getter
     public native boolean getButtonMode( );
@@ -37,10 +37,10 @@ public class Sprite extends flash.display.DisplayObjectContainer {
     public native void stopDrag( );
 
     @Setter
-    public native void setUseHandCursor( boolean setUseHandCursor );
+    public native void setUseHandCursor( boolean value );
 
     @Setter
-    public native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     public native void startDrag( boolean lockCenter, flash.geom.Rectangle bounds );
 

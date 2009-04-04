@@ -24,7 +24,7 @@ public final class ApplicationDomain extends flash.FlashObject {
     public native flash.FlashObject getDefinition( String name );
 
     @Setter
-    public native void setDomainMemory( flash.utils.ByteArray setDomainMemory );
+    public native void setDomainMemory( flash.utils.ByteArray mem );
 
     public native boolean hasDefinition( String name );
 

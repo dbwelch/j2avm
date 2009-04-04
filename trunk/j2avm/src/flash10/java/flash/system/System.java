@@ -20,7 +20,7 @@ public final class System extends flash.FlashObject {
     public static final native int getTotalMemory( );
 
     @Setter
-    public static final native void setUseCodePage( boolean setUseCodePage );
+    public static final native void setUseCodePage( boolean value );
 
     @Getter
     public static final native String getVmVersion( );

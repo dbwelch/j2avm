@@ -17,17 +17,17 @@ public class TextRun extends flash.FlashObject {
     public native flash.text.TextFormat getTextFormat( );
 
     @Setter
-    public native void setTextFormat( flash.text.TextFormat setTextFormat );
+    public native void setTextFormat( flash.text.TextFormat textFormat );
 
     @Getter
     public native int getEndIndex( );
 
     @Setter
-    public native void setEndIndex( int setEndIndex );
+    public native void setEndIndex( int endIndex );
 
     @Getter
     public native int getBeginIndex( );
 
     @Setter
-    public native void setBeginIndex( int setBeginIndex );
+    public native void setBeginIndex( int beginIndex );
 }

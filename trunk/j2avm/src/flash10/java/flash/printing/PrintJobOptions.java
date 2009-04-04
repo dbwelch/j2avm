@@ -16,5 +16,5 @@ public class PrintJobOptions extends flash.FlashObject {
     public native boolean getPrintAsBitmap( );
 
     @Setter
-    public native void setPrintAsBitmap( boolean setPrintAsBitmap );
+    public native void setPrintAsBitmap( boolean printAsBitmap );
 }

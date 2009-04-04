@@ -39,7 +39,7 @@ public class URLStream extends flash.events.EventDispatcher implements flash.uti
     public native int getBytesAvailable( );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     public native void load( flash.net.URLRequest request );
 
@@ -48,7 +48,7 @@ public class URLStream extends flash.events.EventDispatcher implements flash.uti
     public native String readUTF( );
 
     @Setter
-    public native void setEndian( String setEndian );
+    public native void setEndian( String type );
 
     public native int readInt( );
 

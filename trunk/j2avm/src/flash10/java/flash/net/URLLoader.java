@@ -16,7 +16,7 @@ public class URLLoader extends flash.events.EventDispatcher {
     public native String getDataFormat( );
 
     @Setter
-    public native void setDataFormat( String setDataFormat );
+    public native void setDataFormat( String dataFormat );
 
     public native void load( flash.net.URLRequest request );
 
@@ -24,13 +24,13 @@ public class URLLoader extends flash.events.EventDispatcher {
     public native Object getData( );
 
     @Setter
-    public native void setData( Object setData );
+    public native void setData( Object data );
 
     @Getter
     public native int getBytesLoaded( );
 
     @Setter
-    public native void setBytesLoaded( int setBytesLoaded );
+    public native void setBytesLoaded( int bytesLoaded );
 
     public native void close( );
 
@@ -38,5 +38,5 @@ public class URLLoader extends flash.events.EventDispatcher {
     public native int getBytesTotal( );
 
     @Setter
-    public native void setBytesTotal( int setBytesTotal );
+    public native void setBytesTotal( int bytesTotal );
 }

@@ -26,19 +26,19 @@ public class Vector3D extends flash.FlashObject {
     public static native flash.geom.Vector3D getZ_AXIS( );
 
     @Setter
-    public static native void setZ_AXIS( flash.geom.Vector3D setZ_AXIS );
+    public static native void setZ_AXIS( flash.geom.Vector3D Z_AXIS );
 
     @Getter
     public static native flash.geom.Vector3D getY_AXIS( );
 
     @Setter
-    public static native void setY_AXIS( flash.geom.Vector3D setY_AXIS );
+    public static native void setY_AXIS( flash.geom.Vector3D Y_AXIS );
 
     @Getter
     public static native flash.geom.Vector3D getX_AXIS( );
 
     @Setter
-    public static native void setX_AXIS( flash.geom.Vector3D setX_AXIS );
+    public static native void setX_AXIS( flash.geom.Vector3D X_AXIS );
 
     public native void project( );
 
@@ -72,25 +72,25 @@ public class Vector3D extends flash.FlashObject {
     public native double getW( );
 
     @Setter
-    public native void setW( double setW );
+    public native void setW( double w );
 
     @Getter
     public native double getX( );
 
     @Setter
-    public native void setX( double setX );
+    public native void setX( double x );
 
     @Getter
     public native double getY( );
 
     @Setter
-    public native void setY( double setY );
+    public native void setY( double y );
 
     @Getter
     public native double getZ( );
 
     @Setter
-    public native void setZ( double setZ );
+    public native void setZ( double z );
 
     public native flash.geom.Vector3D subtract( flash.geom.Vector3D a );
 

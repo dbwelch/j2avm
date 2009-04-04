@@ -11,7 +11,7 @@ public class SharedObject extends flash.events.EventDispatcher {
     public  SharedObject( ) {}
 
     @Setter
-    public static final native void setDefaultObjectEncoding( int setDefaultObjectEncoding );
+    public static final native void setDefaultObjectEncoding( int version );
 
     public static final native int getDiskUsage( String url );
 
@@ -58,13 +58,13 @@ public class SharedObject extends flash.events.EventDispatcher {
     public native void connect( flash.net.NetConnection myConnection );
 
     @Setter
-    public native void setFps( double setFps );
+    public native void setFps( double updatesPerSecond );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     @Setter
-    public native void setClient( flash.FlashObject setClient );
+    public native void setClient( flash.FlashObject object );
 
     public native void setProperty( String propertyName, flash.FlashObject value );
 

@@ -24,7 +24,7 @@ public class Video extends flash.display.DisplayObject {
     public native int getDeblocking( );
 
     @Setter
-    public native void setSmoothing( boolean setSmoothing );
+    public native void setSmoothing( boolean value );
 
     public native void attachCamera( flash.media.Camera camera );
 
@@ -32,7 +32,7 @@ public class Video extends flash.display.DisplayObject {
     public native int getVideoWidth( );
 
     @Setter
-    public native void setDeblocking( int setDeblocking );
+    public native void setDeblocking( int value );
 
     public native void clear( );
 

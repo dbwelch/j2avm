@@ -18,10 +18,10 @@ public final class Microphone extends flash.events.EventDispatcher {
     public static final native flash.FlashArray getNames( );
 
     @Setter
-    public native void setRate( int setRate );
+    public native void setRate( int rate );
 
     @Setter
-    public native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     @Getter
     public native double getSilenceLevel( );
@@ -42,10 +42,10 @@ public final class Microphone extends flash.events.EventDispatcher {
     public native boolean getMuted( );
 
     @Setter
-    public native void setCodec( String setCodec );
+    public native void setCodec( String codec );
 
     @Setter
-    public native void setGain( double setGain );
+    public native void setGain( double gain );
 
     @Getter
     public native boolean getUseEchoSuppression( );
@@ -57,7 +57,7 @@ public final class Microphone extends flash.events.EventDispatcher {
     public native int getEncodeQuality( );
 
     @Setter
-    public native void setEncodeQuality( int setEncodeQuality );
+    public native void setEncodeQuality( int quality );
 
     public native void setLoopBack( boolean state );
 
@@ -79,7 +79,7 @@ public final class Microphone extends flash.events.EventDispatcher {
     public native flash.media.SoundTransform getSoundTransform( );
 
     @Setter
-    public native void setFramesPerPacket( int setFramesPerPacket );
+    public native void setFramesPerPacket( int frames );
 
     @Getter
     public native int getFramesPerPacket( );

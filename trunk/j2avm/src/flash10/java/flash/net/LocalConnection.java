@@ -14,7 +14,7 @@ public class LocalConnection extends flash.events.EventDispatcher {
     public native String getDomain( );
 
     @Setter
-    public native void setClient( flash.FlashObject setClient );
+    public native void setClient( flash.FlashObject client );
 
     public native void close( );
 

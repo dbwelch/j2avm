@@ -26,19 +26,19 @@ public class Matrix extends flash.FlashObject {
     public native double getA( );
 
     @Setter
-    public native void setA( double setA );
+    public native void setA( double a );
 
     @Getter
     public native double getC( );
 
     @Setter
-    public native void setC( double setC );
+    public native void setC( double c );
 
     @Getter
     public native double getTy( );
 
     @Setter
-    public native void setTy( double setTy );
+    public native void setTy( double ty );
 
     public native void createBox( double scaleX, double scaleY, double rotation, double tx, double ty );
 
@@ -52,13 +52,13 @@ public class Matrix extends flash.FlashObject {
     public native double getB( );
 
     @Setter
-    public native void setB( double setB );
+    public native void setB( double b );
 
     @Getter
     public native double getD( );
 
     @Setter
-    public native void setD( double setD );
+    public native void setD( double d );
 
     public native String toString( );
 
@@ -70,7 +70,7 @@ public class Matrix extends flash.FlashObject {
     public native double getTx( );
 
     @Setter
-    public native void setTx( double setTx );
+    public native void setTx( double tx );
 
     public native void concat( flash.geom.Matrix m );
 

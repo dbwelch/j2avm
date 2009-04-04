@@ -16,10 +16,10 @@ public final class FileFilter extends flash.FlashObject {
     protected FileFilter() {}
 
     @Setter
-    public native void setMacType( String setMacType );
+    public native void setMacType( String value );
 
     @Setter
-    public native void setDescription( String setDescription );
+    public native void setDescription( String value );
 
     @Getter
     public native String getMacType( );
@@ -28,7 +28,7 @@ public final class FileFilter extends flash.FlashObject {
     public native String getDescription( );
 
     @Setter
-    public native void setExtension( String setExtension );
+    public native void setExtension( String value );
 
     @Getter
     public native String getExtension( );

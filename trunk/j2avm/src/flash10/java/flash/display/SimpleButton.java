@@ -22,22 +22,22 @@ public class SimpleButton extends flash.display.InteractiveObject {
     public native boolean getEnabled( );
 
     @Setter
-    public native void setEnabled( boolean setEnabled );
+    public native void setEnabled( boolean value );
 
     @Getter
     public native flash.display.DisplayObject getHitTestState( );
 
     @Setter
-    public native void setHitTestState( flash.display.DisplayObject setHitTestState );
+    public native void setHitTestState( flash.display.DisplayObject value );
 
     @Setter
-    public native void setUpState( flash.display.DisplayObject setUpState );
+    public native void setUpState( flash.display.DisplayObject value );
 
     @Getter
     public native flash.display.DisplayObject getDownState( );
 
     @Setter
-    public native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     @Getter
     public native flash.media.SoundTransform getSoundTransform( );
@@ -46,10 +46,10 @@ public class SimpleButton extends flash.display.InteractiveObject {
     public native flash.display.DisplayObject getUpState( );
 
     @Setter
-    public native void setUseHandCursor( boolean setUseHandCursor );
+    public native void setUseHandCursor( boolean value );
 
     @Setter
-    public native void setOverState( flash.display.DisplayObject setOverState );
+    public native void setOverState( flash.display.DisplayObject value );
 
     @Getter
     public native boolean getUseHandCursor( );
@@ -61,8 +61,8 @@ public class SimpleButton extends flash.display.InteractiveObject {
     public native flash.display.DisplayObject getOverState( );
 
     @Setter
-    public native void setDownState( flash.display.DisplayObject setDownState );
+    public native void setDownState( flash.display.DisplayObject value );
 
     @Setter
-    public native void setTrackAsMenu( boolean setTrackAsMenu );
+    public native void setTrackAsMenu( boolean value );
 }

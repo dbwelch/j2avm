@@ -7,4 +7,6 @@ import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
 public interface IDynamicPropertyWriter {
+
+    public void writeDynamicProperties( flash.FlashObject obj, flash.net.IDynamicPropertyOutput output );
 }

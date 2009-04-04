@@ -29,11 +29,11 @@ public class FlashError extends flash.FlashObject {
     public native Object getMessage( );
 
     @Setter
-    public native void setMessage( Object setMessage );
+    public native void setMessage( Object message );
 
     @Getter
     public native Object getName( );
 
     @Setter
-    public native void setName( Object setName );
+    public native void setName( Object name );
 }

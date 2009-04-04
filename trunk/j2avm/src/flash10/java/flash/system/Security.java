@@ -23,7 +23,7 @@ public final class Security extends flash.FlashObject {
     public static final String LOCAL_TRUSTED = "localTrusted";
 
     @Setter
-    public static final native void setExactSettings( boolean setExactSettings );
+    public static final native void setExactSettings( boolean value );
 
     public static final String REMOTE = "remote";
 
@@ -36,7 +36,7 @@ public final class Security extends flash.FlashObject {
     public static final native void loadPolicyFile( String url );
 
     @Setter
-    public static final native void setDisableAVM1Loading( boolean setDisableAVM1Loading );
+    public static final native void setDisableAVM1Loading( boolean value );
 
     public static final String LOCAL_WITH_NETWORK = "localWithNetwork";
 

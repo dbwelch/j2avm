@@ -13,10 +13,10 @@ public class Shader extends flash.FlashObject {
     public  Shader( ) {}
 
     @Setter
-    public native void setByteCode( flash.utils.ByteArray setByteCode );
+    public native void setByteCode( flash.utils.ByteArray code );
 
     @Setter
-    public native void setData( flash.display.ShaderData setData );
+    public native void setData( flash.display.ShaderData p );
 
     @Getter
     public native String getPrecisionHint( );
@@ -25,5 +25,5 @@ public class Shader extends flash.FlashObject {
     public native flash.display.ShaderData getData( );
 
     @Setter
-    public native void setPrecisionHint( String setPrecisionHint );
+    public native void setPrecisionHint( String p );
 }

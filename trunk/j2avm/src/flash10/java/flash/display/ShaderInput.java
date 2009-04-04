@@ -17,7 +17,7 @@ public final class ShaderInput extends flash.FlashObject {
     public native int getIndex( );
 
     @Setter
-    public native void setInput( flash.FlashObject setInput );
+    public native void setInput( flash.FlashObject input );
 
     @Getter
     public native int getWidth( );
@@ -29,8 +29,8 @@ public final class ShaderInput extends flash.FlashObject {
     public native flash.FlashObject getInput( );
 
     @Setter
-    public native void setWidth( int setWidth );
+    public native void setWidth( int value );
 
     @Setter
-    public native void setHeight( int setHeight );
+    public native void setHeight( int value );
 }

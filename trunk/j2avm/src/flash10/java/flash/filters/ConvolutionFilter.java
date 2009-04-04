@@ -32,37 +32,37 @@ public class ConvolutionFilter extends flash.filters.BitmapFilter {
     public native flash.FlashArray getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.FlashArray setMatrix );
+    public native void setMatrix( flash.FlashArray value );
 
     @Getter
     public native int getColor( );
 
     @Setter
-    public native void setPreserveAlpha( boolean setPreserveAlpha );
+    public native void setPreserveAlpha( boolean value );
 
     @Getter
     public native double getAlpha( );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int value );
 
     @Setter
-    public native void setBias( double setBias );
+    public native void setBias( double value );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     @Setter
-    public native void setMatrixX( double setMatrixX );
+    public native void setMatrixX( double value );
 
     @Setter
-    public native void setMatrixY( double setMatrixY );
+    public native void setMatrixY( double value );
 
     @Getter
     public native boolean getPreserveAlpha( );
 
     @Setter
-    public native void setClamp( boolean setClamp );
+    public native void setClamp( boolean value );
 
     @Getter
     public native double getMatrixX( );
@@ -77,7 +77,7 @@ public class ConvolutionFilter extends flash.filters.BitmapFilter {
     public native boolean getClamp( );
 
     @Setter
-    public native void setDivisor( double setDivisor );
+    public native void setDivisor( double value );
 
     @Override
     public native flash.filters.BitmapFilter clone( );

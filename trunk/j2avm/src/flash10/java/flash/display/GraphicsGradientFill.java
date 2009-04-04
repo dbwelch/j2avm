@@ -30,7 +30,7 @@ public final class GraphicsGradientFill extends flash.FlashObject implements fla
     public native flash.geom.Matrix getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.geom.Matrix setMatrix );
+    public native void setMatrix( flash.geom.Matrix matrix );
 
     @Getter
     public native String getInterpolationMethod( );
@@ -39,34 +39,34 @@ public final class GraphicsGradientFill extends flash.FlashObject implements fla
     public native double getFocalPointRatio( );
 
     @Setter
-    public native void setFocalPointRatio( double setFocalPointRatio );
+    public native void setFocalPointRatio( double focalPointRatio );
 
     @Getter
     public native flash.FlashArray getRatios( );
 
     @Setter
-    public native void setRatios( flash.FlashArray setRatios );
+    public native void setRatios( flash.FlashArray ratios );
 
     @Setter
-    public native void setSpreadMethod( String setSpreadMethod );
+    public native void setSpreadMethod( String value );
 
     @Getter
     public native flash.FlashArray getColors( );
 
     @Setter
-    public native void setColors( flash.FlashArray setColors );
+    public native void setColors( flash.FlashArray colors );
 
     @Setter
-    public native void setInterpolationMethod( String setInterpolationMethod );
+    public native void setInterpolationMethod( String value );
 
     @Setter
-    public native void setType( String setType );
+    public native void setType( String value );
 
     @Getter
     public native flash.FlashArray getAlphas( );
 
     @Setter
-    public native void setAlphas( flash.FlashArray setAlphas );
+    public native void setAlphas( flash.FlashArray alphas );
 
     @Getter
     public native String getType( );

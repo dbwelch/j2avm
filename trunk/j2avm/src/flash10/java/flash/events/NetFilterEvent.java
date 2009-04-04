@@ -25,7 +25,7 @@ public class NetFilterEvent extends flash.events.Event {
     public native flash.utils.ByteArray getData( );
 
     @Setter
-    public native void setData( flash.utils.ByteArray setData );
+    public native void setData( flash.utils.ByteArray data );
 
     @Override
     public native String toString( );
@@ -37,5 +37,5 @@ public class NetFilterEvent extends flash.events.Event {
     public native flash.utils.ByteArray getHeader( );
 
     @Setter
-    public native void setHeader( flash.utils.ByteArray setHeader );
+    public native void setHeader( flash.utils.ByteArray header );
 }

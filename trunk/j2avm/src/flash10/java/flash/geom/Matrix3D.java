@@ -19,7 +19,7 @@ public class Matrix3D extends flash.FlashObject {
     public native void prependTranslation( double x, double y, double z );
 
     @Setter
-    public native void setRawData( double[] setRawData );
+    public native void setRawData( double[] v );
 
     public native flash.geom.Vector3D deltaTransformVector( flash.geom.Vector3D v );
 
@@ -65,7 +65,7 @@ public class Matrix3D extends flash.FlashObject {
     public native void appendRotation( double degrees, flash.geom.Vector3D axis );
 
     @Setter
-    public native void setPosition( flash.geom.Vector3D setPosition );
+    public native void setPosition( flash.geom.Vector3D pos );
 
     public native void append( flash.geom.Matrix3D lhs );
 

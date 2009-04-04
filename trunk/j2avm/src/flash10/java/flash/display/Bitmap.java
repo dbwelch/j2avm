@@ -17,16 +17,16 @@ public class Bitmap extends flash.display.DisplayObject {
     public  Bitmap( ) {}
 
     @Setter
-    public native void setBitmapData( flash.display.BitmapData setBitmapData );
+    public native void setBitmapData( flash.display.BitmapData value );
 
     @Getter
     public native String getPixelSnapping( );
 
     @Setter
-    public native void setPixelSnapping( String setPixelSnapping );
+    public native void setPixelSnapping( String value );
 
     @Setter
-    public native void setSmoothing( boolean setSmoothing );
+    public native void setSmoothing( boolean value );
 
     @Getter
     public native flash.display.BitmapData getBitmapData( );

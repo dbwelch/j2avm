@@ -18,7 +18,7 @@ public class XMLSocket extends flash.events.EventDispatcher {
     public native int getTimeout( );
 
     @Setter
-    public native void setTimeout( int setTimeout );
+    public native void setTimeout( int value );
 
     public native void send( Object object );
 

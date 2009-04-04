@@ -24,7 +24,7 @@ public class Rectangle extends flash.FlashObject {
     public native flash.geom.Point getSize( );
 
     @Setter
-    public native void setSize( flash.geom.Point setSize );
+    public native void setSize( flash.geom.Point value );
 
     public native boolean isEmpty( );
 
@@ -32,7 +32,7 @@ public class Rectangle extends flash.FlashObject {
     public native double getWidth( );
 
     @Setter
-    public native void setWidth( double setWidth );
+    public native void setWidth( double width );
 
     @Getter
     public native double getLeft( );
@@ -42,12 +42,12 @@ public class Rectangle extends flash.FlashObject {
     public native void setEmpty( );
 
     @Setter
-    public native void setLeft( double setLeft );
+    public native void setLeft( double value );
 
     public native flash.geom.Rectangle union( flash.geom.Rectangle toUnion );
 
     @Setter
-    public native void setRight( double setRight );
+    public native void setRight( double value );
 
     public native void offset( double dx, double dy );
 
@@ -55,7 +55,7 @@ public class Rectangle extends flash.FlashObject {
     public native double getTop( );
 
     @Setter
-    public native void setBottom( double setBottom );
+    public native void setBottom( double value );
 
     public native boolean equals( flash.geom.Rectangle toCompare );
 
@@ -69,7 +69,7 @@ public class Rectangle extends flash.FlashObject {
     public native void inflate( double dx, double dy );
 
     @Setter
-    public native void setBottomRight( flash.geom.Point setBottomRight );
+    public native void setBottomRight( flash.geom.Point value );
 
     public native boolean containsRect( flash.geom.Rectangle rect );
 
@@ -77,10 +77,10 @@ public class Rectangle extends flash.FlashObject {
     public native double getHeight( );
 
     @Setter
-    public native void setHeight( double setHeight );
+    public native void setHeight( double height );
 
     @Setter
-    public native void setTop( double setTop );
+    public native void setTop( double value );
 
     @Getter
     public native double getBottom( );
@@ -98,13 +98,13 @@ public class Rectangle extends flash.FlashObject {
     public native double getX( );
 
     @Setter
-    public native void setX( double setX );
+    public native void setX( double x );
 
     @Getter
     public native double getY( );
 
     @Setter
-    public native void setY( double setY );
+    public native void setY( double y );
 
     @Getter
     public native flash.geom.Point getTopLeft( );
@@ -112,5 +112,5 @@ public class Rectangle extends flash.FlashObject {
     public native void offsetPoint( flash.geom.Point point );
 
     @Setter
-    public native void setTopLeft( flash.geom.Point setTopLeft );
+    public native void setTopLeft( flash.geom.Point value );
 }

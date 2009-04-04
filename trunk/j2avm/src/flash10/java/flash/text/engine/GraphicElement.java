@@ -23,16 +23,16 @@ public final class GraphicElement extends flash.text.engine.ContentElement {
     public  GraphicElement( ) {}
 
     @Setter
-    public native void setGraphic( flash.display.DisplayObject setGraphic );
+    public native void setGraphic( flash.display.DisplayObject value );
 
     @Getter
     public native double getElementHeight( );
 
     @Setter
-    public native void setElementWidth( double setElementWidth );
+    public native void setElementWidth( double value );
 
     @Setter
-    public native void setElementHeight( double setElementHeight );
+    public native void setElementHeight( double value );
 
     @Getter
     public native flash.display.DisplayObject getGraphic( );

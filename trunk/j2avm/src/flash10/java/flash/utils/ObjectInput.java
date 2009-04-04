@@ -36,7 +36,7 @@ public class ObjectInput extends flash.FlashObject implements flash.utils.IDataI
     public native int getBytesAvailable( );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     public native String readMultiByte( int length, String charSet );
 
@@ -45,7 +45,7 @@ public class ObjectInput extends flash.FlashObject implements flash.utils.IDataI
     public native String readUTF( );
 
     @Setter
-    public native void setEndian( String setEndian );
+    public native void setEndian( String type );
 
     public native int readInt( );
 

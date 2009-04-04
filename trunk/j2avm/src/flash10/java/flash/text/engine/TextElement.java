@@ -21,5 +21,5 @@ public final class TextElement extends flash.text.engine.ContentElement {
     public native void replaceText( int beginIndex, int endIndex, String newText );
 
     @Setter
-    public native void setText( String setText );
+    public native void setText( String value );
 }

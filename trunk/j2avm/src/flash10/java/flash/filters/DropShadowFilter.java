@@ -36,37 +36,37 @@ public final class DropShadowFilter extends flash.filters.BitmapFilter {
     public native boolean getHideObject( );
 
     @Setter
-    public native void setBlurX( double setBlurX );
+    public native void setBlurX( double value );
 
     @Getter
     public native int getColor( );
 
     @Setter
-    public native void setBlurY( double setBlurY );
+    public native void setBlurY( double value );
 
     @Setter
-    public native void setQuality( int setQuality );
+    public native void setQuality( int value );
 
     @Setter
-    public native void setAngle( double setAngle );
+    public native void setAngle( double value );
 
     @Getter
     public native double getStrength( );
 
     @Setter
-    public native void setHideObject( boolean setHideObject );
+    public native void setHideObject( boolean value );
 
     @Setter
-    public native void setDistance( double setDistance );
+    public native void setDistance( double value );
 
     @Setter
-    public native void setInner( boolean setInner );
+    public native void setInner( boolean value );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int value );
 
     @Setter
-    public native void setStrength( double setStrength );
+    public native void setStrength( double value );
 
     @Getter
     public native double getBlurX( );
@@ -78,7 +78,7 @@ public final class DropShadowFilter extends flash.filters.BitmapFilter {
     public native double getAngle( );
 
     @Setter
-    public native void setKnockout( boolean setKnockout );
+    public native void setKnockout( boolean value );
 
     @Getter
     public native double getDistance( );
@@ -90,7 +90,7 @@ public final class DropShadowFilter extends flash.filters.BitmapFilter {
     public native boolean getKnockout( );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     @Override
     public native flash.filters.BitmapFilter clone( );

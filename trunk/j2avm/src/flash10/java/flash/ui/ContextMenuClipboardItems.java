@@ -14,31 +14,31 @@ public final class ContextMenuClipboardItems extends flash.FlashObject {
     public native boolean getCut( );
 
     @Setter
-    public native void setCut( boolean setCut );
+    public native void setCut( boolean cut );
 
     @Getter
     public native boolean getPaste( );
 
     @Setter
-    public native void setPaste( boolean setPaste );
+    public native void setPaste( boolean paste );
 
     @Getter
     public native boolean getCopy( );
 
     @Setter
-    public native void setCopy( boolean setCopy );
+    public native void setCopy( boolean copy );
 
     @Getter
     public native boolean getSelectAll( );
 
     @Setter
-    public native void setSelectAll( boolean setSelectAll );
+    public native void setSelectAll( boolean selectAll );
 
     @Getter
     public native boolean getClear( );
 
     @Setter
-    public native void setClear( boolean setClear );
+    public native void setClear( boolean clear );
 
     public native flash.ui.ContextMenuClipboardItems clone( );
 }

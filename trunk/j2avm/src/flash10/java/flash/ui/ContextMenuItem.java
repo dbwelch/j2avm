@@ -23,7 +23,7 @@ public final class ContextMenuItem extends flash.events.EventDispatcher {
     public native boolean getEnabled( );
 
     @Setter
-    public native void setEnabled( boolean setEnabled );
+    public native void setEnabled( boolean value );
 
     @Getter
     public native boolean getSeparatorBefore( );
@@ -32,16 +32,16 @@ public final class ContextMenuItem extends flash.events.EventDispatcher {
     public native String getCaption( );
 
     @Setter
-    public native void setSeparatorBefore( boolean setSeparatorBefore );
+    public native void setSeparatorBefore( boolean value );
 
     @Getter
     public native boolean getVisible( );
 
     @Setter
-    public native void setVisible( boolean setVisible );
+    public native void setVisible( boolean value );
 
     @Setter
-    public native void setCaption( String setCaption );
+    public native void setCaption( String value );
 
     public native flash.ui.ContextMenuItem clone( );
 }

@@ -13,12 +13,12 @@ public class TextField extends flash.display.InteractiveObject {
     public static final native boolean isFontCompatible( String fontName, String fontStyle );
 
     @Setter
-    public native void setAlwaysShowSelection( boolean setAlwaysShowSelection );
+    public native void setAlwaysShowSelection( boolean value );
 
     public native void replaceText( int beginIndex, int endIndex, String newText );
 
     @Setter
-    public native void setSharpness( double setSharpness );
+    public native void setSharpness( double value );
 
     @Getter
     public native boolean getWordWrap( );
@@ -32,7 +32,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getLineLength( int lineIndex );
 
     @Setter
-    public native void setGridFitType( String setGridFitType );
+    public native void setGridFitType( String gridFitType );
 
     public native flash.FlashArray getTextRuns( int beginIndex, int endIndex );
 
@@ -44,13 +44,13 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getCaretIndex( );
 
     @Setter
-    public native void setWordWrap( boolean setWordWrap );
+    public native void setWordWrap( boolean value );
 
     @Getter
     public native int getBorderColor( );
 
     @Setter
-    public native void setCondenseWhite( boolean setCondenseWhite );
+    public native void setCondenseWhite( boolean value );
 
     @Getter
     public native int getNumLines( );
@@ -64,7 +64,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getMaxScrollH( );
 
     @Setter
-    public native void setAutoSize( String setAutoSize );
+    public native void setAutoSize( String value );
 
     @Getter
     public native flash.text.TextFormat getDefaultTextFormat( );
@@ -78,7 +78,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getScrollV( );
 
     @Setter
-    public native void setBackgroundColor( int setBackgroundColor );
+    public native void setBackgroundColor( int value );
 
     @Getter
     public native boolean getEmbedFonts( );
@@ -93,19 +93,19 @@ public class TextField extends flash.display.InteractiveObject {
     public native boolean getBackground( );
 
     @Setter
-    public native void setMaxChars( int setMaxChars );
+    public native void setMaxChars( int value );
 
     @Setter
-    public native void setSelectable( boolean setSelectable );
+    public native void setSelectable( boolean value );
 
     @Getter
     public native int getMaxScrollV( );
 
     @Setter
-    public native void setBorderColor( int setBorderColor );
+    public native void setBorderColor( int value );
 
     @Setter
-    public native void setDisplayAsPassword( boolean setDisplayAsPassword );
+    public native void setDisplayAsPassword( boolean value );
 
     public native String getLineText( int lineIndex );
 
@@ -121,7 +121,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native String getRestrict( );
 
     @Setter
-    public native void setScrollH( int setScrollH );
+    public native void setScrollH( int value );
 
     public native String getRawText( );
 
@@ -146,7 +146,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native String getType( );
 
     @Setter
-    public native void setDefaultTextFormat( flash.text.TextFormat setDefaultTextFormat );
+    public native void setDefaultTextFormat( flash.text.TextFormat format );
 
     public native void replaceSelectedText( String value );
 
@@ -167,10 +167,10 @@ public class TextField extends flash.display.InteractiveObject {
     public native void setSelection( int beginIndex, int endIndex );
 
     @Setter
-    public native void setScrollV( int setScrollV );
+    public native void setScrollV( int value );
 
     @Setter
-    public native void setUseRichTextClipboard( boolean setUseRichTextClipboard );
+    public native void setUseRichTextClipboard( boolean value );
 
     @Getter
     public native int getBackgroundColor( );
@@ -179,16 +179,16 @@ public class TextField extends flash.display.InteractiveObject {
     public native boolean getSelectable( );
 
     @Setter
-    public native void setAntiAliasType( String setAntiAliasType );
+    public native void setAntiAliasType( String antiAliasType );
 
     @Setter
-    public native void setBorder( boolean setBorder );
+    public native void setBorder( boolean value );
 
     @Getter
     public native int getMaxChars( );
 
     @Setter
-    public native void setMultiline( boolean setMultiline );
+    public native void setMultiline( boolean value );
 
     public native String getXMLText( int beginIndex, int endIndex );
 
@@ -197,15 +197,15 @@ public class TextField extends flash.display.InteractiveObject {
     public native String getXMLText( );
 
     @Setter
-    public native void setBackground( boolean setBackground );
+    public native void setBackground( boolean value );
 
     @Setter
-    public native void setEmbedFonts( boolean setEmbedFonts );
+    public native void setEmbedFonts( boolean value );
 
     public native int getCharIndexAtPoint( double x, double y );
 
     @Setter
-    public native void setText( String setText );
+    public native void setText( String value );
 
     @Getter
     public native int getSelectionEndIndex( );
@@ -214,7 +214,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getSelectionBeginIndex( );
 
     @Setter
-    public native void setMouseWheelEnabled( boolean setMouseWheelEnabled );
+    public native void setMouseWheelEnabled( boolean value );
 
     @Getter
     public native int getLength( );
@@ -225,16 +225,16 @@ public class TextField extends flash.display.InteractiveObject {
     public native String getAntiAliasType( );
 
     @Setter
-    public native void setStyleSheet( flash.text.StyleSheet setStyleSheet );
+    public native void setStyleSheet( flash.text.StyleSheet value );
 
     @Setter
-    public native void setTextColor( int setTextColor );
+    public native void setTextColor( int value );
 
     @Getter
     public native String getSelectedText( );
 
     @Setter
-    public native void setHtmlText( String setHtmlText );
+    public native void setHtmlText( String value );
 
     public native void insertXMLText( int beginIndex, int endIndex, String richText, boolean pasting );
 
@@ -249,7 +249,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getLineIndexAtPoint( double x, double y );
 
     @Setter
-    public native void setThickness( double setThickness );
+    public native void setThickness( double value );
 
     @Getter
     public native String getHtmlText( );
@@ -263,7 +263,7 @@ public class TextField extends flash.display.InteractiveObject {
     public native flash.text.TextFormat getTextFormat( );
 
     @Setter
-    public native void setType( String setType );
+    public native void setType( String value );
 
     public native int getLineIndexOfChar( int charIndex );
 
@@ -271,5 +271,5 @@ public class TextField extends flash.display.InteractiveObject {
     public native int getBottomScrollV( );
 
     @Setter
-    public native void setRestrict( String setRestrict );
+    public native void setRestrict( String value );
 }

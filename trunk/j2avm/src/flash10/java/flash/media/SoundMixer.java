@@ -11,7 +11,7 @@ public final class SoundMixer extends flash.FlashObject {
     public  SoundMixer( ) {}
 
     @Setter
-    public static final native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public static final native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     public static final native boolean areSoundsInaccessible( );
 
@@ -25,7 +25,7 @@ public final class SoundMixer extends flash.FlashObject {
     public static final native void computeSpectrum( flash.utils.ByteArray outputArray );
 
     @Setter
-    public static final native void setBufferTime( int setBufferTime );
+    public static final native void setBufferTime( int bufferTime );
 
     @Getter
     public static final native flash.media.SoundTransform getSoundTransform( );

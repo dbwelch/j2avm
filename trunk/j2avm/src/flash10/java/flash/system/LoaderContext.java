@@ -20,17 +20,17 @@ public class LoaderContext extends flash.FlashObject {
     public native flash.system.ApplicationDomain getApplicationDomain( );
 
     @Setter
-    public native void setApplicationDomain( flash.system.ApplicationDomain setApplicationDomain );
+    public native void setApplicationDomain( flash.system.ApplicationDomain applicationDomain );
 
     @Getter
     public native boolean getCheckPolicyFile( );
 
     @Setter
-    public native void setCheckPolicyFile( boolean setCheckPolicyFile );
+    public native void setCheckPolicyFile( boolean checkPolicyFile );
 
     @Getter
     public native flash.system.SecurityDomain getSecurityDomain( );
 
     @Setter
-    public native void setSecurityDomain( flash.system.SecurityDomain setSecurityDomain );
+    public native void setSecurityDomain( flash.system.SecurityDomain securityDomain );
 }

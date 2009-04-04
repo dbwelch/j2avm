@@ -6,7 +6,7 @@ package flash.display;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public final class GraphicsPath extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsPath {
+public final class GraphicsPath extends flash.FlashObject implements flash.display.IGraphicsPath,flash.display.IGraphicsData {
 
     public  GraphicsPath( int[] commands, double[] data, String winding ) {}
 
@@ -19,19 +19,19 @@ public final class GraphicsPath extends flash.FlashObject implements flash.displ
     public native void wideLineTo( double x, double y );
 
     @Setter
-    public native void setWinding( String setWinding );
+    public native void setWinding( String value );
 
     @Getter
     public native int[] getCommands( );
 
     @Setter
-    public native void setCommands( int[] setCommands );
+    public native void setCommands( int[] commands );
 
     @Getter
     public native double[] getData( );
 
     @Setter
-    public native void setData( double[] setData );
+    public native void setData( double[] data );
 
     public native void moveTo( double x, double y );
 

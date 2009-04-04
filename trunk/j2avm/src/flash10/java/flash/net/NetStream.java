@@ -20,12 +20,12 @@ public class NetStream extends flash.events.EventDispatcher {
     public static final String DIRECT_CONNECTIONS = "directConnections";
 
     @Setter
-    public native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     public native void togglePause( );
 
     @Setter
-    public native void setMaxPauseBufferTime( double setMaxPauseBufferTime );
+    public native void setMaxPauseBufferTime( double pauseBufferTime );
 
     @Getter
     public native double getMaxPauseBufferTime( );
@@ -62,7 +62,7 @@ public class NetStream extends flash.events.EventDispatcher {
     public native double getBufferLength( );
 
     @Setter
-    public native void setClient( flash.FlashObject setClient );
+    public native void setClient( flash.FlashObject object );
 
     public native void receiveVideo( boolean flag );
 
@@ -70,7 +70,7 @@ public class NetStream extends flash.events.EventDispatcher {
     public native int getBytesTotal( );
 
     @Setter
-    public native void setBufferTime( double setBufferTime );
+    public native void setBufferTime( double bufferTime );
 
     @Getter
     public native int getVideoCodec( );
@@ -90,7 +90,7 @@ public class NetStream extends flash.events.EventDispatcher {
     public native String getNearNonce( );
 
     @Setter
-    public native void setCheckPolicyFile( boolean setCheckPolicyFile );
+    public native void setCheckPolicyFile( boolean state );
 
     @Getter
     public native double getBufferTime( );

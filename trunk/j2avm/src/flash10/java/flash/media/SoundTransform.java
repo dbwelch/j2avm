@@ -15,7 +15,7 @@ public final class SoundTransform extends flash.FlashObject {
     public  SoundTransform( ) {}
 
     @Setter
-    public native void setPan( double setPan );
+    public native void setPan( double panning );
 
     @Getter
     public native double getRightToRight( );
@@ -27,22 +27,22 @@ public final class SoundTransform extends flash.FlashObject {
     public native double getLeftToLeft( );
 
     @Setter
-    public native void setRightToRight( double setRightToRight );
+    public native void setRightToRight( double rightToRight );
 
     @Setter
-    public native void setLeftToLeft( double setLeftToLeft );
+    public native void setLeftToLeft( double leftToLeft );
 
     @Setter
-    public native void setLeftToRight( double setLeftToRight );
+    public native void setLeftToRight( double leftToRight );
 
     @Getter
     public native double getLeftToRight( );
 
     @Setter
-    public native void setVolume( double setVolume );
+    public native void setVolume( double volume );
 
     @Setter
-    public native void setRightToLeft( double setRightToLeft );
+    public native void setRightToLeft( double rightToLeft );
 
     @Getter
     public native double getPan( );

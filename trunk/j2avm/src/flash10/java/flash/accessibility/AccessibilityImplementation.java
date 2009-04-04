@@ -18,7 +18,7 @@ public class AccessibilityImplementation extends flash.FlashObject {
     public native int getErrno( );
 
     @Setter
-    public native void setErrno( int setErrno );
+    public native void setErrno( int errno );
 
     public native int get_accFocus( );
 
@@ -30,7 +30,7 @@ public class AccessibilityImplementation extends flash.FlashObject {
     public native boolean getStub( );
 
     @Setter
-    public native void setStub( boolean setStub );
+    public native void setStub( boolean stub );
 
     public native flash.FlashArray get_accSelection( );
 

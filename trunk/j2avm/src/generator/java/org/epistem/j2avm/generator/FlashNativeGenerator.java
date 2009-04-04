@@ -3,13 +3,9 @@ package org.epistem.j2avm.generator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.epistem.io.IndentingPrintWriter;
-import org.epistem.jvm.type.Signature;
 
 import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.model.*;
@@ -47,6 +43,10 @@ public class FlashNativeGenerator {
      */
     public void generateJava( File dir ) throws IOException {
         
+        Map<AVM2Namespace,Collection<AVM2MethodSlot>> functions = 
+            new HashMap<AVM2Namespace, Collection<AVM2MethodSlot>>();
+        
+        //process each ABC block and generate the classes
         for( AVM2ABCFile abcFile : abcFiles ) {        
             for( AVM2Class clazz : abcFile.classes.values() ) {
                 String filename = clazz.name.name + ".java";
@@ -70,6 +70,73 @@ public class FlashNativeGenerator {
                     fw.close();
                 }
             }
+            
+            //gather the stand-alone functions by package (they may be spread
+            // across different ABC blocks)
+            for( AVM2Script script : abcFile.scripts ) {
+                for( AVM2Trait trait : script.traits.traits ) { 
+                    if( trait instanceof AVM2MethodSlot ){
+                        AVM2MethodSlot fn = (AVM2MethodSlot) trait;
+                        AVM2Namespace ns = fn.name.namespace;
+                        if( ns.kind == NamespaceKind.PackageNamespace ) {
+                            Collection<AVM2MethodSlot> fns = functions.get( ns );
+                            if( fns == null ) {
+                                functions.put( ns, fns = new ArrayList<AVM2MethodSlot>() );
+                            }
+                            fns.add( fn );
+                        }                                
+                    }                    
+                }
+            }
+        }
+        
+        //generate the function holders
+        AVM2Name superclass = new AVM2QName( "flash.FlashObject" );
+        for( AVM2Namespace ns : functions.keySet() ) {
+            
+            AVM2QName className;
+            if( ns.equals( AVM2Namespace.publicNamespace ) ) {
+                className = new AVM2QName( "flash.toplevel_functions" );
+            }
+            else {
+                className = new AVM2QName( ns.name + "_functions" );                
+            }
+            
+            String filename = className.name + ".java";
+            File pkgDir = new File( dir, className.namespace.name.replace( '.', '/' ) );
+            pkgDir.mkdirs();
+            
+            System.out.println( "Generating scripts for " + className );
+            
+            FileWriter fw = new FileWriter( new File( pkgDir, filename ) );
+            try {    
+                out = new IndentingPrintWriter( fw );
+                templateStartClass( className, true, false, superclass, null );
+    
+                //private constructor to prevent instantiation
+                out.println( "\nprivate " + className.name + "() {}" ); 
+    
+                for( AVM2MethodSlot func : functions.get( ns ) ) {
+                    String annotation = ns.name;
+                    if( annotation.length() > 0 ) annotation += ".";
+                    annotation = "@Function(\"" + annotation + func.name.name + "\")";
+                    
+                    templateMethod( func.name.name, 
+                                    func.method.returnType,
+                                    func.method.paramTypes,
+                                    func.method.paramNames,
+                                    func.method.defaultValues.size(),
+                                    true, false, false, true, 
+                                    false, false, false,
+                                    annotation );                    
+                }
+                
+                templateEndClass();
+            } 
+            finally {
+                out.flush();
+                fw.close();
+            }
         }
     }
     
@@ -79,8 +146,9 @@ public class FlashNativeGenerator {
     private void generateClass( AVM2Class clazz ) {
         System.out.println( "Generating " + clazz.name );
                 
-        templateStartClass( clazz );
-    
+        templateStartClass( clazz.name, clazz.isFinal, clazz.isInterface,
+                            clazz.superclass, clazz.interfaces );
+            
         generateConstructors:
         if( ! clazz.isInterface ) {
             AVM2Method cons = clazz.constructor;
@@ -96,7 +164,7 @@ public class FlashNativeGenerator {
             
             templateMethod( name, null, cons.paramTypes, 
                             cons.paramNames, cons.defaultValues.size(),
-                            false, false, false, false, false, true );
+                            false, false, false, false, false, true, false, null );
             
             //cheat - create a no-arg protected constructor so that we don't have
             // to make a valid super call in the sub-class constructors
@@ -134,15 +202,15 @@ public class FlashNativeGenerator {
     
     private void processTrait( AVM2Trait trait, AVM2Class clazz, boolean isStatic ) {
         
-        if( clazz.name.name.equals( "Object" ) ) {
-            System.out.println( trait.name );
-        }
-        
         boolean isDate = clazz.name.name.equals( "Date" ) 
                       && clazz.name.namespace.equals( AVM2Namespace.publicNamespace );
         
+        AVM2Namespace ns = new AVM2Namespace( NamespaceKind.Namespace, 
+                                              clazz.name.namespace.name + ":" + clazz.name.name );
+        
         boolean isPublic = trait.name.namespace.equals( AVM2Namespace.publicNamespace )
-                        || trait.name.namespace.equals( BUILT_IN );
+                        || trait.name.namespace.equals( BUILT_IN )
+                        || trait.name.namespace.equals( ns ) ;
         boolean isProtected = trait.name.namespace.kind == NamespaceKind.ProtectedNamespace;
         if( ! ( isProtected || isPublic )) return;
         
@@ -162,7 +230,7 @@ public class FlashNativeGenerator {
             String   name = getter.name.name;
             AVM2Name type = getter.getMethod().returnType;
 
-            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride );                
+            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride, clazz.isInterface );                
         }
         else if( trait instanceof AVM2Setter ) {
             if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
@@ -171,7 +239,10 @@ public class FlashNativeGenerator {
             String   name = setter.name.name;
             AVM2Name type = setter.getMethod().paramTypes.get( 0 );
 
-            templateSetter( name, type, isStatic, isProtected, isFinal, isOverride );
+            List<String> pnames = setter.method.paramNames;
+            String pname = (pnames != null && ! pnames.isEmpty()) ? pnames.get( 0 ) : name;
+            
+            templateSetter( name, type, pname, isStatic, isProtected, isFinal, isOverride, clazz.isInterface );
         }
         else if( trait instanceof AVM2MethodSlot ) {
             AVM2MethodSlot methodSlot = (AVM2MethodSlot) trait;
@@ -182,7 +253,8 @@ public class FlashNativeGenerator {
             templateMethod( name, method.returnType, method.paramTypes, 
                             method.paramNames, method.defaultValues.size(),
                             isStatic, isProtected, methodSlot.isFinal, 
-                            ! clazz.isInterface, methodSlot.isOverride, false );
+                            ! clazz.isInterface, methodSlot.isOverride, 
+                            false, clazz.isInterface, null );
         }
         else if( trait instanceof AVM2Slot ) {
             if( isDate ) return; //don't generate accessors for Date since it also specifies them explicitly
@@ -196,8 +268,8 @@ public class FlashNativeGenerator {
                 return;
             }
             
-            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride );
-            templateSetter( name, type, isStatic, isProtected, isFinal, isOverride );
+            templateGetter( name, type, isStatic, isProtected, isFinal, isOverride, clazz.isInterface );
+            templateSetter( name, type, name, isStatic, isProtected, isFinal, isOverride, clazz.isInterface );
         }
     }
     
@@ -295,14 +367,16 @@ public class FlashNativeGenerator {
                                  int optionalParamCount,
                                  boolean isStatic, boolean isProtected , 
                                  boolean isFinal, boolean isNative, boolean isOverride,
-                                 boolean isConstructor ) {
+                                 boolean isConstructor,
+                                 boolean isInterface,
+                                 String annotation ) {
 
         String visibility = isProtected ? "protected" : "public";
         String strRetType = isConstructor ? "" : typeToString( returnType );
         String strStatic  = isStatic ? " static" : "";
         String strFinal   = isFinal  ? " final" : "";
         String strNative  = isNative ? " native" : "";
-        String body = isNative ? ";" : " {}";
+        String body = ( isNative || isInterface ) ? ";" : " {}";
         
         if( paramTypes == null ) paramTypes = Collections.emptyList();
         if( paramNames == null ) paramNames = Collections.emptyList();
@@ -341,38 +415,32 @@ public class FlashNativeGenerator {
         for( int i = 0; i < paramStrings.length; i++ ) {
             out.println();
             if( isOverride ) out.println( "@Override" );
+            if( annotation != null ) out.println( annotation );
             out.println( visibility + strStatic + strFinal + strNative 
                          + " " + strRetType + " " + name + "(" + paramStrings[i] + ")" + body );            
         }
     }
 
-    /**
-     * Template for a constructor
-     */
-    private void templateConstructor() {
-        
-    }
 
     /**
      * Generate a setter method
      * @param name the property name
      * @param type the property type
      */
-    private void templateSetter( String name, AVM2Name type, boolean isStatic, 
-                                 boolean isProtected, boolean isFinal, boolean isOverride ) {
+    private void templateSetter( String name, AVM2Name type, String paramName, boolean isStatic, 
+                                 boolean isProtected, boolean isFinal, boolean isOverride, boolean isInterface ) {
         
         if( name.length() == 1 ) name = name.toUpperCase();
         else name = name.substring( 0, 1 ).toUpperCase() + name.substring( 1 );
         
         name = "set" + name;
         List<AVM2Name> params = Collections.singletonList( type );
-        List<String>   pnames = Collections.singletonList( name );
+        List<String>   pnames = Collections.singletonList( paramName );
         
-        out.println();
-        out.print( "@Setter" );
         templateMethod( name, AVM2StandardName.TypeVoid.qname, 
                         params, pnames, 0, isStatic, 
-                        isProtected, isFinal, true, isOverride, false );
+                        isProtected, isFinal, ! isInterface, 
+                        isOverride, false, isInterface, "@Setter" );
     }
 
     /**
@@ -381,62 +449,48 @@ public class FlashNativeGenerator {
      * @param type the property type
      */
     private void templateGetter( String name, AVM2Name type, boolean isStatic, 
-                                 boolean isProtected, boolean isFinal, boolean isOverride ) {
+                                 boolean isProtected, boolean isFinal, boolean isOverride, boolean isInterface ) {
         
         if( name.length() == 1 ) name = name.toUpperCase();
         else name = name.substring( 0, 1 ).toUpperCase() + name.substring( 1 );
         
         name = "get" + name;
         
-        out.println();
-        out.print( "@Getter" );
         templateMethod( name, type, null, null, 0, isStatic, 
-                        isProtected, isFinal, true, isOverride, false );
-    }
-    
-    /**
-     * Template for a method signature
-     */
-    private void templateSignature( Signature signature ) {
-        StringBuilder arguments = new StringBuilder();
-        for( int i = 0; i < signature.paramTypes.length; i++ ) {
-            if( i > 0 ) arguments.append( "," );
-            arguments.append( " " );
-            arguments.append( signature.paramTypes[i].name );
-            arguments.append( " arg" + (i+1) );
-        }
-        if( arguments.length() > 0 ) arguments.append( " " );
-        
-        out.print( signature.name + "(" + arguments + ")" );
+                        isProtected, isFinal, ! isInterface, 
+                        isOverride, false, isInterface, "@Getter" );
     }
     
     /**
      * The template for the start of a class
      */
-    private void templateStartClass( AVM2Class clazz ) {
+    private void templateStartClass( AVM2QName className,
+                                     boolean isFinal, boolean isInterface,
+                                     AVM2Name superclass,
+                                     Collection<AVM2Name> interfaces ) {
         
         StringBuilder ifaces = new StringBuilder();
-        boolean first = true;
-        for( AVM2Name ifname : clazz.interfaces ) {
-            if( first ) {
-                ifaces.append( " implements " );
-                first = false;
+        if( interfaces != null ) {
+            boolean first = true;
+            for( AVM2Name ifname : interfaces ) {
+                if( first ) {
+                    ifaces.append( " implements " );
+                    first = false;
+                }
+                else ifaces.append( "," );
+                
+                ifaces.append( typeToString( ifname ) );
             }
-            else ifaces.append( "," );
-            
-            System.out.println( "IFACE ==> " + ifname );
-            
-            ifaces.append( typeToString( ifname ) );
         }
         
-        String pkg = clazz.name.namespace.name;
+        String pkg = className.namespace.name;
         
-        String isFinal = clazz.isFinal ? " final" : "";
-        String nature  = clazz.isInterface ? " interface" : " class";
-        String name    = clazz.name.name;
-        String supername = (clazz.superclass == null) ? 
-                              "" :
-                              " extends " + typeToString( clazz.superclass );
+        String finalStr  = isFinal ? " final" : "";
+        String nature    = isInterface ? " interface" : " class";
+        String name      = className.name;
+        String supername = (superclass == null) ? 
+                               "" :
+                               " extends " + typeToString( superclass );
 
         if( pkg.length() == 0 ) {
             pkg = "flash";
@@ -451,7 +505,7 @@ public class FlashNativeGenerator {
         out.println( "import org.epistem.j2avm.annotations.runtime.*;" );
         out.println();
         out.println( "@FlashNativeClass" );
-        out.println( "public" + isFinal + nature + " " + name + supername + ifaces + " {" );
+        out.println( "public" + finalStr + nature + " " + name + supername + ifaces + " {" );
         out.indent();
     }
     

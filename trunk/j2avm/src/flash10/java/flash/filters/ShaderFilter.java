@@ -19,22 +19,22 @@ public class ShaderFilter extends flash.filters.BitmapFilter {
     public native flash.display.Shader getShader( );
 
     @Setter
-    public native void setRightExtension( int setRightExtension );
+    public native void setRightExtension( int v );
 
     @Setter
-    public native void setBottomExtension( int setBottomExtension );
+    public native void setBottomExtension( int v );
 
     @Setter
-    public native void setShader( flash.display.Shader setShader );
+    public native void setShader( flash.display.Shader shader );
 
     @Setter
-    public native void setLeftExtension( int setLeftExtension );
+    public native void setLeftExtension( int v );
 
     @Getter
     public native int getTopExtension( );
 
     @Setter
-    public native void setTopExtension( int setTopExtension );
+    public native void setTopExtension( int v );
 
     @Getter
     public native int getLeftExtension( );

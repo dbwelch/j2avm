@@ -19,9 +19,13 @@ import com.anotherbigidea.flash.avm2.model.AVM2QName;
 public class FlashNativeMethodTranslator extends MethodTranslatorBase {
     
     /*pkg*/ FlashNativeMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method ) {
-        super( classTrans, method, new AVM2QName( makeAVM2Namespace( classTrans, method ), method.name ) );
+        this( classTrans, method, new AVM2QName( makeAVM2Namespace( classTrans, method ), method.name ) );
     }
 
+    /*pkg*/ FlashNativeMethodTranslator( ClassTranslatorBase classTrans, JVMMethod method, AVM2QName name ) {
+        super( classTrans, method, name );
+    }
+    
     /**
      * @see org.epistem.j2avm.translator.MethodTranslator#translateCall(MethodTranslator, MethodCall, boolean)
      */

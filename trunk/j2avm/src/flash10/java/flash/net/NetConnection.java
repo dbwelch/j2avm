@@ -11,7 +11,7 @@ public class NetConnection extends flash.events.EventDispatcher {
     public  NetConnection( ) {}
 
     @Setter
-    public static final native void setDefaultObjectEncoding( int setDefaultObjectEncoding );
+    public static final native void setDefaultObjectEncoding( int version );
 
     @Getter
     public static final native int getDefaultObjectEncoding( );
@@ -23,10 +23,10 @@ public class NetConnection extends flash.events.EventDispatcher {
     public native String getNearID( );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     @Setter
-    public native void setMaxPeerConnections( int setMaxPeerConnections );
+    public native void setMaxPeerConnections( int maxPeers );
 
     @Getter
     public native String getProtocol( );
@@ -55,7 +55,7 @@ public class NetConnection extends flash.events.EventDispatcher {
     public native int getMaxPeerConnections( );
 
     @Setter
-    public native void setProxyType( String setProxyType );
+    public native void setProxyType( String ptype );
 
     @Getter
     public native int getObjectEncoding( );
@@ -64,7 +64,7 @@ public class NetConnection extends flash.events.EventDispatcher {
     public native String getNearNonce( );
 
     @Setter
-    public native void setClient( flash.FlashObject setClient );
+    public native void setClient( flash.FlashObject object );
 
     @Getter
     public native boolean getUsingTLS( );

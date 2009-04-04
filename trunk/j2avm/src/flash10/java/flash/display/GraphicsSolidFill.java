@@ -6,7 +6,7 @@ package flash.display;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public final class GraphicsSolidFill extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsFill {
+public final class GraphicsSolidFill extends flash.FlashObject implements flash.display.IGraphicsFill,flash.display.IGraphicsData {
 
     public  GraphicsSolidFill( int color, double alpha ) {}
 
@@ -18,11 +18,11 @@ public final class GraphicsSolidFill extends flash.FlashObject implements flash.
     public native int getColor( );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int color );
 
     @Getter
     public native double getAlpha( );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double alpha );
 }

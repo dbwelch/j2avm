@@ -14,7 +14,7 @@ public class authObject extends flash.FlashObject {
     protected authObject() {}
 
     @Setter
-    public static final native void setOffScreenSurfaceRenderingEnabled( boolean setOffScreenSurfaceRenderingEnabled );
+    public static final native void setOffScreenSurfaceRenderingEnabled( boolean value );
 
     @Getter
     public static final native boolean getOffScreenSurfaceRenderingEnabled( );

@@ -14,29 +14,29 @@ public class NetStreamPlayOptions extends flash.events.EventDispatcher {
     public native String getOldStreamName( );
 
     @Setter
-    public native void setOldStreamName( String setOldStreamName );
+    public native void setOldStreamName( String oldStreamName );
 
     @Getter
     public native double getLen( );
 
     @Setter
-    public native void setLen( double setLen );
+    public native void setLen( double len );
 
     @Getter
     public native double getStart( );
 
     @Setter
-    public native void setStart( double setStart );
+    public native void setStart( double start );
 
     @Getter
     public native String getStreamName( );
 
     @Setter
-    public native void setStreamName( String setStreamName );
+    public native void setStreamName( String streamName );
 
     @Getter
     public native String getTransition( );
 
     @Setter
-    public native void setTransition( String setTransition );
+    public native void setTransition( String transition );
 }

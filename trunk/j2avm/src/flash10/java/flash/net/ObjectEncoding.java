@@ -20,5 +20,5 @@ public final class ObjectEncoding extends flash.FlashObject {
     public static final int AMF3 = 3;
 
     @Setter
-    public static final native void setDynamicPropertyWriter( flash.net.IDynamicPropertyWriter setDynamicPropertyWriter );
+    public static final native void setDynamicPropertyWriter( flash.net.IDynamicPropertyWriter object );
 }

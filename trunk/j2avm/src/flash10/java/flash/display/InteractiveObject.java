@@ -17,13 +17,13 @@ public class InteractiveObject extends flash.display.DisplayObject {
     public native flash.FlashObject getFocusRect( );
 
     @Setter
-    public native void setFocusRect( flash.FlashObject setFocusRect );
+    public native void setFocusRect( flash.FlashObject focusRect );
 
     @Getter
     public native boolean getDoubleClickEnabled( );
 
     @Setter
-    public native void setContextMenu( flash.ui.ContextMenu setContextMenu );
+    public native void setContextMenu( flash.ui.ContextMenu cm );
 
     @Getter
     public native boolean getTabEnabled( );
@@ -32,16 +32,16 @@ public class InteractiveObject extends flash.display.DisplayObject {
     public native flash.ui.ContextMenu getContextMenu( );
 
     @Setter
-    public native void setAccessibilityImplementation( flash.accessibility.AccessibilityImplementation setAccessibilityImplementation );
+    public native void setAccessibilityImplementation( flash.accessibility.AccessibilityImplementation value );
 
     @Setter
-    public native void setDoubleClickEnabled( boolean setDoubleClickEnabled );
+    public native void setDoubleClickEnabled( boolean enabled );
 
     @Setter
-    public native void setMouseEnabled( boolean setMouseEnabled );
+    public native void setMouseEnabled( boolean enabled );
 
     @Setter
-    public native void setTabIndex( int setTabIndex );
+    public native void setTabIndex( int index );
 
     @Getter
     public native boolean getMouseEnabled( );
@@ -50,5 +50,5 @@ public class InteractiveObject extends flash.display.DisplayObject {
     public native int getTabIndex( );
 
     @Setter
-    public native void setTabEnabled( boolean setTabEnabled );
+    public native void setTabEnabled( boolean enabled );
 }

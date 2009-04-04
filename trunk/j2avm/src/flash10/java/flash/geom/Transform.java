@@ -17,10 +17,10 @@ public class Transform extends flash.FlashObject {
     public native flash.geom.Matrix getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.geom.Matrix setMatrix );
+    public native void setMatrix( flash.geom.Matrix value );
 
     @Setter
-    public native void setMatrix3D( flash.geom.Matrix3D setMatrix3D );
+    public native void setMatrix3D( flash.geom.Matrix3D m );
 
     @Getter
     public native flash.geom.ColorTransform getColorTransform( );
@@ -37,13 +37,13 @@ public class Transform extends flash.FlashObject {
     public native flash.geom.Matrix3D getRelativeMatrix3D( flash.display.DisplayObject relativeTo );
 
     @Setter
-    public native void setPerspectiveProjection( flash.geom.PerspectiveProjection setPerspectiveProjection );
+    public native void setPerspectiveProjection( flash.geom.PerspectiveProjection pm );
 
     @Getter
     public native flash.geom.ColorTransform getConcatenatedColorTransform( );
 
     @Setter
-    public native void setColorTransform( flash.geom.ColorTransform setColorTransform );
+    public native void setColorTransform( flash.geom.ColorTransform value );
 
     @Getter
     public native flash.geom.Rectangle getPixelBounds( );

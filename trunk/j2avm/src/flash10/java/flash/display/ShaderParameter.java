@@ -14,7 +14,7 @@ public final class ShaderParameter extends flash.FlashObject {
     public native flash.FlashArray getValue( );
 
     @Setter
-    public native void setValue( flash.FlashArray setValue );
+    public native void setValue( flash.FlashArray v );
 
     @Getter
     public native String getType( );

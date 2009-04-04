@@ -37,7 +37,7 @@ public final class TextBlock extends flash.FlashObject {
     public native flash.text.engine.TextLine getFirstLine( );
 
     @Setter
-    public native void setTextJustifier( flash.text.engine.TextJustifier setTextJustifier );
+    public native void setTextJustifier( flash.text.engine.TextJustifier value );
 
     @Getter
     public native flash.text.engine.ContentElement getContent( );
@@ -52,7 +52,7 @@ public final class TextBlock extends flash.FlashObject {
     public native int findNextWordBoundary( int afterCharIndex );
 
     @Setter
-    public native void setBaselineFontDescription( flash.text.engine.FontDescription setBaselineFontDescription );
+    public native void setBaselineFontDescription( flash.text.engine.FontDescription value );
 
     @Getter
     public native String getLineRotation( );
@@ -66,13 +66,13 @@ public final class TextBlock extends flash.FlashObject {
     public native Object getUserData( );
 
     @Setter
-    public native void setUserData( Object setUserData );
+    public native void setUserData( Object userData );
 
     @Getter
     public native int getBidiLevel( );
 
     @Setter
-    public native void setBaselineZero( String setBaselineZero );
+    public native void setBaselineZero( String value );
 
     @Getter
     public native double getBaselineFontSize( );
@@ -91,10 +91,10 @@ public final class TextBlock extends flash.FlashObject {
     public native flash.text.engine.TabStop[] getTabStops( );
 
     @Setter
-    public native void setLineRotation( String setLineRotation );
+    public native void setLineRotation( String value );
 
     @Setter
-    public native void setApplyNonLinearFontScaling( boolean setApplyNonLinearFontScaling );
+    public native void setApplyNonLinearFontScaling( boolean value );
 
     @Getter
     public native flash.text.engine.TextLine getLastLine( );
@@ -103,18 +103,18 @@ public final class TextBlock extends flash.FlashObject {
     public native flash.text.engine.FontDescription getBaselineFontDescription( );
 
     @Setter
-    public native void setBidiLevel( int setBidiLevel );
+    public native void setBidiLevel( int value );
 
     @Setter
-    public native void setBaselineFontSize( double setBaselineFontSize );
+    public native void setBaselineFontSize( double value );
 
     @Setter
-    public native void setContent( flash.text.engine.ContentElement setContent );
+    public native void setContent( flash.text.engine.ContentElement value );
 
     public native String dump( );
 
     @Setter
-    public native void setTabStops( flash.text.engine.TabStop[] setTabStops );
+    public native void setTabStops( flash.text.engine.TabStop[] value );
 
     @Getter
     public native flash.text.engine.TextLine getFirstInvalidLine( );

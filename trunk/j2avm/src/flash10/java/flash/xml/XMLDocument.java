@@ -18,7 +18,7 @@ public class XMLDocument extends flash.xml.XMLNode {
     public native flash.FlashObject getIdMap( );
 
     @Setter
-    public native void setIdMap( flash.FlashObject setIdMap );
+    public native void setIdMap( flash.FlashObject idMap );
 
     public native void parseXML( String source );
 
@@ -26,7 +26,7 @@ public class XMLDocument extends flash.xml.XMLNode {
     public native flash.FlashObject getXmlDecl( );
 
     @Setter
-    public native void setXmlDecl( flash.FlashObject setXmlDecl );
+    public native void setXmlDecl( flash.FlashObject xmlDecl );
 
     public native flash.xml.XMLNode createTextNode( String text );
 
@@ -37,11 +37,11 @@ public class XMLDocument extends flash.xml.XMLNode {
     public native boolean getIgnoreWhite( );
 
     @Setter
-    public native void setIgnoreWhite( boolean setIgnoreWhite );
+    public native void setIgnoreWhite( boolean ignoreWhite );
 
     @Getter
     public native flash.FlashObject getDocTypeDecl( );
 
     @Setter
-    public native void setDocTypeDecl( flash.FlashObject setDocTypeDecl );
+    public native void setDocTypeDecl( flash.FlashObject docTypeDecl );
 }

@@ -22,7 +22,7 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native String getName( );
 
     @Setter
-    public native void setWidth( double setWidth );
+    public native void setWidth( double value );
 
     public native flash.geom.Point globalToLocal( flash.geom.Point point );
 
@@ -33,7 +33,7 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native flash.geom.Rectangle getScale9Grid( );
 
     @Setter
-    public native void setName( String setName );
+    public native void setName( String value );
 
     @Getter
     public native double getRotationX( );
@@ -42,19 +42,19 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native double getRotationY( );
 
     @Setter
-    public native void setScaleX( double setScaleX );
+    public native void setScaleX( double value );
 
     @Setter
-    public native void setScaleY( double setScaleY );
+    public native void setScaleY( double value );
 
     @Setter
-    public native void setScaleZ( double setScaleZ );
+    public native void setScaleZ( double value );
 
     @Getter
     public native flash.accessibility.AccessibilityProperties getAccessibilityProperties( );
 
     @Setter
-    public native void setScrollRect( flash.geom.Rectangle setScrollRect );
+    public native void setScrollRect( flash.geom.Rectangle value );
 
     @Getter
     public native double getRotationZ( );
@@ -63,15 +63,15 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native double getHeight( );
 
     @Setter
-    public native void setBlendMode( String setBlendMode );
+    public native void setBlendMode( String value );
 
     @Setter
-    public native void setScale9Grid( flash.geom.Rectangle setScale9Grid );
+    public native void setScale9Grid( flash.geom.Rectangle innerRectangle );
 
     public native flash.geom.Rectangle getBounds( flash.display.DisplayObject targetCoordinateSpace );
 
     @Setter
-    public native void setBlendShader( flash.display.Shader setBlendShader );
+    public native void setBlendShader( flash.display.Shader value );
 
     @Getter
     public native flash.FlashObject getOpaqueBackground( );
@@ -83,23 +83,23 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native boolean getCacheAsBitmap( );
 
     @Setter
-    public native void setRotationX( double setRotationX );
+    public native void setRotationX( double value );
 
     @Setter
-    public native void setRotationY( double setRotationY );
+    public native void setRotationY( double value );
 
     @Setter
-    public native void setRotationZ( double setRotationZ );
+    public native void setRotationZ( double value );
 
     public native flash.geom.Point local3DToGlobal( flash.geom.Vector3D point3d );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     public native flash.geom.Vector3D globalToLocal3D( flash.geom.Point point );
 
     @Setter
-    public native void setAccessibilityProperties( flash.accessibility.AccessibilityProperties setAccessibilityProperties );
+    public native void setAccessibilityProperties( flash.accessibility.AccessibilityProperties value );
 
     @Getter
     public native double getWidth( );
@@ -109,7 +109,7 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native boolean hitTestPoint( double x, double y );
 
     @Setter
-    public native void setCacheAsBitmap( boolean setCacheAsBitmap );
+    public native void setCacheAsBitmap( boolean value );
 
     @Getter
     public native double getScaleX( );
@@ -130,10 +130,10 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native double getMouseY( );
 
     @Setter
-    public native void setHeight( double setHeight );
+    public native void setHeight( double value );
 
     @Setter
-    public native void setMask( flash.display.DisplayObject setMask );
+    public native void setMask( flash.display.DisplayObject value );
 
     public native flash.geom.Rectangle getRect( flash.display.DisplayObject targetCoordinateSpace );
 
@@ -141,7 +141,7 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native double getAlpha( );
 
     @Setter
-    public native void setTransform( flash.geom.Transform setTransform );
+    public native void setTransform( flash.geom.Transform value );
 
     @Getter
     public native flash.display.LoaderInfo getLoaderInfo( );
@@ -150,10 +150,10 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native flash.display.DisplayObject getRoot( );
 
     @Setter
-    public native void setVisible( boolean setVisible );
+    public native void setVisible( boolean value );
 
     @Setter
-    public native void setOpaqueBackground( flash.FlashObject setOpaqueBackground );
+    public native void setOpaqueBackground( flash.FlashObject value );
 
     public native boolean hitTestObject( flash.display.DisplayObject obj );
 
@@ -161,19 +161,19 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native flash.display.DisplayObject getMask( );
 
     @Setter
-    public native void setX( double setX );
+    public native void setX( double value );
 
     @Setter
-    public native void setY( double setY );
+    public native void setY( double value );
 
     @Getter
     public native flash.geom.Transform getTransform( );
 
     @Setter
-    public native void setZ( double setZ );
+    public native void setZ( double value );
 
     @Setter
-    public native void setFilters( flash.FlashArray setFilters );
+    public native void setFilters( flash.FlashArray value );
 
     @Getter
     public native double getX( );
@@ -188,7 +188,7 @@ public class DisplayObject extends flash.events.EventDispatcher implements flash
     public native flash.FlashArray getFilters( );
 
     @Setter
-    public native void setRotation( double setRotation );
+    public native void setRotation( double value );
 
     @Getter
     public native flash.display.Stage getStage( );

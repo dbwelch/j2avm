@@ -26,7 +26,7 @@ public class FlashRegExp extends flash.FlashObject {
     public native boolean getGlobal( );
 
     @Setter
-    public native void setLastIndex( int setLastIndex );
+    public native void setLastIndex( int i );
 
     @Getter
     public native boolean getExtended( );

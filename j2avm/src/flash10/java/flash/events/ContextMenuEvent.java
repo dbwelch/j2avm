@@ -29,16 +29,16 @@ public class ContextMenuEvent extends flash.events.Event {
     public native flash.display.InteractiveObject getContextMenuOwner( );
 
     @Setter
-    public native void setIsMouseTargetInaccessible( boolean setIsMouseTargetInaccessible );
+    public native void setIsMouseTargetInaccessible( boolean value );
 
     @Getter
     public native boolean getIsMouseTargetInaccessible( );
 
     @Setter
-    public native void setMouseTarget( flash.display.InteractiveObject setMouseTarget );
+    public native void setMouseTarget( flash.display.InteractiveObject value );
 
     @Setter
-    public native void setContextMenuOwner( flash.display.InteractiveObject setContextMenuOwner );
+    public native void setContextMenuOwner( flash.display.InteractiveObject value );
 
     @Getter
     public native flash.display.InteractiveObject getMouseTarget( );

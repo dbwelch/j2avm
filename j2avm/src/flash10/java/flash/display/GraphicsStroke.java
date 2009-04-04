@@ -28,13 +28,13 @@ public final class GraphicsStroke extends flash.FlashObject implements flash.dis
     public native String getCaps( );
 
     @Setter
-    public native void setCaps( String setCaps );
+    public native void setCaps( String value );
 
     @Getter
     public native flash.display.IGraphicsFill getFill( );
 
     @Setter
-    public native void setFill( flash.display.IGraphicsFill setFill );
+    public native void setFill( flash.display.IGraphicsFill fill );
 
     @Getter
     public native String getJoints( );
@@ -43,26 +43,26 @@ public final class GraphicsStroke extends flash.FlashObject implements flash.dis
     public native String getScaleMode( );
 
     @Setter
-    public native void setJoints( String setJoints );
+    public native void setJoints( String value );
 
     @Getter
     public native double getThickness( );
 
     @Setter
-    public native void setThickness( double setThickness );
+    public native void setThickness( double thickness );
 
     @Getter
     public native boolean getPixelHinting( );
 
     @Setter
-    public native void setPixelHinting( boolean setPixelHinting );
+    public native void setPixelHinting( boolean pixelHinting );
 
     @Getter
     public native double getMiterLimit( );
 
     @Setter
-    public native void setMiterLimit( double setMiterLimit );
+    public native void setMiterLimit( double miterLimit );
 
     @Setter
-    public native void setScaleMode( String setScaleMode );
+    public native void setScaleMode( String value );
 }

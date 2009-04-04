@@ -30,25 +30,25 @@ public final class GlowFilter extends flash.filters.BitmapFilter {
     public native double getStrength( );
 
     @Setter
-    public native void setBlurX( double setBlurX );
+    public native void setBlurX( double value );
 
     @Getter
     public native int getColor( );
 
     @Setter
-    public native void setBlurY( double setBlurY );
+    public native void setBlurY( double value );
 
     @Setter
-    public native void setQuality( int setQuality );
+    public native void setQuality( int value );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int value );
 
     @Setter
-    public native void setStrength( double setStrength );
+    public native void setStrength( double value );
 
     @Setter
-    public native void setInner( boolean setInner );
+    public native void setInner( boolean value );
 
     @Getter
     public native double getBlurX( );
@@ -57,7 +57,7 @@ public final class GlowFilter extends flash.filters.BitmapFilter {
     public native double getBlurY( );
 
     @Setter
-    public native void setKnockout( boolean setKnockout );
+    public native void setKnockout( boolean value );
 
     @Getter
     public native boolean getInner( );
@@ -66,7 +66,7 @@ public final class GlowFilter extends flash.filters.BitmapFilter {
     public native boolean getKnockout( );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     @Override
     public native flash.filters.BitmapFilter clone( );

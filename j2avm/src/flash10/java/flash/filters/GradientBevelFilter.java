@@ -33,19 +33,19 @@ public final class GradientBevelFilter extends flash.filters.BitmapFilter {
     public  GradientBevelFilter( ) {}
 
     @Setter
-    public native void setColors( flash.FlashArray setColors );
+    public native void setColors( flash.FlashArray value );
 
     @Getter
     public native double getStrength( );
 
     @Setter
-    public native void setBlurX( double setBlurX );
+    public native void setBlurX( double value );
 
     @Setter
-    public native void setBlurY( double setBlurY );
+    public native void setBlurY( double value );
 
     @Setter
-    public native void setAngle( double setAngle );
+    public native void setAngle( double value );
 
     @Getter
     public native String getType( );
@@ -54,10 +54,10 @@ public final class GradientBevelFilter extends flash.filters.BitmapFilter {
     public native flash.FlashArray getRatios( );
 
     @Setter
-    public native void setStrength( double setStrength );
+    public native void setStrength( double value );
 
     @Setter
-    public native void setAlphas( flash.FlashArray setAlphas );
+    public native void setAlphas( flash.FlashArray value );
 
     @Getter
     public native flash.FlashArray getColors( );
@@ -72,22 +72,22 @@ public final class GradientBevelFilter extends flash.filters.BitmapFilter {
     public native double getAngle( );
 
     @Setter
-    public native void setKnockout( boolean setKnockout );
+    public native void setKnockout( boolean value );
 
     @Getter
     public native double getDistance( );
 
     @Setter
-    public native void setRatios( flash.FlashArray setRatios );
+    public native void setRatios( flash.FlashArray value );
 
     @Setter
-    public native void setDistance( double setDistance );
+    public native void setDistance( double value );
 
     @Getter
     public native boolean getKnockout( );
 
     @Setter
-    public native void setType( String setType );
+    public native void setType( String value );
 
     @Getter
     public native flash.FlashArray getAlphas( );
@@ -96,7 +96,7 @@ public final class GradientBevelFilter extends flash.filters.BitmapFilter {
     public native flash.filters.BitmapFilter clone( );
 
     @Setter
-    public native void setQuality( int setQuality );
+    public native void setQuality( int value );
 
     @Getter
     public native int getQuality( );

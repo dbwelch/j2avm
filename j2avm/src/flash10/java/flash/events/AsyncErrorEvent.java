@@ -27,7 +27,7 @@ public class AsyncErrorEvent extends flash.events.ErrorEvent {
     public native flash.FlashError getError( );
 
     @Setter
-    public native void setError( flash.FlashError setError );
+    public native void setError( flash.FlashError error );
 
     @Override
     public native String toString( );

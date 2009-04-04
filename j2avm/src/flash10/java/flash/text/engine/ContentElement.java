@@ -22,7 +22,7 @@ public class ContentElement extends flash.FlashObject {
     public native flash.text.engine.TextBlock getTextBlock( );
 
     @Setter
-    public native void setElementFormat( flash.text.engine.ElementFormat setElementFormat );
+    public native void setElementFormat( flash.text.engine.ElementFormat value );
 
     @Getter
     public native int getTextBlockBeginIndex( );
@@ -34,7 +34,7 @@ public class ContentElement extends flash.FlashObject {
     public native String getText( );
 
     @Setter
-    public native void setEventMirror( flash.events.EventDispatcher setEventMirror );
+    public native void setEventMirror( flash.events.EventDispatcher value );
 
     @Getter
     public native flash.text.engine.ElementFormat getElementFormat( );
@@ -43,10 +43,10 @@ public class ContentElement extends flash.FlashObject {
     public native Object getUserData( );
 
     @Setter
-    public native void setUserData( Object setUserData );
+    public native void setUserData( Object userData );
 
     @Setter
-    public native void setTextRotation( String setTextRotation );
+    public native void setTextRotation( String value );
 
     @Getter
     public native flash.events.EventDispatcher getEventMirror( );

@@ -25,7 +25,7 @@ public class ActivityEvent extends flash.events.Event {
     public native boolean getActivating( );
 
     @Setter
-    public native void setActivating( boolean setActivating );
+    public native void setActivating( boolean value );
 
     @Override
     public native String toString( );

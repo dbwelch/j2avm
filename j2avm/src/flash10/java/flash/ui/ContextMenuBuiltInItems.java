@@ -14,7 +14,7 @@ public final class ContextMenuBuiltInItems extends flash.FlashObject {
     public native boolean getLoop( );
 
     @Setter
-    public native void setLoop( boolean setLoop );
+    public native void setLoop( boolean loop );
 
     public native flash.ui.ContextMenuBuiltInItems clone( );
 
@@ -22,41 +22,41 @@ public final class ContextMenuBuiltInItems extends flash.FlashObject {
     public native boolean getPrint( );
 
     @Setter
-    public native void setPrint( boolean setPrint );
+    public native void setPrint( boolean print );
 
     @Getter
     public native boolean getZoom( );
 
     @Setter
-    public native void setZoom( boolean setZoom );
+    public native void setZoom( boolean zoom );
 
     @Getter
     public native boolean getPlay( );
 
     @Setter
-    public native void setPlay( boolean setPlay );
+    public native void setPlay( boolean play );
 
     @Getter
     public native boolean getForwardAndBack( );
 
     @Setter
-    public native void setForwardAndBack( boolean setForwardAndBack );
+    public native void setForwardAndBack( boolean forwardAndBack );
 
     @Getter
     public native boolean getRewind( );
 
     @Setter
-    public native void setRewind( boolean setRewind );
+    public native void setRewind( boolean rewind );
 
     @Getter
     public native boolean getSave( );
 
     @Setter
-    public native void setSave( boolean setSave );
+    public native void setSave( boolean save );
 
     @Getter
     public native boolean getQuality( );
 
     @Setter
-    public native void setQuality( boolean setQuality );
+    public native void setQuality( boolean quality );
 }

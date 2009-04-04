@@ -19,7 +19,7 @@ public final class SoundChannel extends flash.events.EventDispatcher {
     public native double getPosition( );
 
     @Setter
-    public native void setSoundTransform( flash.media.SoundTransform setSoundTransform );
+    public native void setSoundTransform( flash.media.SoundTransform sndTransform );
 
     @Getter
     public native double getRightPeak( );

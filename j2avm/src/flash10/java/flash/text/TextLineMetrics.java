@@ -17,35 +17,35 @@ public class TextLineMetrics extends flash.FlashObject {
     public native double getAscent( );
 
     @Setter
-    public native void setAscent( double setAscent );
+    public native void setAscent( double ascent );
 
     @Getter
     public native double getWidth( );
 
     @Setter
-    public native void setWidth( double setWidth );
+    public native void setWidth( double width );
 
     @Getter
     public native double getHeight( );
 
     @Setter
-    public native void setHeight( double setHeight );
+    public native void setHeight( double height );
 
     @Getter
     public native double getLeading( );
 
     @Setter
-    public native void setLeading( double setLeading );
+    public native void setLeading( double leading );
 
     @Getter
     public native double getX( );
 
     @Setter
-    public native void setX( double setX );
+    public native void setX( double x );
 
     @Getter
     public native double getDescent( );
 
     @Setter
-    public native void setDescent( double setDescent );
+    public native void setDescent( double descent );
 }

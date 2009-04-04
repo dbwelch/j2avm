@@ -32,19 +32,19 @@ public class ShaderJob extends flash.events.EventDispatcher {
     public native int getHeight( );
 
     @Setter
-    public native void setTarget( flash.FlashObject setTarget );
+    public native void setTarget( flash.FlashObject s );
 
     @Setter
-    public native void setShader( flash.display.Shader setShader );
+    public native void setShader( flash.display.Shader s );
 
     @Setter
-    public native void setWidth( int setWidth );
+    public native void setWidth( int v );
 
     @Getter
     public native double getProgress( );
 
     @Setter
-    public native void setHeight( int setHeight );
+    public native void setHeight( int v );
 
     @Getter
     public native flash.FlashObject getTarget( );

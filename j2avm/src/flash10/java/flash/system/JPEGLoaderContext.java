@@ -22,5 +22,5 @@ public class JPEGLoaderContext extends flash.system.LoaderContext {
     public native double getDeblockingFilter( );
 
     @Setter
-    public native void setDeblockingFilter( double setDeblockingFilter );
+    public native void setDeblockingFilter( double deblockingFilter );
 }

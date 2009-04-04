@@ -29,7 +29,7 @@ public class DisplayObjectContainer extends flash.display.InteractiveObject {
     public native flash.display.DisplayObject addChildAt( flash.display.DisplayObject child, int index );
 
     @Setter
-    public native void setTabChildren( boolean setTabChildren );
+    public native void setTabChildren( boolean enable );
 
     @Getter
     public native flash.text.TextSnapshot getTextSnapshot( );
@@ -42,7 +42,7 @@ public class DisplayObjectContainer extends flash.display.InteractiveObject {
     public native flash.FlashArray getObjectsUnderPoint( flash.geom.Point point );
 
     @Setter
-    public native void setMouseChildren( boolean setMouseChildren );
+    public native void setMouseChildren( boolean enable );
 
     public native flash.display.DisplayObject removeChild( flash.display.DisplayObject child );
 

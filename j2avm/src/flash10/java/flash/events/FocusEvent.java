@@ -32,7 +32,7 @@ public class FocusEvent extends flash.events.Event {
     public static final String FOCUS_IN = "focusIn";
 
     @Setter
-    public native void setShiftKey( boolean setShiftKey );
+    public native void setShiftKey( boolean value );
 
     @Getter
     public native boolean getIsRelatedObjectInaccessible( );
@@ -50,14 +50,14 @@ public class FocusEvent extends flash.events.Event {
     public native int getKeyCode( );
 
     @Setter
-    public native void setIsRelatedObjectInaccessible( boolean setIsRelatedObjectInaccessible );
+    public native void setIsRelatedObjectInaccessible( boolean value );
 
     @Setter
-    public native void setRelatedObject( flash.display.InteractiveObject setRelatedObject );
+    public native void setRelatedObject( flash.display.InteractiveObject value );
 
     @Override
     public native flash.events.Event clone( );
 
     @Setter
-    public native void setKeyCode( int setKeyCode );
+    public native void setKeyCode( int value );
 }

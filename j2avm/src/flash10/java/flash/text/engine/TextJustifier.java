@@ -16,7 +16,7 @@ public class TextJustifier extends flash.FlashObject {
     public static final native flash.text.engine.TextJustifier getJustifierForLocale( String locale );
 
     @Setter
-    public native void setLineJustification( String setLineJustification );
+    public native void setLineJustification( String value );
 
     @Getter
     public native String getLocale( );

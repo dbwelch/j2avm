@@ -18,11 +18,11 @@ public final class URLRequestHeader extends flash.FlashObject {
     public native String getValue( );
 
     @Setter
-    public native void setValue( String setValue );
+    public native void setValue( String value );
 
     @Getter
     public native String getName( );
 
     @Setter
-    public native void setName( String setName );
+    public native void setName( String name );
 }

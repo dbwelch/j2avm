@@ -12,14 +12,15 @@ import flash.display.MovieClip;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.utils.Dictionary;
+import static flash.utils_functions.*;
 
 /**
  * A simple test case
  *
  * @author nickmain
  */
-@SWF( width  = 500, 
-      height = 200,
+@SWF( width  = 800, 
+      height = 600,
       background = 0xffeeee )
 public class Test extends MovieClip {
 
@@ -91,9 +92,9 @@ public class Test extends MovieClip {
         field2 = new TextField();
         field2.setX( 300 );
         field2.setY( 10 );
-        field2.setWidth( 190 );
-        field2.setHeight( 180 );
-        field2.setText( "Hashcode test -->\n" );
+        field2.setWidth( 490 );
+        field2.setHeight( 580 );
+        field2.setText( describeType( getDefinitionByName( "flash.display.MovieClip" ) ).toString() );
         field2.setBorder( true );
         addChild( field2 );
         

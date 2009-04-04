@@ -20,10 +20,10 @@ public final class BlurFilter extends flash.filters.BitmapFilter {
     public native double getBlurX( );
 
     @Setter
-    public native void setBlurX( double setBlurX );
+    public native void setBlurX( double value );
 
     @Setter
-    public native void setBlurY( double setBlurY );
+    public native void setBlurY( double value );
 
     @Getter
     public native double getBlurY( );
@@ -32,7 +32,7 @@ public final class BlurFilter extends flash.filters.BitmapFilter {
     public native flash.filters.BitmapFilter clone( );
 
     @Setter
-    public native void setQuality( int setQuality );
+    public native void setQuality( int value );
 
     @Getter
     public native int getQuality( );

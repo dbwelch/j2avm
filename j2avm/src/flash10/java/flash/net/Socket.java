@@ -6,7 +6,7 @@ package flash.net;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public class Socket extends flash.events.EventDispatcher implements flash.utils.IDataOutput,flash.utils.IDataInput {
+public class Socket extends flash.events.EventDispatcher implements flash.utils.IDataInput,flash.utils.IDataOutput {
 
     public  Socket( String host, int port ) {}
 
@@ -37,7 +37,7 @@ public class Socket extends flash.events.EventDispatcher implements flash.utils.
     public native String getEndian( );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     @Getter
     public native int getBytesAvailable( );
@@ -49,7 +49,7 @@ public class Socket extends flash.events.EventDispatcher implements flash.utils.
     public native String readUTF( );
 
     @Setter
-    public native void setEndian( String setEndian );
+    public native void setEndian( String type );
 
     public native boolean readBoolean( );
 
@@ -58,7 +58,7 @@ public class Socket extends flash.events.EventDispatcher implements flash.utils.
     public native void writeFloat( double value );
 
     @Setter
-    public native void setTimeout( int setTimeout );
+    public native void setTimeout( int value );
 
     public native int readByte( );
 

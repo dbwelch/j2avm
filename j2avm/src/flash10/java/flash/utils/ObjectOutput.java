@@ -40,13 +40,13 @@ public class ObjectOutput extends flash.FlashObject implements flash.utils.IData
     public native String getEndian( );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     @Getter
     public native int getObjectEncoding( );
 
     @Setter
-    public native void setEndian( String setEndian );
+    public native void setEndian( String type );
 
     public native void writeFloat( double value );
 }

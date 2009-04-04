@@ -6,7 +6,7 @@ package flash.utils;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public class ByteArray extends flash.FlashObject implements flash.utils.IDataOutput,flash.utils.IDataInput {
+public class ByteArray extends flash.FlashObject implements flash.utils.IDataInput,flash.utils.IDataOutput {
 
     public  ByteArray( ) {}
 
@@ -14,7 +14,7 @@ public class ByteArray extends flash.FlashObject implements flash.utils.IDataOut
     public static final native int getDefaultObjectEncoding( );
 
     @Setter
-    public static final native void setDefaultObjectEncoding( int setDefaultObjectEncoding );
+    public static final native void setDefaultObjectEncoding( int version );
 
     public native void writeUTFBytes( String value );
 
@@ -48,7 +48,7 @@ public class ByteArray extends flash.FlashObject implements flash.utils.IDataOut
     public native void inflate( );
 
     @Setter
-    public native void setEndian( String setEndian );
+    public native void setEndian( String type );
 
     public native String readUTF( );
 
@@ -78,7 +78,7 @@ public class ByteArray extends flash.FlashObject implements flash.utils.IDataOut
     public native void writeBoolean( boolean value );
 
     @Setter
-    public native void setPosition( int setPosition );
+    public native void setPosition( int offset );
 
     public native int readUnsignedByte( );
 
@@ -94,10 +94,10 @@ public class ByteArray extends flash.FlashObject implements flash.utils.IDataOut
     public native String toString( );
 
     @Setter
-    public native void setLength( int setLength );
+    public native void setLength( int value );
 
     @Setter
-    public native void setObjectEncoding( int setObjectEncoding );
+    public native void setObjectEncoding( int version );
 
     public native double readFloat( );
 

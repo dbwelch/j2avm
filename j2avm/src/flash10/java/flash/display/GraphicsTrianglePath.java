@@ -6,7 +6,7 @@ package flash.display;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public final class GraphicsTrianglePath extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsPath {
+public final class GraphicsTrianglePath extends flash.FlashObject implements flash.display.IGraphicsPath,flash.display.IGraphicsData {
 
     public  GraphicsTrianglePath( double[] vertices, int[] indices, double[] uvtData, String culling ) {}
 
@@ -25,20 +25,20 @@ public final class GraphicsTrianglePath extends flash.FlashObject implements fla
     public native int[] getIndices( );
 
     @Setter
-    public native void setIndices( int[] setIndices );
+    public native void setIndices( int[] indices );
 
     @Getter
     public native double[] getVertices( );
 
     @Setter
-    public native void setVertices( double[] setVertices );
+    public native void setVertices( double[] vertices );
 
     @Getter
     public native double[] getUvtData( );
 
     @Setter
-    public native void setUvtData( double[] setUvtData );
+    public native void setUvtData( double[] uvtData );
 
     @Setter
-    public native void setCulling( String setCulling );
+    public native void setCulling( String value );
 }

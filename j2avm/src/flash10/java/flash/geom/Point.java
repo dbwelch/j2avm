@@ -35,13 +35,13 @@ public class Point extends flash.FlashObject {
     public native double getX( );
 
     @Setter
-    public native void setX( double setX );
+    public native void setX( double x );
 
     @Getter
     public native double getY( );
 
     @Setter
-    public native void setY( double setY );
+    public native void setY( double y );
 
     public native void offset( double dx, double dy );
 

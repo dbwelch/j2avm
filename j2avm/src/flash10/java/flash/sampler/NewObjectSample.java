@@ -14,13 +14,13 @@ public final class NewObjectSample extends flash.sampler.Sample {
     public native flash.FlashClass getType( );
 
     @Setter
-    public native void setType( flash.FlashClass setType );
+    public native void setType( flash.FlashClass type );
 
     @Getter
     public native double getId( );
 
     @Setter
-    public native void setId( double setId );
+    public native void setId( double id );
 
     @Getter
     public native Object getObject( );

@@ -44,6 +44,30 @@ public abstract class MethodTranslatorBase extends MemberTranslatorBase
     }
         
     /**
+     * Store all the args on the stack and return the local vars used
+     */
+    protected final List<LocalValue<Instruction>> storeArgs( AVM2Code code, int argCount ) {
+        //pop all args into locals
+        List<LocalValue<Instruction>> args = new ArrayList<LocalValue<Instruction>>();
+        for( int i = 0; i < argCount; i++ ) {
+            LocalValue<Instruction> local = code.newLocal();
+            code.setLocal( local );
+            args.add( 0, local );
+        }
+        
+        return args;
+    }
+    
+    /**
+     * Restore args back to the stack
+     */
+    protected final void restoreArgs(  AVM2Code code, List<LocalValue<Instruction>> args ) {
+        for( LocalValue<Instruction> local : args ) {
+            code.getLocal( local );
+        }        
+    }
+    
+    /**
      * @see org.epistem.j2avm.translator.MethodTranslator#translateCall(MethodTranslator, MethodCall, boolean)
      */
     public void translateCall( MethodTranslator method, MethodCall call, boolean isSuper ) {
@@ -53,21 +77,13 @@ public abstract class MethodTranslatorBase extends MemberTranslatorBase
         
         //--TODO: implement static calls in a more efficient manner
         if( call.callType == CallType.Static ) {
-            //pop all args into locals
-            List<LocalValue<Instruction>> args = new ArrayList<LocalValue<Instruction>>();
-            for( int i = 0; i < argCount; i++ ) {
-                LocalValue<Instruction> local = code.newLocal();
-                code.setLocal( local );
-                args.add( 0, local );
-            }
+            
+            List<LocalValue<Instruction>> args = storeArgs( code, argCount );
             
             //find the class
             classTranslator.translateStaticPush( method );
             
-            //restore args
-            for( LocalValue<Instruction> local : args ) {
-                code.getLocal( local );
-            }
+            restoreArgs( code, args );
             
             if( isVoid ) code.callPropVoid( avm2Name, argCount );
             else         code.callProperty( avm2Name, argCount );            

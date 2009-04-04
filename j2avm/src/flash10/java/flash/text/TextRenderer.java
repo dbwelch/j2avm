@@ -11,7 +11,7 @@ public final class TextRenderer extends flash.FlashObject {
     public  TextRenderer( ) {}
 
     @Setter
-    public static final native void setMaxLevel( int setMaxLevel );
+    public static final native void setMaxLevel( int value );
 
     @Getter
     public static final native String getDisplayMode( );
@@ -25,8 +25,8 @@ public final class TextRenderer extends flash.FlashObject {
     public static final native String getAntiAliasType( );
 
     @Setter
-    public static final native void setDisplayMode( String setDisplayMode );
+    public static final native void setDisplayMode( String value );
 
     @Setter
-    public static final native void setAntiAliasType( String setAntiAliasType );
+    public static final native void setAntiAliasType( String value );
 }

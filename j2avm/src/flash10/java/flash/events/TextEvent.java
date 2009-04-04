@@ -27,7 +27,7 @@ public class TextEvent extends flash.events.Event {
     public native String getText( );
 
     @Setter
-    public native void setText( String setText );
+    public native void setText( String value );
 
     @Override
     public native String toString( );

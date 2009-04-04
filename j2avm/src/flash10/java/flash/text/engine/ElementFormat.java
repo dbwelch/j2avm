@@ -45,10 +45,10 @@ public final class ElementFormat extends flash.FlashObject {
     public  ElementFormat( ) {}
 
     @Setter
-    public native void setBaselineShift( double setBaselineShift );
+    public native void setBaselineShift( double value );
 
     @Setter
-    public native void setTrackingLeft( double setTrackingLeft );
+    public native void setTrackingLeft( double value );
 
     @Getter
     public native double getBaselineShift( );
@@ -57,13 +57,13 @@ public final class ElementFormat extends flash.FlashObject {
     public native String getDominantBaseline( );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int value );
 
     @Getter
     public native String getAlignmentBaseline( );
 
     @Setter
-    public native void setDominantBaseline( String setDominantBaseline );
+    public native void setDominantBaseline( String dominantBaseline );
 
     @Getter
     public native String getTextRotation( );
@@ -72,28 +72,28 @@ public final class ElementFormat extends flash.FlashObject {
     public native String getKerning( );
 
     @Setter
-    public native void setAlignmentBaseline( String setAlignmentBaseline );
+    public native void setAlignmentBaseline( String alignmentBaseline );
 
     @Setter
-    public native void setTrackingRight( double setTrackingRight );
+    public native void setTrackingRight( double value );
 
     @Getter
     public native String getBreakOpportunity( );
 
     @Setter
-    public native void setTextRotation( String setTextRotation );
+    public native void setTextRotation( String value );
 
     @Setter
-    public native void setKerning( String setKerning );
+    public native void setKerning( String value );
 
     @Getter
     public native String getDigitWidth( );
 
     @Setter
-    public native void setFontDescription( flash.text.engine.FontDescription setFontDescription );
+    public native void setFontDescription( flash.text.engine.FontDescription value );
 
     @Setter
-    public native void setLocked( boolean setLocked );
+    public native void setLocked( boolean value );
 
     public native flash.text.engine.ElementFormat clone( );
 
@@ -101,10 +101,10 @@ public final class ElementFormat extends flash.FlashObject {
     public native double getAlpha( );
 
     @Setter
-    public native void setLigatureLevel( String setLigatureLevel );
+    public native void setLigatureLevel( String ligatureLevelType );
 
     @Setter
-    public native void setFontSize( double setFontSize );
+    public native void setFontSize( double value );
 
     @Getter
     public native String getLocale( );
@@ -119,22 +119,22 @@ public final class ElementFormat extends flash.FlashObject {
     public native double getTrackingRight( );
 
     @Setter
-    public native void setBreakOpportunity( String setBreakOpportunity );
+    public native void setBreakOpportunity( String opportunityType );
 
     @Getter
     public native flash.text.engine.FontDescription getFontDescription( );
 
     @Setter
-    public native void setTypographicCase( String setTypographicCase );
+    public native void setTypographicCase( String typographicCaseType );
 
     @Getter
     public native double getFontSize( );
 
     @Setter
-    public native void setDigitWidth( String setDigitWidth );
+    public native void setDigitWidth( String digitWidthType );
 
     @Setter
-    public native void setLocale( String setLocale );
+    public native void setLocale( String value );
 
     @Getter
     public native double getTrackingLeft( );
@@ -143,13 +143,13 @@ public final class ElementFormat extends flash.FlashObject {
     public native String getLigatureLevel( );
 
     @Setter
-    public native void setDigitCase( String setDigitCase );
+    public native void setDigitCase( String digitCaseType );
 
     @Getter
     public native String getTypographicCase( );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     @Getter
     public native String getDigitCase( );

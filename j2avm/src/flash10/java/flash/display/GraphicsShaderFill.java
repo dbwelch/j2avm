@@ -6,7 +6,7 @@ package flash.display;
 import org.epistem.j2avm.annotations.runtime.*;
 
 @FlashNativeClass
-public final class GraphicsShaderFill extends flash.FlashObject implements flash.display.IGraphicsData,flash.display.IGraphicsFill {
+public final class GraphicsShaderFill extends flash.FlashObject implements flash.display.IGraphicsFill,flash.display.IGraphicsData {
 
     public  GraphicsShaderFill( flash.display.Shader shader, flash.geom.Matrix matrix ) {}
 
@@ -18,11 +18,11 @@ public final class GraphicsShaderFill extends flash.FlashObject implements flash
     public native flash.geom.Matrix getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.geom.Matrix setMatrix );
+    public native void setMatrix( flash.geom.Matrix matrix );
 
     @Getter
     public native flash.display.Shader getShader( );
 
     @Setter
-    public native void setShader( flash.display.Shader setShader );
+    public native void setShader( flash.display.Shader shader );
 }

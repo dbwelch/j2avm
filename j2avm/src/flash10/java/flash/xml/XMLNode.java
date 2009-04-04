@@ -17,19 +17,19 @@ public class XMLNode extends flash.FlashObject {
     public native flash.xml.XMLNode getPreviousSibling( );
 
     @Setter
-    public native void setPreviousSibling( flash.xml.XMLNode setPreviousSibling );
+    public native void setPreviousSibling( flash.xml.XMLNode previousSibling );
 
     @Getter
     public native flash.xml.XMLNode getParentNode( );
 
     @Setter
-    public native void setParentNode( flash.xml.XMLNode setParentNode );
+    public native void setParentNode( flash.xml.XMLNode parentNode );
 
     @Getter
     public native flash.xml.XMLNode getNextSibling( );
 
     @Setter
-    public native void setNextSibling( flash.xml.XMLNode setNextSibling );
+    public native void setNextSibling( flash.xml.XMLNode nextSibling );
 
     @Getter
     public native String getNamespaceURI( );
@@ -41,13 +41,13 @@ public class XMLNode extends flash.FlashObject {
     public native flash.xml.XMLNode getFirstChild( );
 
     @Setter
-    public native void setFirstChild( flash.xml.XMLNode setFirstChild );
+    public native void setFirstChild( flash.xml.XMLNode firstChild );
 
     @Getter
     public native String getNodeValue( );
 
     @Setter
-    public native void setNodeValue( String setNodeValue );
+    public native void setNodeValue( String nodeValue );
 
     @Getter
     public native flash.FlashObject getAttributes( );
@@ -56,7 +56,7 @@ public class XMLNode extends flash.FlashObject {
     public native int getNodeType( );
 
     @Setter
-    public native void setNodeType( int setNodeType );
+    public native void setNodeType( int nodeType );
 
     public native void appendChild( flash.xml.XMLNode node );
 
@@ -64,7 +64,7 @@ public class XMLNode extends flash.FlashObject {
     public native flash.xml.XMLNode getLastChild( );
 
     @Setter
-    public native void setLastChild( flash.xml.XMLNode setLastChild );
+    public native void setLastChild( flash.xml.XMLNode lastChild );
 
     public native void insertBefore( flash.xml.XMLNode node, flash.xml.XMLNode before );
 
@@ -74,10 +74,10 @@ public class XMLNode extends flash.FlashObject {
     public native String getNodeName( );
 
     @Setter
-    public native void setNodeName( String setNodeName );
+    public native void setNodeName( String nodeName );
 
     @Setter
-    public native void setAttributes( flash.FlashObject setAttributes );
+    public native void setAttributes( flash.FlashObject value );
 
     public native boolean hasChildNodes( );
 

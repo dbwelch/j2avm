@@ -38,13 +38,13 @@ public final class DisplacementMapFilter extends flash.filters.BitmapFilter {
     public native double getAlpha( );
 
     @Setter
-    public native void setMode( String setMode );
+    public native void setMode( String value );
 
     @Setter
-    public native void setMapPoint( flash.geom.Point setMapPoint );
+    public native void setMapPoint( flash.geom.Point value );
 
     @Setter
-    public native void setAlpha( double setAlpha );
+    public native void setAlpha( double value );
 
     @Getter
     public native String getMode( );
@@ -53,7 +53,7 @@ public final class DisplacementMapFilter extends flash.filters.BitmapFilter {
     public native flash.display.BitmapData getMapBitmap( );
 
     @Setter
-    public native void setColor( int setColor );
+    public native void setColor( int value );
 
     @Getter
     public native double getScaleX( );
@@ -68,20 +68,20 @@ public final class DisplacementMapFilter extends flash.filters.BitmapFilter {
     public native flash.geom.Point getMapPoint( );
 
     @Setter
-    public native void setComponentX( int setComponentX );
+    public native void setComponentX( int value );
 
     @Setter
-    public native void setComponentY( int setComponentY );
+    public native void setComponentY( int value );
 
     @Getter
     public native int getComponentX( );
 
     @Setter
-    public native void setScaleX( double setScaleX );
+    public native void setScaleX( double value );
 
     @Setter
-    public native void setMapBitmap( flash.display.BitmapData setMapBitmap );
+    public native void setMapBitmap( flash.display.BitmapData value );
 
     @Setter
-    public native void setScaleY( double setScaleY );
+    public native void setScaleY( double value );
 }

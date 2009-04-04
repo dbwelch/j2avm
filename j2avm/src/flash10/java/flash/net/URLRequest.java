@@ -16,28 +16,28 @@ public final class URLRequest extends flash.FlashObject {
     public native String getMethod( );
 
     @Setter
-    public native void setMethod( String setMethod );
+    public native void setMethod( String value );
 
     @Getter
     public native String getDigest( );
 
     @Setter
-    public native void setContentType( String setContentType );
+    public native void setContentType( String value );
 
     @Setter
-    public native void setDigest( String setDigest );
+    public native void setDigest( String value );
 
     @Getter
     public native flash.FlashObject getData( );
 
     @Setter
-    public native void setRequestHeaders( flash.FlashArray setRequestHeaders );
+    public native void setRequestHeaders( flash.FlashArray value );
 
     @Getter
     public native String getUrl( );
 
     @Setter
-    public native void setData( flash.FlashObject setData );
+    public native void setData( flash.FlashObject value );
 
     @Getter
     public native flash.FlashArray getRequestHeaders( );
@@ -46,5 +46,5 @@ public final class URLRequest extends flash.FlashObject {
     public native String getContentType( );
 
     @Setter
-    public native void setUrl( String setUrl );
+    public native void setUrl( String value );
 }

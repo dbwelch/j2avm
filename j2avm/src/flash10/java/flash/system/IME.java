@@ -16,10 +16,10 @@ public final class IME extends flash.events.EventDispatcher {
     public static final native boolean getEnabled( );
 
     @Setter
-    public static final native void setConversionMode( String setConversionMode );
+    public static final native void setConversionMode( String mode );
 
     @Setter
-    public static final native void setConstructOK( boolean setConstructOK );
+    public static final native void setConstructOK( boolean construct );
 
     public static final native void doConversion( );
 
@@ -27,5 +27,5 @@ public final class IME extends flash.events.EventDispatcher {
     public static final native String getConversionMode( );
 
     @Setter
-    public static final native void setEnabled( boolean setEnabled );
+    public static final native void setEnabled( boolean enabled );
 }

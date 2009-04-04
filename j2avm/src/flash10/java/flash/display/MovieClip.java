@@ -25,7 +25,7 @@ public class MovieClip extends flash.display.Sprite {
     public native void gotoAndPlay( flash.FlashObject frame );
 
     @Setter
-    public native void setEnabled( boolean setEnabled );
+    public native void setEnabled( boolean value );
 
     @Getter
     public native int getTotalFrames( );
@@ -51,7 +51,7 @@ public class MovieClip extends flash.display.Sprite {
     public native void addFrameScript( );
 
     @Setter
-    public native void setTrackAsMenu( boolean setTrackAsMenu );
+    public native void setTrackAsMenu( boolean value );
 
     public native void prevScene( );
 

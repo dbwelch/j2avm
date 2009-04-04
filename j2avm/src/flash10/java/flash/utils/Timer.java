@@ -19,10 +19,10 @@ public class Timer extends flash.events.EventDispatcher {
     public native double getDelay( );
 
     @Setter
-    public native void setDelay( double setDelay );
+    public native void setDelay( double value );
 
     @Setter
-    public native void setRepeatCount( int setRepeatCount );
+    public native void setRepeatCount( int value );
 
     public native void reset( );
 

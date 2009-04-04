@@ -26,13 +26,13 @@ public class ShaderEvent extends flash.events.Event {
     public static final String COMPLETE = "complete";
 
     @Setter
-    public native void setByteArray( flash.utils.ByteArray setByteArray );
+    public native void setByteArray( flash.utils.ByteArray bArray );
 
     @Getter
     public native double[] getVector( );
 
     @Setter
-    public native void setVector( double[] setVector );
+    public native void setVector( double[] v );
 
     @Override
     public native String toString( );
@@ -41,7 +41,7 @@ public class ShaderEvent extends flash.events.Event {
     public native flash.utils.ByteArray getByteArray( );
 
     @Setter
-    public native void setBitmapData( flash.display.BitmapData setBitmapData );
+    public native void setBitmapData( flash.display.BitmapData bmpData );
 
     @Getter
     public native flash.display.BitmapData getBitmapData( );

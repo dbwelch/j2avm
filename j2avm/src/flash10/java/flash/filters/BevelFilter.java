@@ -38,10 +38,10 @@ public final class BevelFilter extends flash.filters.BitmapFilter {
     public native double getStrength( );
 
     @Setter
-    public native void setStrength( double setStrength );
+    public native void setStrength( double value );
 
     @Setter
-    public native void setShadowColor( int setShadowColor );
+    public native void setShadowColor( int value );
 
     @Getter
     public native boolean getKnockout( );
@@ -62,34 +62,34 @@ public final class BevelFilter extends flash.filters.BitmapFilter {
     public native double getAngle( );
 
     @Setter
-    public native void setHighlightAlpha( double setHighlightAlpha );
+    public native void setHighlightAlpha( double value );
 
     @Override
     public native flash.filters.BitmapFilter clone( );
 
     @Setter
-    public native void setHighlightColor( int setHighlightColor );
+    public native void setHighlightColor( int value );
 
     @Setter
-    public native void setBlurX( double setBlurX );
+    public native void setBlurX( double value );
 
     @Getter
     public native int getShadowColor( );
 
     @Setter
-    public native void setBlurY( double setBlurY );
+    public native void setBlurY( double value );
 
     @Getter
     public native double getShadowAlpha( );
 
     @Setter
-    public native void setAngle( double setAngle );
+    public native void setAngle( double value );
 
     @Setter
-    public native void setDistance( double setDistance );
+    public native void setDistance( double value );
 
     @Setter
-    public native void setType( String setType );
+    public native void setType( String value );
 
     @Getter
     public native double getDistance( );
@@ -98,13 +98,13 @@ public final class BevelFilter extends flash.filters.BitmapFilter {
     public native String getType( );
 
     @Setter
-    public native void setKnockout( boolean setKnockout );
+    public native void setKnockout( boolean value );
 
     @Setter
-    public native void setShadowAlpha( double setShadowAlpha );
+    public native void setShadowAlpha( double value );
 
     @Setter
-    public native void setQuality( int setQuality );
+    public native void setQuality( int value );
 
     @Getter
     public native int getQuality( );

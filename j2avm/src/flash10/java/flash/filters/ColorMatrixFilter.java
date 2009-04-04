@@ -16,7 +16,7 @@ public final class ColorMatrixFilter extends flash.filters.BitmapFilter {
     public native flash.FlashArray getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.FlashArray setMatrix );
+    public native void setMatrix( flash.FlashArray value );
 
     @Override
     public native flash.filters.BitmapFilter clone( );

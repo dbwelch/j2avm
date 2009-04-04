@@ -42,7 +42,7 @@ public class FlashArray extends flash.FlashObject {
     public native int lastIndexOf( Object searchElement );
 
     @Setter
-    public native void setLength( int setLength );
+    public native void setLength( int newLength );
 
     public native int indexOf( Object searchElement, Object fromIndex );
 

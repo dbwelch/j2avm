@@ -14,11 +14,11 @@ public final class DeleteObjectSample extends flash.sampler.Sample {
     public native double getSize( );
 
     @Setter
-    public native void setSize( double setSize );
+    public native void setSize( double size );
 
     @Getter
     public native double getId( );
 
     @Setter
-    public native void setId( double setId );
+    public native void setId( double id );
 }

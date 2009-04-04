@@ -18,11 +18,11 @@ public class SoundLoaderContext extends flash.FlashObject {
     public native double getBufferTime( );
 
     @Setter
-    public native void setBufferTime( double setBufferTime );
+    public native void setBufferTime( double bufferTime );
 
     @Getter
     public native boolean getCheckPolicyFile( );
 
     @Setter
-    public native void setCheckPolicyFile( boolean setCheckPolicyFile );
+    public native void setCheckPolicyFile( boolean checkPolicyFile );
 }

@@ -43,22 +43,22 @@ public class TextFormat extends flash.FlashObject {
     public native flash.FlashObject getBullet( );
 
     @Setter
-    public native void setBullet( flash.FlashObject setBullet );
+    public native void setBullet( flash.FlashObject value );
 
     @Getter
     public native String getAlign( );
 
     @Setter
-    public native void setColor( flash.FlashObject setColor );
+    public native void setColor( flash.FlashObject value );
 
     @Getter
     public native String getDisplay( );
 
     @Setter
-    public native void setBold( flash.FlashObject setBold );
+    public native void setBold( flash.FlashObject value );
 
     @Setter
-    public native void setDisplay( String setDisplay );
+    public native void setDisplay( String value );
 
     @Getter
     public native flash.FlashObject getBold( );
@@ -70,25 +70,25 @@ public class TextFormat extends flash.FlashObject {
     public native String getFont( );
 
     @Setter
-    public native void setAlign( String setAlign );
+    public native void setAlign( String value );
 
     @Setter
-    public native void setLeading( flash.FlashObject setLeading );
+    public native void setLeading( flash.FlashObject value );
 
     @Setter
-    public native void setRightMargin( flash.FlashObject setRightMargin );
+    public native void setRightMargin( flash.FlashObject value );
 
     @Getter
     public native flash.FlashObject getLeftMargin( );
 
     @Setter
-    public native void setIndent( flash.FlashObject setIndent );
+    public native void setIndent( flash.FlashObject value );
 
     @Getter
     public native flash.FlashObject getBlockIndent( );
 
     @Setter
-    public native void setSize( flash.FlashObject setSize );
+    public native void setSize( flash.FlashObject value );
 
     @Getter
     public native flash.FlashObject getKerning( );
@@ -97,16 +97,16 @@ public class TextFormat extends flash.FlashObject {
     public native flash.FlashArray getTabStops( );
 
     @Setter
-    public native void setFont( String setFont );
+    public native void setFont( String value );
 
     @Setter
-    public native void setKerning( flash.FlashObject setKerning );
+    public native void setKerning( flash.FlashObject value );
 
     @Setter
-    public native void setItalic( flash.FlashObject setItalic );
+    public native void setItalic( flash.FlashObject value );
 
     @Setter
-    public native void setTarget( String setTarget );
+    public native void setTarget( String value );
 
     @Getter
     public native flash.FlashObject getColor( );
@@ -115,16 +115,16 @@ public class TextFormat extends flash.FlashObject {
     public native flash.FlashObject getUnderline( );
 
     @Setter
-    public native void setUrl( String setUrl );
+    public native void setUrl( String value );
 
     @Setter
-    public native void setUnderline( flash.FlashObject setUnderline );
+    public native void setUnderline( flash.FlashObject value );
 
     @Getter
     public native String getTarget( );
 
     @Setter
-    public native void setLeftMargin( flash.FlashObject setLeftMargin );
+    public native void setLeftMargin( flash.FlashObject value );
 
     @Getter
     public native flash.FlashObject getIndent( );
@@ -139,13 +139,13 @@ public class TextFormat extends flash.FlashObject {
     public native flash.FlashObject getRightMargin( );
 
     @Setter
-    public native void setBlockIndent( flash.FlashObject setBlockIndent );
+    public native void setBlockIndent( flash.FlashObject value );
 
     @Setter
-    public native void setTabStops( flash.FlashArray setTabStops );
+    public native void setTabStops( flash.FlashArray value );
 
     @Setter
-    public native void setLetterSpacing( flash.FlashObject setLetterSpacing );
+    public native void setLetterSpacing( flash.FlashObject value );
 
     @Getter
     public native flash.FlashObject getLetterSpacing( );

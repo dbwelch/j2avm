@@ -27,10 +27,10 @@ public class StatusEvent extends flash.events.Event {
     public native String getCode( );
 
     @Setter
-    public native void setLevel( String setLevel );
+    public native void setLevel( String value );
 
     @Setter
-    public native void setCode( String setCode );
+    public native void setCode( String value );
 
     @Getter
     public native String getLevel( );

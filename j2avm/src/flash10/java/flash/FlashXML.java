@@ -16,7 +16,7 @@ public final class FlashXML extends flash.FlashObject {
     public static final native flash.FlashObject settings( );
 
     @Setter
-    public static final native void setPrettyIndent( int setPrettyIndent );
+    public static final native void setPrettyIndent( int newIndent );
 
     public static final native void setSettings( flash.FlashObject o );
 
@@ -40,18 +40,18 @@ public final class FlashXML extends flash.FlashObject {
     public static final native boolean getIgnoreWhitespace( );
 
     @Setter
-    public static final native void setIgnoreComments( boolean setIgnoreComments );
+    public static final native void setIgnoreComments( boolean newIgnore );
 
     @Setter
-    public static final native void setIgnoreProcessingInstructions( boolean setIgnoreProcessingInstructions );
+    public static final native void setIgnoreProcessingInstructions( boolean newIgnore );
 
     @Setter
-    public static final native void setPrettyPrinting( boolean setPrettyPrinting );
+    public static final native void setPrettyPrinting( boolean newPretty );
 
     public static final native flash.FlashObject defaultSettings( );
 
     @Setter
-    public static final native void setIgnoreWhitespace( boolean setIgnoreWhitespace );
+    public static final native void setIgnoreWhitespace( boolean newIgnore );
 
     @Override
     public native boolean hasOwnProperty( Object P );

@@ -13,7 +13,7 @@ public final class Mouse extends flash.FlashObject {
     public static final native void hide( );
 
     @Setter
-    public static final native void setCursor( String setCursor );
+    public static final native void setCursor( String value );
 
     public static final native void show( );
 

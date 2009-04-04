@@ -22,23 +22,23 @@ public final class GraphicsBitmapFill extends flash.FlashObject implements flash
     public native flash.geom.Matrix getMatrix( );
 
     @Setter
-    public native void setMatrix( flash.geom.Matrix setMatrix );
+    public native void setMatrix( flash.geom.Matrix matrix );
 
     @Getter
     public native flash.display.BitmapData getBitmapData( );
 
     @Setter
-    public native void setBitmapData( flash.display.BitmapData setBitmapData );
+    public native void setBitmapData( flash.display.BitmapData bitmapData );
 
     @Getter
     public native boolean getRepeat( );
 
     @Setter
-    public native void setRepeat( boolean setRepeat );
+    public native void setRepeat( boolean repeat );
 
     @Getter
     public native boolean getSmooth( );
 
     @Setter
-    public native void setSmooth( boolean setSmooth );
+    public native void setSmooth( boolean smooth );
 }

@@ -10,12 +10,12 @@ public class Stage extends flash.display.DisplayObjectContainer {
 
     public  Stage( ) {}
 
-    @Setter
     @Override
-    public native void setTabIndex( int setTabIndex );
+    @Setter
+    public native void setTabIndex( int value );
 
     @Setter
-    public native void setStageFocusRect( boolean setStageFocusRect );
+    public native void setStageFocusRect( boolean on );
 
     @Getter
     public native String getAlign( );
@@ -23,14 +23,14 @@ public class Stage extends flash.display.DisplayObjectContainer {
     @Override
     public native boolean willTrigger( String type );
 
-    @Setter
     @Override
-    public native void setMouseChildren( boolean setMouseChildren );
+    @Setter
+    public native void setMouseChildren( boolean value );
 
     public native boolean isFocusInaccessible( );
 
     @Setter
-    public native void setStageHeight( int setStageHeight );
+    public native void setStageHeight( int value );
 
     @Override
     public native boolean hasEventListener( String type );
@@ -44,129 +44,129 @@ public class Stage extends flash.display.DisplayObjectContainer {
     @Getter
     public native boolean getShowDefaultContextMenu( );
 
-    @Setter
     @Override
-    public native void setWidth( double setWidth );
+    @Setter
+    public native void setWidth( double value );
 
     @Setter
-    public native void setShowDefaultContextMenu( boolean setShowDefaultContextMenu );
+    public native void setShowDefaultContextMenu( boolean value );
 
-    @Setter
     @Override
-    public native void setName( String setName );
+    @Setter
+    public native void setName( String value );
 
     @Override
     public native void setChildIndex( flash.display.DisplayObject child, int index );
 
     @Setter
-    public native void setAlign( String setAlign );
+    public native void setAlign( String value );
 
     @Setter
-    public native void setScaleMode( String setScaleMode );
+    public native void setScaleMode( String value );
 
-    @Setter
     @Override
-    public native void setScaleX( double setScaleX );
+    @Setter
+    public native void setScaleX( double value );
 
     @Override
     public native void swapChildrenAt( int index1, int index2 );
 
-    @Setter
     @Override
-    public native void setScaleY( double setScaleY );
+    @Setter
+    public native void setScaleY( double value );
 
-    @Setter
     @Override
-    public native void setScaleZ( double setScaleZ );
+    @Setter
+    public native void setScaleZ( double value );
 
     @Getter
     public native String getColorCorrection( );
 
+    @Override
     @Setter
-    @Override
-    public native void setScrollRect( flash.geom.Rectangle setScrollRect );
+    public native void setScrollRect( flash.geom.Rectangle value );
 
-    @Getter
     @Override
+    @Getter
     public native int getNumChildren( );
 
-    @Getter
     @Override
+    @Getter
     public native double getHeight( );
 
+    @Override
     @Setter
-    @Override
-    public native void setBlendMode( String setBlendMode );
+    public native void setBlendMode( String value );
 
-    @Getter
     @Override
+    @Getter
     public native flash.text.TextSnapshot getTextSnapshot( );
 
-    @Setter
     @Override
-    public native void setScale9Grid( flash.geom.Rectangle setScale9Grid );
+    @Setter
+    public native void setScale9Grid( flash.geom.Rectangle value );
 
     @Getter
     public native int getFullScreenWidth( );
 
     @Setter
-    public native void setFocus( flash.display.InteractiveObject setFocus );
+    public native void setFocus( flash.display.InteractiveObject newFocus );
 
     @Setter
-    public native void setFullScreenSourceRect( flash.geom.Rectangle setFullScreenSourceRect );
+    public native void setFullScreenSourceRect( flash.geom.Rectangle value );
 
-    @Setter
     @Override
-    public native void setRotationY( double setRotationY );
+    @Setter
+    public native void setRotationY( double value );
 
     @Setter
-    public native void setQuality( String setQuality );
+    public native void setQuality( String value );
 
-    @Setter
     @Override
-    public native void setRotationZ( double setRotationZ );
-
     @Setter
+    public native void setRotationZ( double value );
+
     @Override
-    public native void setRotationX( double setRotationX );
-
     @Setter
+    public native void setRotationX( double value );
+
     @Override
-    public native void setAlpha( double setAlpha );
-
     @Setter
+    public native void setAlpha( double value );
+
     @Override
-    public native void setFocusRect( flash.FlashObject setFocusRect );
-
     @Setter
+    public native void setFocusRect( flash.FlashObject value );
+
     @Override
-    public native void setAccessibilityImplementation( flash.accessibility.AccessibilityImplementation setAccessibilityImplementation );
+    @Setter
+    public native void setAccessibilityImplementation( flash.accessibility.AccessibilityImplementation value );
 
     @Setter
-    public native void setColorCorrection( String setColorCorrection );
+    public native void setColorCorrection( String value );
 
+    @Override
     @Getter
-    @Override
     public native boolean getTabChildren( );
 
-    @Getter
     @Override
+    @Getter
     public native boolean getMouseChildren( );
 
     @Getter
     public native int getStageHeight( );
 
-    @Setter
     @Override
-    public native void setCacheAsBitmap( boolean setCacheAsBitmap );
+    @Setter
+    public native void setCacheAsBitmap( boolean value );
 
-    @Setter
     @Override
-    public native void setMouseEnabled( boolean setMouseEnabled );
+    @Setter
+    public native void setMouseEnabled( boolean value );
 
-    @Setter
     @Override
-    public native void setAccessibilityProperties( flash.accessibility.AccessibilityProperties setAccessibilityProperties );
+    @Setter
+    public native void setAccessibilityProperties( flash.accessibility.AccessibilityProperties value );
 
     public native void invalidate( );
 
@@ -185,37 +185,37 @@ public class Stage extends flash.display.DisplayObjectContainer {
     @Override
     public native void addEventListener( String type, flash.FlashFunction listener );
 
-    @Setter
     @Override
-    public native void setHeight( double setHeight );
+    @Setter
+    public native void setHeight( double value );
 
     @Override
     public native boolean dispatchEvent( flash.events.Event event );
 
     @Setter
-    public native void setStageWidth( int setStageWidth );
+    public native void setStageWidth( int value );
 
-    @Getter
     @Override
+    @Getter
     public native double getWidth( );
 
     @Getter
     public native flash.display.InteractiveObject getFocus( );
 
     @Setter
-    public native void setFrameRate( double setFrameRate );
+    public native void setFrameRate( double value );
 
-    @Setter
     @Override
-    public native void setContextMenu( flash.ui.ContextMenu setContextMenu );
+    @Setter
+    public native void setContextMenu( flash.ui.ContextMenu value );
 
-    @Setter
     @Override
-    public native void setOpaqueBackground( flash.FlashObject setOpaqueBackground );
+    @Setter
+    public native void setOpaqueBackground( flash.FlashObject value );
 
-    @Setter
     @Override
-    public native void setMask( flash.display.DisplayObject setMask );
+    @Setter
+    public native void setMask( flash.display.DisplayObject value );
 
     @Getter
     public native flash.geom.Rectangle getFullScreenSourceRect( );
@@ -223,16 +223,16 @@ public class Stage extends flash.display.DisplayObjectContainer {
     @Getter
     public native int getFullScreenHeight( );
 
-    @Setter
     @Override
-    public native void setVisible( boolean setVisible );
+    @Setter
+    public native void setVisible( boolean value );
 
     @Setter
-    public native void setDisplayState( String setDisplayState );
+    public native void setDisplayState( String value );
 
-    @Setter
     @Override
-    public native void setTransform( flash.geom.Transform setTransform );
+    @Setter
+    public native void setTransform( flash.geom.Transform value );
 
     @Getter
     public native int getStageWidth( );
@@ -246,36 +246,36 @@ public class Stage extends flash.display.DisplayObjectContainer {
     @Getter
     public native String getDisplayState( );
 
-    @Setter
     @Override
-    public native void setX( double setX );
+    @Setter
+    public native void setX( double value );
 
-    @Setter
     @Override
-    public native void setY( double setY );
+    @Setter
+    public native void setY( double value );
 
-    @Setter
     @Override
-    public native void setZ( double setZ );
+    @Setter
+    public native void setZ( double value );
 
-    @Setter
     @Override
-    public native void setFilters( flash.FlashArray setFilters );
+    @Setter
+    public native void setFilters( flash.FlashArray value );
 
-    @Setter
     @Override
-    public native void setTabChildren( boolean setTabChildren );
+    @Setter
+    public native void setTabChildren( boolean value );
 
-    @Setter
     @Override
-    public native void setTabEnabled( boolean setTabEnabled );
+    @Setter
+    public native void setTabEnabled( boolean value );
 
     @Override
     public native flash.display.DisplayObject addChild( flash.display.DisplayObject child );
 
-    @Setter
     @Override
-    public native void setRotation( double setRotation );
+    @Setter
+    public native void setRotation( double value );
 
     @Getter
     public native boolean getStageFocusRect( );

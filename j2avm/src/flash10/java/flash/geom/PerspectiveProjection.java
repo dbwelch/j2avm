@@ -19,14 +19,14 @@ public class PerspectiveProjection extends flash.FlashObject {
     public native double getFieldOfView( );
 
     @Setter
-    public native void setProjectionCenter( flash.geom.Point setProjectionCenter );
+    public native void setProjectionCenter( flash.geom.Point p );
 
     @Getter
     public native double getFocalLength( );
 
     @Setter
-    public native void setFieldOfView( double setFieldOfView );
+    public native void setFieldOfView( double fieldOfViewAngleInDegrees );
 
     @Setter
-    public native void setFocalLength( double setFocalLength );
+    public native void setFocalLength( double value );
 }

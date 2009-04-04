@@ -22,7 +22,7 @@ public class NetStatusEvent extends flash.events.Event {
     public static final String NET_STATUS = "netStatus";
 
     @Setter
-    public native void setInfo( flash.FlashObject setInfo );
+    public native void setInfo( flash.FlashObject value );
 
     @Override
     public native String toString( );

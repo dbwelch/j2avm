@@ -16,7 +16,7 @@ public class FlashFunction extends flash.FlashObject {
     public native Object getPrototype( );
 
     @Setter
-    public native void setPrototype( Object setPrototype );
+    public native void setPrototype( Object p );
 
     public native Object call( Object thisArg );
 

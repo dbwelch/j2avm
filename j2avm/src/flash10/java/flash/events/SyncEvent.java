@@ -22,7 +22,7 @@ public class SyncEvent extends flash.events.Event {
     public static final String SYNC = "sync";
 
     @Setter
-    public native void setChangeList( flash.FlashArray setChangeList );
+    public native void setChangeList( flash.FlashArray value );
 
     @Override
     public native String toString( );

@@ -19,7 +19,7 @@ public final class Vector$object extends flash.FlashObject {
     public native int unshift( );
 
     @Setter
-    public native void setLength( int setLength );
+    public native void setLength( int value );
 
     public native double indexOf( flash.FlashObject value, double from );
 
@@ -56,7 +56,7 @@ public final class Vector$object extends flash.FlashObject {
     public native int getLength( );
 
     @Setter
-    public native void setFixed( boolean setFixed );
+    public native void setFixed( boolean f );
 
     public native String join( String separator );
 

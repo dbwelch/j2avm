@@ -29,13 +29,13 @@ public class ProgressEvent extends flash.events.Event {
     public native int getBytesLoaded( );
 
     @Setter
-    public native void setBytesTotal( int setBytesTotal );
+    public native void setBytesTotal( int value );
 
     @Override
     public native String toString( );
 
     @Setter
-    public native void setBytesLoaded( int setBytesLoaded );
+    public native void setBytesLoaded( int value );
 
     @Getter
     public native int getBytesTotal( );

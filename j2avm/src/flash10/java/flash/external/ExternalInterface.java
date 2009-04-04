@@ -24,5 +24,5 @@ public final class ExternalInterface extends flash.FlashObject {
     public static native boolean getMarshallExceptions( );
 
     @Setter
-    public static native void setMarshallExceptions( boolean setMarshallExceptions );
+    public static native void setMarshallExceptions( boolean marshallExceptions );
 }

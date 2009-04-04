@@ -14,11 +14,11 @@ public class Sample extends flash.FlashObject {
     public native flash.FlashArray getStack( );
 
     @Setter
-    public native void setStack( flash.FlashArray setStack );
+    public native void setStack( flash.FlashArray stack );
 
     @Getter
     public native double getTime( );
 
     @Setter
-    public native void setTime( double setTime );
+    public native void setTime( double time );
 }

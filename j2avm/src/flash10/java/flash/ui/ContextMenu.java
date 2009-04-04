@@ -11,7 +11,7 @@ public final class ContextMenu extends flash.events.EventDispatcher {
     public  ContextMenu( ) {}
 
     @Setter
-    public native void setBuiltInItems( flash.ui.ContextMenuBuiltInItems setBuiltInItems );
+    public native void setBuiltInItems( flash.ui.ContextMenuBuiltInItems value );
 
     @Getter
     public native flash.ui.ContextMenuBuiltInItems getBuiltInItems( );
@@ -23,10 +23,10 @@ public final class ContextMenu extends flash.events.EventDispatcher {
     public native flash.FlashArray getCustomItems( );
 
     @Setter
-    public native void setClipboardMenu( boolean setClipboardMenu );
+    public native void setClipboardMenu( boolean value );
 
     @Setter
-    public native void setLink( flash.net.URLRequest setLink );
+    public native void setLink( flash.net.URLRequest value );
 
     @Getter
     public native boolean getClipboardMenu( );
@@ -35,12 +35,12 @@ public final class ContextMenu extends flash.events.EventDispatcher {
     public native flash.net.URLRequest getLink( );
 
     @Setter
-    public native void setClipboardItems( flash.ui.ContextMenuClipboardItems setClipboardItems );
+    public native void setClipboardItems( flash.ui.ContextMenuClipboardItems value );
 
     public native flash.ui.ContextMenu clone( );
 
     @Setter
-    public native void setCustomItems( flash.FlashArray setCustomItems );
+    public native void setCustomItems( flash.FlashArray value );
 
     public native void hideBuiltInItems( );
 }

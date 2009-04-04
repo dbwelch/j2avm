@@ -34,13 +34,13 @@ public class KeyboardEvent extends flash.events.Event {
     public static final String KEY_UP = "keyUp";
 
     @Setter
-    public native void setShiftKey( boolean setShiftKey );
+    public native void setShiftKey( boolean value );
 
     @Getter
     public native int getKeyLocation( );
 
     @Setter
-    public native void setCharCode( int setCharCode );
+    public native void setCharCode( int value );
 
     public native void updateAfterEvent( );
 
@@ -48,7 +48,7 @@ public class KeyboardEvent extends flash.events.Event {
     public native int getKeyCode( );
 
     @Setter
-    public native void setKeyCode( int setKeyCode );
+    public native void setKeyCode( int value );
 
     @Override
     public native flash.events.Event clone( );
@@ -57,16 +57,16 @@ public class KeyboardEvent extends flash.events.Event {
     public native int getCharCode( );
 
     @Setter
-    public native void setCtrlKey( boolean setCtrlKey );
+    public native void setCtrlKey( boolean value );
 
     @Override
     public native String toString( );
 
     @Setter
-    public native void setKeyLocation( int setKeyLocation );
+    public native void setKeyLocation( int value );
 
     @Setter
-    public native void setAltKey( boolean setAltKey );
+    public native void setAltKey( boolean value );
 
     @Getter
     public native boolean getCtrlKey( );

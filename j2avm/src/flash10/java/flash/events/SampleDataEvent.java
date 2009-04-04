@@ -24,10 +24,10 @@ public class SampleDataEvent extends flash.events.Event {
     public static final String SAMPLE_DATA = "sampleData";
 
     @Setter
-    public native void setPosition( double setPosition );
+    public native void setPosition( double theposition );
 
     @Setter
-    public native void setData( flash.utils.ByteArray setData );
+    public native void setData( flash.utils.ByteArray thedata );
 
     @Getter
     public native double getPosition( );

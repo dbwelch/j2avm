@@ -14,19 +14,19 @@ public final class XMLTag extends flash.FlashObject {
     public native String getValue( );
 
     @Setter
-    public native void setValue( String setValue );
+    public native void setValue( String v );
 
     @Setter
-    public native void setType( int setType );
+    public native void setType( int value );
 
     @Getter
     public native int getType( );
 
     @Setter
-    public native void setEmpty( boolean setEmpty );
+    public native void setEmpty( boolean value );
 
     @Setter
-    public native void setAttrs( flash.FlashObject setAttrs );
+    public native void setAttrs( flash.FlashObject value );
 
     @Getter
     public native boolean getEmpty( );

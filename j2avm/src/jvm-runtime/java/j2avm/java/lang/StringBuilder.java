@@ -1,6 +1,9 @@
 package j2avm.java.lang;
 
-import static org.epistem.j2avm.asm.AVM2_ASM.*;
+import static org.epistem.j2avm.asm.AVM2_ASM.appendDouble;
+import static org.epistem.j2avm.asm.AVM2_ASM.appendInt;
+import static org.epistem.j2avm.asm.AVM2_ASM.appendObject;
+import static org.epistem.j2avm.asm.AVM2_ASM.appendString;
 
 import org.epistem.j2avm.annotations.runtime.Translator;
 import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
@@ -11,7 +14,7 @@ import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
  * @author nickmain
  */
 @Translator( JavaFrameworkClassTranslator.class )
-public class StringBuilder extends j2avm.java.lang.Object {
+public class StringBuilder {
 
     private String s;
     

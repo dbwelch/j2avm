@@ -10,7 +10,6 @@ import j2avm.java.io.Serializable;
  * @author nickmain
  */
 public abstract class Enum<E extends Enum<E>>
-    extends Object
     implements Comparable<E>, Serializable {
     
     private final int ordinal;

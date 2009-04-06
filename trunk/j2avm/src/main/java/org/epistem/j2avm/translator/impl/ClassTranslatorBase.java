@@ -22,6 +22,8 @@ import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
+import flash.FlashObject;
+
 /**
  * A translator for a class. A bridge between the Java class and the AVM2 class.
  *
@@ -158,7 +160,12 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
 
     /** @see org.epistem.j2avm.translator.ClassTranslator#getSuperclass() */
     public ClassTranslator getSuperclass() {
-        if( jvmClass.superclassName == null ) return null;        
+        if( jvmClass.superclassName == null ) return null; 
+        
+        if( jvmClass.superclassName.equals( ObjectType.OBJECT ) ) {
+            return manager.translatorForClass( new ObjectType( FlashObject.class.getName()));
+        }
+        
         return manager.translatorForClass( jvmClass.superclassName );
     }
 

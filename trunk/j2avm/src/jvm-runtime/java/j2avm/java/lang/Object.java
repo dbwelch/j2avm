@@ -4,17 +4,19 @@ import org.epistem.j2avm.annotations.runtime.FlashTargetClass;
 import org.epistem.j2avm.annotations.runtime.Translator;
 import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassAugmentingTranslator;
 
+import flash.FlashObject;
+
 /**
  * Runtime support for Object
  *
  * @author nickmain
  */
 @Translator( JavaFrameworkClassAugmentingTranslator.class )
-@FlashTargetClass( "Object" )
+@FlashTargetClass( FlashObject.class )
 public class Object {
     
     /** @see java.lang.Object#equals(java.lang.Object) */
-    public boolean equals( j2avm.java.lang.Object obj ) {
+    public boolean equals( java.lang.Object obj ) {
         return this == obj;
     }
 
@@ -25,7 +27,7 @@ public class Object {
     }
 
     /** @see java.lang.Object#toString() */
-    public String toString() {
+    public java.lang.String toString() {
         return "java.lang.Object@" + hashCode();
     }
 }

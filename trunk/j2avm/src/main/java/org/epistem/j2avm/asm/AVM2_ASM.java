@@ -61,4 +61,7 @@ public class AVM2_ASM {
 
     /** Set a public property on an object */
     public static native void setPublicProperty( Object target, Object name, Object value );
+    
+    /** Call a void no-arg function */
+    public static native void callVoidFunction( Object target, Object funcName );
 }

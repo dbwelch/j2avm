@@ -45,8 +45,8 @@ public class TargetSWF {
         
         this.file = new File( fileName );
 
-        ClassTranslator mainClass = manager.translatorForClass( new ObjectType( className ));
-        manager.requireClass( mainClass );
+        ClassTranslator mainClass = manager.translatorForClass( new ObjectType( className ));        
+        manager.setMainClass( mainClass );
         
         //get swf params from annotation
         JavaAnnotation swfDef = mainClass.getAnnotation( SWF.class.getName() );

@@ -16,9 +16,9 @@ import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
 @Translator( JavaFrameworkClassTranslator.class )
 public class StringBuilder {
 
-    private String s;
+    private java.lang.String s;
     
-    public StringBuilder( String s  ) {
+    public StringBuilder( java.lang.String s  ) {
         this.s = s;
     }
     
@@ -32,7 +32,7 @@ public class StringBuilder {
         return this;
     }
 
-    public StringBuilder append( String value ) {
+    public StringBuilder append( java.lang.String value ) {
         s = appendString( s, value );
         return this;
     }
@@ -42,7 +42,7 @@ public class StringBuilder {
         return this;
     }
     
-    public String toString() {
+    public java.lang.String toString() {
         return s;
     }
 }

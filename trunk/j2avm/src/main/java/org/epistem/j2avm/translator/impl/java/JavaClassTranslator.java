@@ -7,6 +7,7 @@ import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2swf.swf.code.Code;
+import org.epistem.j2swf.swf.code.CodeClass;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.flags.ClassFlag;
@@ -38,6 +39,13 @@ public class JavaClassTranslator extends JavaTranslator {
         super( manager, jvmClass, avm2name );
     }
 
+    /**
+     * Get the CodeClass
+     */
+    public CodeClass getCodeClass() {
+        return codeClass;
+    }
+    
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateImplementation(org.epistem.j2swf.swf.code.Code) */
     public void translateImplementation( Code code ) {
         J2AVM.log.info( "Translating class " + name );

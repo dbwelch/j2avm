@@ -31,11 +31,21 @@ public class TranslatorManager {
     private final Collection<ClassTranslator> requiredClasses   = new HashSet<ClassTranslator>();    
     private final Set<ClassTranslator> translated = new HashSet<ClassTranslator>();
     
+    private ClassTranslator mainClass;
+    
     /**
      * @param loader the loader to use to find Java classes
      */
     public TranslatorManager( JVMClassLoader loader ) {
         this.loader = loader;
+    }
+    
+    /**
+     * Set the main class.
+     */
+    public void setMainClass( ClassTranslator mainClass ) {
+        this.mainClass = mainClass;
+        requireClass( mainClass );
     }
     
     /**
@@ -67,6 +77,13 @@ public class TranslatorManager {
         
         trans.translateImplementation( code );
         translated.add( trans );
+    }
+    
+    /**
+     * Get the main class
+     */
+    public ClassTranslator getMainClass() {
+        return mainClass;
     }
     
     /**

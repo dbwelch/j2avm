@@ -6,6 +6,7 @@ import org.epistem.jvm.code.instructions.MethodCall;
 
 import com.anotherbigidea.flash.avm2.model.AVM2LateMultiname;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
+import com.anotherbigidea.flash.avm2.model.AVM2StandardNamespace;
 
 /**
  * An instruction transformer that converts calls to the static methods of
@@ -36,6 +37,7 @@ public class AVM2_ASM_Transformer extends Transformer {
         else if( name.startsWith( "push"   ) ) callback = nothing( name );
         else if( name.startsWith( "setPublicProperty" ) ) callback = setPubProp( name );
         else if( name.startsWith( "getPublicProperty" ) ) callback = getPubProp( name );
+        else if( name.startsWith( "callVoidFunction"  ) ) callback = call( name );
         
         if( callback != null ) {
             call.list().insertAfter( call, callback );
@@ -70,6 +72,19 @@ public class AVM2_ASM_Transformer extends Transformer {
             @Override public void generate( MethodTranslator method ) {
                 System.out.println( "Generating " + name );
                 method.getCode().code().add();                
+            }
+
+            @Override public String toString() { return "avm2#" + name ; }
+        };
+    }
+
+    private CallbackInstruction call( final String name ) {
+        return new CallbackInstruction() {
+            @Override public void generate( MethodTranslator method ) {
+                System.out.println( "Generating " + name );
+                method.getCode().code().callPropVoid( 
+                   new AVM2LateMultiname( 
+                           AVM2StandardNamespace.EmptyPackage.namespace ), 0 );                
             }
 
             @Override public String toString() { return "avm2#" + name ; }

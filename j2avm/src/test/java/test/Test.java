@@ -117,12 +117,18 @@ public class Test extends MovieClip {
     
         getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
         
-//        Dictionary dict = new Dictionary( );
-//        Object obj = new Object();
-//        AVM2_ASM.setPublicProperty( dict, obj, "hellow" );
-//        AVM2_ASM.getPublicProperty( dict, obj );
-//        Object val = AVM2_ASM.popObject();
-//        trace( val );
+        Dictionary dict = new Dictionary( );
+        Object obj = new Object();
+        AVM2_ASM.setPublicProperty( dict, obj, "hellow" );
+        AVM2_ASM.getPublicProperty( dict, obj );
+        Object val = AVM2_ASM.popObject();
+        trace( val );
+        
+        trace( "" + dict.hashCode() );
+        trace( "" + hashCode() );
+        trace( obj.toString() );
+        trace( String.valueOf( true ) );
+        trace( String.valueOf( false ) );
     }
 
     @Name("onMove")

@@ -29,6 +29,11 @@ public class JavaStaticInitMethodTranslator extends JavaMethodTranslator {
         throw new RuntimeException( "Cannot call <clinit>" );
     }
 
+    /*
+     * The <clinit> method is now just implemented as a static method of the
+     * class and called from the class initialization script after the
+     * class slot has been assigned.
+     */
     /**
      * @see org.epistem.j2avm.translator.MemberTranslator#translateImplementation(org.epistem.j2swf.swf.code.CodeClass)
      */

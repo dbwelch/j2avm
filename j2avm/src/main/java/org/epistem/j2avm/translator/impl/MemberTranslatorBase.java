@@ -15,7 +15,7 @@ public abstract class MemberTranslatorBase implements MemberTranslator {
 
     protected final ClassTranslator classTranslator;
     protected final String jvmName;
-    protected final AVM2QName avm2Name;
+    protected AVM2QName avm2Name;
     protected final AVM2Name avm2Type;
     
     /** @see org.epistem.j2avm.translator.MemberTranslator#getClassTranslator() */
@@ -38,6 +38,10 @@ public abstract class MemberTranslatorBase implements MemberTranslator {
         return avm2Type;
     }
 
+    public void setAVM2Name( AVM2QName name ) {
+        this.avm2Name = name;
+    }
+    
     protected MemberTranslatorBase( ClassTranslator classTranslator, 
                                     String jvmName,
                                     AVM2QName avm2Name,

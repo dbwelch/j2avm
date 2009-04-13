@@ -13,9 +13,9 @@ public abstract class Enum<E extends Enum<E>>
     implements Comparable<E>, Serializable {
     
     private final int ordinal;
-    private final String name;
+    private final java.lang.String name;
 
-    public final String name() {
+    public final java.lang.String name() {
         return name;
     }
 
@@ -23,16 +23,16 @@ public abstract class Enum<E extends Enum<E>>
         return ordinal;
     }
 
-    protected Enum( String name, int ordinal ) {
+    protected Enum( java.lang.String name, int ordinal ) {
         this.name = name;
         this.ordinal = ordinal;
     }
 
-    public String toString() {
+    public java.lang.String toString() {
         return name;
     }
 
-    public final int compareTo( E o ) {
+    public final int compareTo( E other ) {
         return ordinal - other.ordinal;
     }
 
@@ -42,14 +42,14 @@ public abstract class Enum<E extends Enum<E>>
     }
     */
     
-    public static <T extends Enum<T>> T valueOf(Class<T> enumType,
-                                                String name) {
-        T result = enumType.enumConstantDirectory().get(name);
-        if (result != null)
-            return result;
-        if (name == null)
-            throw new NullPointerException("Name is null");
-        throw new IllegalArgumentException(
-            "No enum const " + enumType +"." + name);
-    }
+//    public static <T extends Enum<T>> T valueOf(Class<T> enumType,
+//                                                java.lang.String name) {
+//        T result = enumType.enumConstantDirectory().get(name);
+//        if (result != null)
+//            return result;
+//        if (name == null)
+//            throw new NullPointerException("Name is null");
+//        throw new IllegalArgumentException(
+//            "No enum const " + enumType +"." + name);
+//    }
 }

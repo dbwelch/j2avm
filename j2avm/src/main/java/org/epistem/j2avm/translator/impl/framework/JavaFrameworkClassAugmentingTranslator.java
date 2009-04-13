@@ -8,22 +8,20 @@ import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
+import org.epistem.j2avm.translator.impl.MemberTranslatorBase;
 import org.epistem.j2avm.translator.impl.flash.FlashNativeDummyMethodTranslator;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
-import org.epistem.j2swf.swf.code.Code;
-import org.epistem.j2swf.swf.code.CodeClass;
-import org.epistem.j2swf.swf.code.CodeClassInitializer;
-import org.epistem.j2swf.swf.code.CodeMethod;
+import org.epistem.j2swf.swf.code.*;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.code.instructions.FieldAccess;
 import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.type.ObjectType;
 
 import com.anotherbigidea.flash.avm2.model.*;
-import com.sun.org.apache.xml.internal.utils.UnImplNode;
 
 /**
  * Translator for Java framework classes that augments existing Flash
@@ -73,15 +71,14 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultFieldTranslator(org.epistem.jvm.JVMField) */
     @Override
     public FieldTranslator defaultFieldTranslator( JVMField field ) {
-        return new JavaFrameworkFieldTranslator( this, field );
+        JavaFrameworkFieldTranslator t = new JavaFrameworkFieldTranslator( this, field );        
+        t.setAVM2Name( new AVM2QName( t.getAVM2Name().name )); //make public
+        return t;
     }
 
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#defaultMethodTranslator(org.epistem.jvm.JVMMethod) */
     @Override
     public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
-        if( method.name.equals( JavaClassTranslator.CLINIT_NAME ) ) {
-            throw new RuntimeException( "Cannot have a static initializer" );
-        }
 
         if( method.name.equals( JavaClassTranslator.INIT_NAME ) ) {
             return new FlashNativeDummyMethodTranslator( this, method );
@@ -99,6 +96,8 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
         final CodeClassInitializer mainInit = mainClass.getStaticInitializer();
         final ClassTranslator target = manager.translatorForClass( targetClass );
         final List<CodeMethod> methods = new ArrayList<CodeMethod>();
+
+        final boolean[] hasClinit = {false};
         
         codeClass = new CodeClass( mainClass ) {
 
@@ -147,11 +146,80 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
                 c2.newFunction( func );
                 c2.setProperty( new AVM2LateMultiname( AVM2StandardNamespace.EmptyPackage.namespace ) );
 
+                if( name.name.equals( "<clinit>()" ) ) hasClinit[0] = true;
+                
                 return cm;                
-            }            
+            }
+
+            /** @see CodeClass#addField(AVM2QName, AVM2Name, Object, boolean, boolean) */
+            @Override
+            protected CodeField addField( AVM2QName name, AVM2Name type, Object defaultValue, boolean isStatic, boolean isConstant ) {
+                
+                if( isStatic ) {
+                    //add to the target class
+                    AVM2Code c2 = mainInit.code();
+                    c2.getLex( target.getAVM2Name() );
+                    c2.pushString( name.name );
+                    pushDefaultValue( c2, defaultValue, type );                                    
+                    c2.setProperty( new AVM2LateMultiname( AVM2StandardNamespace.EmptyPackage.namespace ) );
+                }
+                else {
+                    //add to the main class static init to augment the target class
+                    AVM2Code c2 = mainInit.code();
+                    c2.getLex( target.getAVM2Name() );
+                    c2.getProperty( "prototype" );
+                    c2.pushString( name.name );
+                    pushDefaultValue( c2, defaultValue, type );                    
+                    c2.setProperty( new AVM2LateMultiname( AVM2StandardNamespace.EmptyPackage.namespace ) );
+                }
+                
+                return new CodeField( this, null, isStatic, isConstant );
+            }
+            
+            private void pushDefaultValue( AVM2Code c2, Object value, AVM2Name type ) {
+                
+                if( value == null ) {
+                    c2.pushUndefined();
+                }                
+                else if( value instanceof Integer ) {
+                    
+                    if( type.equals( AVM2StandardName.TypeBoolean.qname ) ) {
+                        if( ((Integer)value).intValue() == 0 ) {
+                            c2.pushBoolean( false );
+                        }
+                        else {
+                            c2.pushBoolean( true );
+                        }
+                    }
+                    else {
+                        c2.pushInt( (Integer) value );
+                    }
+                }
+                else if( value instanceof Long ) { //TODO: long support
+                    c2.pushDouble( ((Number) value).doubleValue() );
+                }
+                else if( value instanceof Double ) {
+                    c2.pushDouble( (Double) value );
+                }
+                else if( value instanceof Float ) {
+                    c2.pushDouble( (Float) value );
+                }
+                else if( value instanceof String ) {
+                    c2.pushString( (String) value );
+                }
+                else throw new RuntimeException( "Unknown constant type" );
+            }
         };        
         
         translateMembers();
+        
+        //if there was a clinit then call it
+        if( hasClinit[0] ) {
+            //add to the target class
+            AVM2Code c2 = mainInit.code();
+            c2.getLex( target.getAVM2Name() );
+            c2.callPropVoid( "<clinit>()", 0 );
+        }
         
         for( CodeMethod cm : methods ) {
             cm.code().analyze();
@@ -208,4 +276,6 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
         ClassTranslator target = manager.translatorForClass( targetClass );
         target.translateStaticPush( method );
     }
+    
+    
 }

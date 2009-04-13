@@ -40,6 +40,7 @@ public class NameUtils {
             return AVM2StandardName.TypeArray.qname;
         }
  
+        if( type.equals( ObjectType.OBJECT ) ) return new AVM2QName( "Object" );
         if( type.equals( ObjectType.STRING ) ) type = new ObjectType( "String" );
         
         if( type instanceof ObjectType ) {
@@ -74,7 +75,7 @@ public class NameUtils {
 //        String name = ( className.name.startsWith( "flash.Flash" ) ) ?
 //                          className.name.substring( 11 ) :
 //                          className.name;
-            
+                    
         String name = className.name;
         return new AVM2QName( name );
     }

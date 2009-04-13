@@ -80,7 +80,7 @@ public abstract class JavaTranslator extends ClassTranslatorBase {
     }
     
     /** 
-     * Translate the members
+     * Translate the members - fields then methods (order assumption is important)
      */
     protected void translateMembers() {
         for( FieldTranslator field : fields.values() ) {

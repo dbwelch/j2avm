@@ -78,7 +78,7 @@ public class Test extends MovieClip {
     private final TextField field;
     private final TextField field2;
     
-    //private Foo foo;
+    private Foo foo;
     
     public Test() {
         field = new TextField();
@@ -116,19 +116,15 @@ public class Test extends MovieClip {
         }
     
         getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
+
+        Object[] objs = { new Object(), new Object(), new Object(), new Object(), new Object() };
+        for( int i = 0; i < objs.length; i++ ) {
+            trace( "Object " + i + " ==> " + objs[i].hashCode() );
+        }
         
-        Dictionary dict = new Dictionary( );
-        Object obj = new Object();
-        AVM2_ASM.setPublicProperty( dict, obj, "hellow" );
-        AVM2_ASM.getPublicProperty( dict, obj );
-        Object val = AVM2_ASM.popObject();
-        trace( val );
-        
-        trace( "" + dict.hashCode() );
-        trace( "" + hashCode() );
-        trace( obj.toString() );
-        trace( String.valueOf( true ) );
-        trace( String.valueOf( false ) );
+        for( int i = 0; i < objs.length; i++ ) {
+            trace( "Object " + i + " ==> " + objs[i].hashCode() );
+        }
     }
 
     @Name("onMove")

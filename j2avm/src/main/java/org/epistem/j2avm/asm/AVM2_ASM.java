@@ -61,7 +61,19 @@ public class AVM2_ASM {
 
     /** Set a public property on an object */
     public static native void setPublicProperty( Object target, Object name, Object value );
+
+    /** Set a public property on an object */
+    public static native void setPublicProperty( Object target, Object name, int value );
+
+    /** Set a public property on an object */
+    public static native void setPublicProperty( Object target, Object name, double value );
+
+    /** Set a public property on an object */
+    public static native void setPublicProperty( Object target, Object name, boolean value );
     
     /** Call a void no-arg function */
     public static native void callVoidFunction( Object target, Object funcName );
+    
+    /** Duplicate and trace stack top */
+    public static native void traceStackTop();
 }

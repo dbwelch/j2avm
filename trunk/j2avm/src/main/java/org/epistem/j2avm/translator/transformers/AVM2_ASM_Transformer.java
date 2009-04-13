@@ -35,6 +35,7 @@ public class AVM2_ASM_Transformer extends Transformer {
         if     ( name.startsWith( "append" ) ) callback = append( name );
         else if( name.startsWith( "pop"    ) ) callback = nothing( name );
         else if( name.startsWith( "push"   ) ) callback = nothing( name );
+        else if( name.startsWith( "trace"  ) ) callback = trace( name );
         else if( name.startsWith( "setPublicProperty" ) ) callback = setPubProp( name );
         else if( name.startsWith( "getPublicProperty" ) ) callback = getPubProp( name );
         else if( name.startsWith( "callVoidFunction"  ) ) callback = call( name );
@@ -72,6 +73,17 @@ public class AVM2_ASM_Transformer extends Transformer {
             @Override public void generate( MethodTranslator method ) {
                 System.out.println( "Generating " + name );
                 method.getCode().code().add();                
+            }
+
+            @Override public String toString() { return "avm2#" + name ; }
+        };
+    }
+
+    private CallbackInstruction trace( final String name ) {
+        return new CallbackInstruction() {
+            @Override public void generate( MethodTranslator method ) {
+                System.out.println( "Generating " + name );
+                method.getCode().code().traceTop( "STACK TOP ==> " );                
             }
 
             @Override public String toString() { return "avm2#" + name ; }

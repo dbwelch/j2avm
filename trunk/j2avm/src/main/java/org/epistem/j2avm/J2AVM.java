@@ -16,7 +16,7 @@ public class J2AVM {
     /**
      * True to include debugging trace logging in the translated code
      */
-    public static boolean TRACE_ON = true;
+    public static boolean TRACE_ON = false;
     public static final String TRACE_PREFIX = "J2AVM: ";
     
     /**

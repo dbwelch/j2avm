@@ -10,7 +10,7 @@ public class ObjectType extends ObjectOrArrayType {
     public static final ObjectType OBJECT         = new ObjectType( "java.lang.Object" );
     public static final ObjectType STRING         = new ObjectType( "java.lang.String" );
     public static final ObjectType CLASS          = new ObjectType( "java.lang.Class" );
-    public static final ObjectType STRING_BUIDLER = new ObjectType( "java.lang.StringBuilder" );
+    public static final ObjectType STRING_BUILDER = new ObjectType( "java.lang.StringBuilder" );
     public static final ObjectType THROWABLE      = new ObjectType( "java.lang.Throwable" );
     
     /**

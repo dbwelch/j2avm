@@ -75,11 +75,8 @@ public class FlashNativeClassTranslator extends ClassTranslatorBase {
     public void translateInstantiation( MethodTranslator method, New newInsn ) {
         AVM2Code code = method.getCode().code();
         
+        //push the class onto the stack - the call to <init> will construct
         code.findPropStrict( avm2name );
-        code.constructProp( avm2name, 0 );
-        
-        //This assumes that the subsequent call to <init> will be dropped and
-        //that the no-arg constructor is being called
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.InstanceOf) */

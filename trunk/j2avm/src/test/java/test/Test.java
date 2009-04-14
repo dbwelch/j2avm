@@ -78,7 +78,7 @@ public class Test extends MovieClip {
     private final TextField field;
     private final TextField field2;
     
-    private Foo foo;
+    //private Foo foo;
     
     public Test() {
         field = new TextField();

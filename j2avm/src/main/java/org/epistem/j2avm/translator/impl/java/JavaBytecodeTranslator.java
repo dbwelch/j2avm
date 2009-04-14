@@ -94,6 +94,10 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCall(org.epistem.jvm.code.instructions.MethodCall) */
     public void visitCall( MethodCall call ) {      
         
+        if( call.owner.equals( ObjectType.STRING_BUILDER ) ) {
+            System.out.println();
+        }
+        
         ClassTranslator owner = manager.translatorForClass( call.owner );        
         int argCount = call.signature.paramTypes.length;
 

@@ -61,4 +61,13 @@ public abstract class Instruction {
     public final Instruction prev() {
         return prev;
     }
+    
+    /**
+     * Get the context, pulling it from the next instruction if necessary
+     * @return null if analysis has not taken place
+     */
+    public ExecutionContext getContext() {
+        if( context == null ) return next().getContext();
+        return context;
+    }
 }

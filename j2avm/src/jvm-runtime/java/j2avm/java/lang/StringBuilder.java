@@ -17,6 +17,10 @@ import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassTranslator;
 public class StringBuilder {
 
     private java.lang.String s;
+
+    public StringBuilder() {
+        this( "" );
+    }
     
     public StringBuilder( java.lang.String s  ) {
         this.s = s;

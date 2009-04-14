@@ -19,7 +19,7 @@ import flash.utils.Dictionary;
 public class Object {
     
     private static int nextHash = 1;
-    private static Dictionary hashCodes = new Dictionary(  );
+    private static Dictionary hashCodes = new Dictionary( true );
     
     /** @see java.lang.Object#equals(java.lang.Object) */
     public boolean equals( java.lang.Object obj ) {

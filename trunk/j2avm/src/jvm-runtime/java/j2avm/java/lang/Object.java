@@ -28,16 +28,16 @@ public class Object {
 
     /** @see java.lang.Object#hashCode() */
     public int hashCode() {
-//        trace( "hashCode()" );
+        trace( "hashCode()" );
         
         AVM2_ASM.getPublicProperty( hashCodes, this );
-//        AVM2_ASM.traceStackTop();
+        AVM2_ASM.traceStackTop();
         int hash = AVM2_ASM.popInt();
-//        trace( "hash 1= " + hash );
+        trace( "hash 1= " + hash );
         if( hash < 1 ) { // cannot do hash == 0 since undefined == 0 is false
-//            trace( "new hash" );
+            trace( "new hash" );
             hash = nextHash++;
-//            trace( "hash 2= " + hash );
+            trace( "hash 2= " + hash );
             
             if( nextHash > 10000 ) nextHash = 1;
             AVM2_ASM.setPublicProperty( hashCodes, this, hash );            

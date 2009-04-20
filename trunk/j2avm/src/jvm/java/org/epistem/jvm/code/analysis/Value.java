@@ -67,6 +67,6 @@ public class Value {
         if( producer instanceof This ) return "this";
         if( producer instanceof Argument ) return "arg";
         
-        return type.abbreviation + "@" + producer.offset;
+        return type.name + "@" + producer.offset;
     }
 }

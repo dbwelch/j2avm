@@ -93,11 +93,7 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCall(org.epistem.jvm.code.instructions.MethodCall) */
     public void visitCall( MethodCall call ) {      
-        
-        if( call.owner.equals( ObjectType.STRING_BUILDER ) ) {
-            System.out.println();
-        }
-        
+ 
         ClassTranslator owner = manager.translatorForClass( call.owner );        
         int argCount = call.signature.paramTypes.length;
 
@@ -129,11 +125,8 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitCheckCast(org.epistem.jvm.code.instructions.CheckCast) */
     public void visitCheckCast( CheckCast cast ) {       
-        if( cast.type instanceof ArrayType ) {
-            throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
-        }        
         
-        AVM2QName type = new AVM2QName( cast.type.name );
+        AVM2Name type = NameUtils.qnameForJavaType( cast.type );
         code.dup();
         code.isType( type );
         code.iftrue( "" + cast.toString() );
@@ -238,8 +231,16 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitConstant(org.epistem.jvm.code.instructions.ConstantType) */
     public void visitConstant( ConstantType constType ) {
-        throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
         
+        JVMType type = constType.type;
+        if( type instanceof ObjectType ) {
+            ClassTranslator trans =  manager.translatorForClass( (ObjectType) constType.type );
+            manager.requireClass( trans );
+            trans.translateStaticPush( method );
+            return;
+        }
+        
+        throw new RuntimeException( "UNIMPLEMENTED - classes for primitives and arrays" ); // TODO: primitive and array classes        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitConstantNull(org.epistem.jvm.code.instructions.ConstantNull) */
@@ -249,8 +250,7 @@ public class JavaBytecodeTranslator implements InstructionVisitor {
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitContext(org.epistem.jvm.code.analysis.ExecutionContext) */
     public void visitContext( ExecutionContext context ) {
-        throw new RuntimeException( "UNIMPLEMENTED" ); // TODO Auto-generated method stub
-        
+        //nada        
     }
 
     /** @see org.epistem.jvm.code.InstructionVisitor#visitConvert(org.epistem.jvm.code.instructions.Convert) */

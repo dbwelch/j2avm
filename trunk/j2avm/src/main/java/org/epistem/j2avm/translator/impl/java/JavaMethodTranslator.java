@@ -20,6 +20,7 @@ import org.epistem.jvm.flags.MethodFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.ValueType;
 
+import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.instruction.Instruction;
 import com.anotherbigidea.flash.avm2.model.*;
 
@@ -72,8 +73,13 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         ClassTranslator superTrans = classTranslator.getSuperclass();
         if( superTrans != null && ! (superTrans instanceof FlashNativeClassTranslator )) {
             try {
-                superTrans.getMethodTranslator( superTrans, this.jvmMethod.signature );
-                isOverride = true;
+                MethodTranslator mt = superTrans.getMethodTranslator( superTrans, this.jvmMethod.signature );
+                
+                //TODO: kludge - only flag an override if the names and namespaces match
+                if( mt.getAVM2Name().equals( this.avm2Name ) ) {                
+                    isOverride = true;
+                }
+                
             } catch( NoSuchMethodException nsme ) {
                 //not an override
             }

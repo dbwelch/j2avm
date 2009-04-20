@@ -3,6 +3,7 @@ package org.epistem.j2avm.translator.impl.framework;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.epistem.j2avm.J2AVM;
 import org.epistem.j2avm.annotations.runtime.FlashTargetClass;
 import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.FieldTranslator;
@@ -80,9 +81,9 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
     @Override
     public MethodTranslator defaultMethodTranslator( JVMMethod method ) {
 
-        if( method.name.equals( JavaClassTranslator.INIT_NAME ) ) {
-            return new FlashNativeDummyMethodTranslator( this, method );
-        }        
+//        if( method.name.equals( JavaClassTranslator.INIT_NAME ) ) {
+//            return new FlashNativeDummyMethodTranslator( this, method );
+//        }        
         
         return new JavaFrameworkMethodTranslator( this, method );
     }
@@ -266,6 +267,9 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
      */
     public void translateInstantiation( MethodTranslator method, New newInsn ) {
         ClassTranslator target = manager.translatorForClass( targetClass );
+        J2AVM.TRACE_ON = true;
+        method.runtimeTrace( "NEW ==> " + target.getJVMType() );
+        J2AVM.TRACE_ON = false;
         target.translateInstantiation( method, newInsn ); 
     }
 

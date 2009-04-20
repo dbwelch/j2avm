@@ -73,6 +73,14 @@ public class JVMClass {
         new ClassPrinter( ipw ).print( this );
         ipw.flush();
     }
+
+    /**
+     * Dump class for debug purposes
+     */
+    public void dump( IndentingPrintWriter ipw, boolean analyze ) {
+        new ClassPrinter( ipw, analyze ).print( this );
+        ipw.flush();
+    }
     
     /**
      * Get the method with the given signature.

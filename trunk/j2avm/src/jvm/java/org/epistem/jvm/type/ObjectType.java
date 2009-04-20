@@ -54,6 +54,6 @@ public class ObjectType extends ObjectOrArrayType {
             return (ObjectType) vt;
         }
         
-        throw new RuntimeException( "Not an Object or Array type: " + name );        
+        throw new RuntimeException( "Not an Object type: " + name );        
     }
 }

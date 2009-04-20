@@ -35,10 +35,13 @@ public class AVM2_ASM_Transformer extends Transformer {
         if     ( name.startsWith( "append" ) ) callback = append( name );
         else if( name.startsWith( "pop"    ) ) callback = nothing( name );
         else if( name.startsWith( "push"   ) ) callback = nothing( name );
+        else if( name.startsWith( "retype" ) ) callback = nothing( name );
         else if( name.startsWith( "trace"  ) ) callback = trace( name );
+        else if( name.startsWith( "equal"  ) ) callback = equal( name );
         else if( name.startsWith( "setPublicProperty" ) ) callback = setPubProp( name );
         else if( name.startsWith( "getPublicProperty" ) ) callback = getPubProp( name );
-        else if( name.startsWith( "callVoidFunction"  ) ) callback = call( name );
+        else if( name.startsWith( "callVoidFunction"  ) ) callback = callVoid( name );
+        else if( name.startsWith( "callFunction"      ) ) callback = call( name );
         
         if( callback != null ) {
             call.list().insertAfter( call, callback );
@@ -79,6 +82,17 @@ public class AVM2_ASM_Transformer extends Transformer {
         };
     }
 
+    private CallbackInstruction equal( final String name ) {
+        return new CallbackInstruction() {
+            @Override public void generate( MethodTranslator method ) {
+                System.out.println( "Generating " + name );
+                method.getCode().code().equals();                
+            }
+
+            @Override public String toString() { return "avm2#" + name ; }
+        };
+    }
+
     private CallbackInstruction trace( final String name ) {
         return new CallbackInstruction() {
             @Override public void generate( MethodTranslator method ) {
@@ -90,7 +104,7 @@ public class AVM2_ASM_Transformer extends Transformer {
         };
     }
 
-    private CallbackInstruction call( final String name ) {
+    private CallbackInstruction callVoid( final String name ) {
         return new CallbackInstruction() {
             @Override public void generate( MethodTranslator method ) {
                 System.out.println( "Generating " + name );
@@ -102,7 +116,20 @@ public class AVM2_ASM_Transformer extends Transformer {
             @Override public String toString() { return "avm2#" + name ; }
         };
     }
-    
+
+    private CallbackInstruction call( final String name ) {
+        return new CallbackInstruction() {
+            @Override public void generate( MethodTranslator method ) {
+                System.out.println( "Generating " + name );
+                method.getCode().code().callProperty( 
+                   new AVM2LateMultiname( 
+                           AVM2StandardNamespace.EmptyPackage.namespace ), 0 );                
+            }
+
+            @Override public String toString() { return "avm2#" + name ; }
+        };
+    }
+
     private CallbackInstruction nothing( final String name ) {
         return new CallbackInstruction() {
             @Override public void generate( MethodTranslator method ) {

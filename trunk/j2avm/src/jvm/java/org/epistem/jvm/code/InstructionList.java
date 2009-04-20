@@ -143,7 +143,7 @@ public final class InstructionList {
         Instruction i = first;
         while( i != null ) {    
             if( i.context != null && !( i instanceof LineNumber ) ) {
-                //visitor.visitContext( i.context );
+                visitor.visitContext( i.context );
             }
             
             Instruction prev = i.prev;

@@ -137,6 +137,7 @@ public abstract class MethodTranslatorBase extends MemberTranslatorBase
      * Make an AVM2 namespace that matches the visibility of the the JVM method
      */
     protected static AVM2Namespace makeAVM2Namespace( ClassTranslator classTrans, JVMMethod method ) {
+        
         AVM2Namespace namespace = null;
         if( method.flags.contains( MethodFlag.MethodIsPrivate ) ) {
             namespace = classTrans.getAVM2PrivateNamespace();

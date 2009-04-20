@@ -5,6 +5,7 @@ import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
+import org.epistem.j2avm.translator.impl.java.JavaInterfaceTranslator;
 import org.epistem.j2avm.translator.impl.java.JavaStaticInitMethodTranslator;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.JVMClass;
@@ -23,17 +24,10 @@ import flash.FlashObject;
  *
  * @author nickmain
  */
-public class JavaFrameworkClassTranslator extends JavaClassTranslator {
+public class JavaFrameworkInterfaceTranslator extends JavaInterfaceTranslator {
 
-    public JavaFrameworkClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
-        super( manager, jvmClass, makeName( jvmClass.name ) );
-    }
-    
-    //strip off the prefix
-    static AVM2QName makeName( ObjectType type ) {
-        String name = type.name;
-        if( name.startsWith( "j2avm." ) ) name = name.substring( 6 );
-        return new AVM2QName( name );
+    public JavaFrameworkInterfaceTranslator( TranslatorManager manager, JVMClass jvmClass ) {
+        super( manager, jvmClass, JavaFrameworkClassTranslator.makeName( jvmClass.name ) );
     }
     
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#getSuperclass() */
@@ -56,33 +50,5 @@ public class JavaFrameworkClassTranslator extends JavaClassTranslator {
         }
         
         return new JavaFrameworkMethodTranslator( this, method );
-    }
-
-    /**
-     * @see org.epistem.j2avm.translator.ClassTranslator#translateImplementation(Code))
-     */
-    public void translateImplementation( Code code ) {
-        super.translateImplementation( code );
-    }
-
-    /**
-     * @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(MethodTranslator, InstanceOf)
-     */
-    public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn ) {
-        super.translateInstanceOf( method, instOfInsn );
-    }
-
-    /**
-     * @see org.epistem.j2avm.translator.ClassTranslator#translateInstantiation(MethodTranslator, New)
-     */
-    public void translateInstantiation( MethodTranslator method, New newInsn ) {
-        super.translateInstantiation( method, newInsn ); 
-    }
-
-    /**
-     * @see org.epistem.j2avm.translator.ClassTranslator#translateStaticPush(MethodTranslator)
-     */
-    public void translateStaticPush( MethodTranslator method ) {
-        super.translateStaticPush( method );
     }
 }

@@ -78,7 +78,7 @@ public class Test extends MovieClip {
     private final TextField field;
     private final TextField field2;
     
-    //private Foo foo;
+    private Foo foo;
     
     public Test() {
         field = new TextField();
@@ -117,14 +117,17 @@ public class Test extends MovieClip {
     
         getStage().addEventListener( MouseEvent.MOUSE_MOVE, delegate( "onMove" ) );
 
-        Object[] objs = { new Object(), new Object(), new Object(), new Object(), new Object() };
+        Object[] objs = { new Object(), new Object(), "obj3", new Object(), new Object(), new Object() };
         for( int i = 0; i < objs.length; i++ ) {
-            trace( "Object " + i + " ==> " + objs[i].hashCode() );
+            trace( "Object " + i + " ==> " + objs[i] + " " + objs[i].hashCode() );
         }
         
         for( int i = 0; i < objs.length; i++ ) {
-            trace( "Object " + i + " ==> " + objs[i].hashCode() );
+            trace( "Object " + i + " ==> " + objs[i] + " " + objs[i].hashCode() );
         }
+
+        trace( "NEW OBJECT ==> " + new Object() );
+
     }
 
     @Name("onMove")

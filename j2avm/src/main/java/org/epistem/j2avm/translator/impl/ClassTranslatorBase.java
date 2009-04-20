@@ -162,10 +162,6 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
     public ClassTranslator getSuperclass() {
         if( jvmClass.superclassName == null ) return null; 
         
-        if( jvmClass.superclassName.equals( ObjectType.OBJECT ) ) {
-            return manager.translatorForClass( new ObjectType( FlashObject.class.getName()));
-        }
-        
         return manager.translatorForClass( jvmClass.superclassName );
     }
 

@@ -73,6 +73,15 @@ public class AVM2_ASM {
     
     /** Call a void no-arg function */
     public static native void callVoidFunction( Object target, Object funcName );
+
+    /** Call a no-arg function */
+    public static native void callFunction( Object target, Object funcName );
+    
+    /** Test whether two objects are equal (non-strict) */
+    public static native boolean equal( Object a, Object b );
+    
+    /** Do nothing - just bypass the Java type system */
+    public static native <T> T retype( Object a );
     
     /** Duplicate and trace stack top */
     public static native void traceStackTop();

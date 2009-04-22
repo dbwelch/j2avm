@@ -9,15 +9,12 @@ import org.epistem.j2avm.translator.ClassTranslator;
 import org.epistem.j2avm.translator.FieldTranslator;
 import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.TranslatorManager;
-import org.epistem.j2avm.translator.impl.MemberTranslatorBase;
-import org.epistem.j2avm.translator.impl.flash.FlashNativeDummyMethodTranslator;
 import org.epistem.j2avm.translator.impl.java.JavaClassTranslator;
 import org.epistem.j2swf.swf.code.*;
 import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
-import org.epistem.jvm.code.instructions.FieldAccess;
 import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.code.instructions.New;
 import org.epistem.jvm.type.ObjectType;
@@ -42,7 +39,7 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
     /**
      * Extract the target Flass class
      */
-    private ObjectType extractTarget( JVMClass jvmClass ) {
+    private static ObjectType extractTarget( JVMClass jvmClass ) {
         try {
             JavaAnnotation annot = jvmClass.attributes.annotation( FlashTargetClass.class.getName() );
             
@@ -57,6 +54,12 @@ public class JavaFrameworkClassAugmentingTranslator extends JavaFrameworkClassTr
         throw new RuntimeException( "TargetClass annotation is missing on " + jvmClass.name );
     }
     
+    /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#getAVM2Name() */
+    @Override
+    public AVM2QName getAVM2Name() {
+        return manager.translatorForClass( targetClass ).getAVM2Name();
+    }
+
     /** @see org.epistem.j2avm.translator.impl.ClassTranslatorBase#getSuperclass() */
     @Override
     public ClassTranslator getSuperclass() {

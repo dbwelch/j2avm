@@ -11,6 +11,7 @@ import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.type.ObjectType;
 
+import com.anotherbigidea.flash.avm2.model.AVM2ABCFile;
 import com.anotherbigidea.flash.structs.Color;
 
 /**
@@ -40,7 +41,7 @@ public class TargetSWF {
      * @param fileName the target file name
      * @param className the main class
      */
-    public TargetSWF( TranslatorManager manager, String fileName, String className ) 
+    public TargetSWF( final TranslatorManager manager, String fileName, String className ) 
         throws ClassNotFoundException, IOException {
         
         this.file = new File( fileName );
@@ -61,7 +62,12 @@ public class TargetSWF {
 
         //TODO: need way to set the script limits
         
-        Code code = new Code( "test" );
+        Code code = new Code( "test" ) {
+            @Override protected void prepareABCforWriting( AVM2ABCFile abc ) {
+                abc.setScriptSort( manager );
+            }            
+        };
+        
         manager.translateRequiredClasses( code );
         
         swf.setMainClass( mainClass.getAVM2Name().toQualString() );

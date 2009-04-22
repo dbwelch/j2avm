@@ -117,4 +117,9 @@ public interface ClassTranslator {
      * @return null if the annotation does not exist
      */
     public JavaAnnotation getAnnotation( String name );
+    
+    /**
+     * Whether the class is an interface
+     */
+    public boolean isInterface();
 }

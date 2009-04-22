@@ -66,7 +66,7 @@ public class JavaClassTranslator extends JavaTranslator {
         
         String initName = methods.containsKey( STATIC_INIT ) ? CLINIT_NAME : null;
         
-        codeClass = code.addClass( avm2name.toQualString(), initName, true, isFinal, false, superclasses );
+        codeClass = code.addClass( getAVM2Name().toQualString(), initName, true, isFinal, false, superclasses );
 
         translateMembers();
         addImplementedInterfaces();
@@ -87,8 +87,8 @@ public class JavaClassTranslator extends JavaTranslator {
     public void translateInstantiation( MethodTranslator method, New newInsn ) {
         AVM2Code code = method.getCode().code();
         
-        code.findPropStrict( avm2name );
-        code.constructProp( avm2name, 0 );
+        code.findPropStrict( getAVM2Name() );
+        code.constructProp( getAVM2Name(), 0 );
         
         //The <init> method will be called later in the same manner as
         //normal JVM instantiation

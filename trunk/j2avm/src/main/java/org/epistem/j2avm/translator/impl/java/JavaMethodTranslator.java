@@ -8,6 +8,7 @@ import org.epistem.j2avm.translator.MethodTranslator;
 import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.impl.MethodTranslatorBase;
 import org.epistem.j2avm.translator.impl.flash.FlashNativeClassTranslator;
+import org.epistem.j2avm.translator.impl.framework.JavaFrameworkClassAugmentingTranslator;
 import org.epistem.j2avm.translator.transformers.AVM2_ASM_Transformer;
 import org.epistem.j2avm.translator.transformers.Transformer;
 import org.epistem.j2avm.util.NameUtils;
@@ -70,18 +71,23 @@ public class JavaMethodTranslator extends MethodTranslatorBase {
         boolean isFinal = jvmMethod.flags.contains( MethodFlag.MethodIsFinal );
         boolean isOverride = false;
         
-        ClassTranslator superTrans = classTranslator.getSuperclass();
-        if( superTrans != null && ! (superTrans instanceof FlashNativeClassTranslator )) {
-            try {
-                MethodTranslator mt = superTrans.getMethodTranslator( superTrans, this.jvmMethod.signature );
-                
-                //TODO: kludge - only flag an override if the names and namespaces match
-                if( mt.getAVM2Name().equals( this.avm2Name ) ) {                
-                    isOverride = true;
+        if( ! jvmName.equals( JavaClassTranslator.INIT_NAME ) ) { //<init> is never an override
+            
+            ClassTranslator superTrans = classTranslator.getSuperclass();
+            if( superTrans != null 
+             && ! (superTrans instanceof FlashNativeClassTranslator )
+             && ! (superTrans instanceof JavaFrameworkClassAugmentingTranslator )) {
+                try {
+                    MethodTranslator mt = superTrans.getMethodTranslator( superTrans, this.jvmMethod.signature );
+                    
+                    //TODO: kludge - only flag an override if the names and namespaces match
+                    if( mt.getAVM2Name().equals( this.avm2Name ) ) {                
+                        isOverride = true;
+                    }
+                    
+                } catch( NoSuchMethodException nsme ) {
+                    //not an override
                 }
-                
-            } catch( NoSuchMethodException nsme ) {
-                //not an override
             }
         }
         

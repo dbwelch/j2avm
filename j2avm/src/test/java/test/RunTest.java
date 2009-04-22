@@ -26,7 +26,7 @@ public class RunTest {
         
         J2AVM.translate( "test.Test", "eclipse-build/test.swf", loader );
         
-        //SWFTagDumper.main( new String[] { "eclipse-build/test.swf", "acts" } );
+        SWFTagDumper.main( new String[] { "eclipse-build/test.swf", "acts" } );
         //SWFTagDumper.main( new String[] { "flex-cases/test.swf" } );
 
         AVM2ABCFile abc = AVM2ABCFileLoader.abcFilesFromExistingSWF( new File( "eclipse-build/test.swf" ) ).iterator().next();

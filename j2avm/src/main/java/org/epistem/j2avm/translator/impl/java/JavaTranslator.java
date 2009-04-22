@@ -60,14 +60,14 @@ public abstract class JavaTranslator extends ClassTranslatorBase {
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.InstanceOf) */
     public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn ) {
-        method.getCode().code().isType( avm2name );
+        method.getCode().code().isType( getAVM2Name() );
     }
 
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateStaticPush(org.epistem.j2avm.translator.MethodTranslator) */
     public void translateStaticPush( MethodTranslator method ) {
         // TODO this would be the place to implement ClassLoader support ?
         
-        method.getCode().code().getLex( avm2name );
+        method.getCode().code().getLex( getAVM2Name() );
     }
     
     /**

@@ -193,12 +193,19 @@ public class ABCMindMapDumper {
     }
     
     private void dumpScript( AVM2Script s ) {
-        out.startNode().text( "script" ).backColor( 0xe0e0ff ).folded();
         
-        for( AVM2Trait trait : s.traits.traits ) {
-            dumpTrait( trait );
+        AVM2QName className = s.findClassSlot();
+        if( className != null ) {
+            out.startNode().text( className.toQualString() ).backColor( 0xD0D0ff ).folded();
         }
-
+        else {
+            out.startNode().text( "script" ).backColor( 0xe0e0ff ).folded();
+            
+            for( AVM2Trait trait : s.traits.traits ) {
+                dumpTrait( trait );
+            }
+        }
+        
         out.startNode().text( "body" );
         dumpMethod( s.script );
         out.endNode();

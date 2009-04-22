@@ -16,8 +16,6 @@ import org.epistem.jvm.type.ObjectType;
 
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
-import flash.FlashObject;
-
 /**
  * Translator for Java framework classes
  *
@@ -28,7 +26,11 @@ public class JavaFrameworkClassTranslator extends JavaClassTranslator {
     public JavaFrameworkClassTranslator( TranslatorManager manager, JVMClass jvmClass ) {
         super( manager, jvmClass, makeName( jvmClass.name ) );
     }
-    
+
+    protected JavaFrameworkClassTranslator( TranslatorManager manager, JVMClass jvmClass, AVM2QName avm2name ) {
+        super( manager, jvmClass, avm2name );
+    }
+
     //strip off the prefix
     static AVM2QName makeName( ObjectType type ) {
         String name = type.name;

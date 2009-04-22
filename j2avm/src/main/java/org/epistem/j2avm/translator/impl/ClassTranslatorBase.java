@@ -15,14 +15,13 @@ import org.epistem.jvm.JVMClass;
 import org.epistem.jvm.JVMField;
 import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.attributes.JavaAnnotation;
+import org.epistem.jvm.flags.ClassFlag;
 import org.epistem.jvm.type.ObjectType;
 import org.epistem.jvm.type.Signature;
 
 import com.anotherbigidea.flash.avm2.NamespaceKind;
 import com.anotherbigidea.flash.avm2.model.AVM2Namespace;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
-
-import flash.FlashObject;
 
 /**
  * A translator for a class. A bridge between the Java class and the AVM2 class.
@@ -33,7 +32,7 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
 
     protected final String name;
     protected final TranslatorManager manager;
-    protected final AVM2QName avm2name;
+    private final AVM2QName avm2name;
     
     protected final AVM2Namespace privateNamespace;
     protected final AVM2Namespace internalNamespace;
@@ -191,6 +190,11 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         return jvmClass.name;
     }
     
+    /** @see org.epistem.j2avm.translator.ClassTranslator#isInterface() */
+    public boolean isInterface() {
+        return jvmClass.flags.contains( ClassFlag.IsInterface );
+    }
+
     /**
      * Determine whether one class is a superclass of another
      * 
@@ -210,4 +214,24 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
         
         return false;
     }
+
+    /**
+     * Determine whether a class has a given interface - either directly, or
+     * via superclasses
+     * 
+     * @param clazz the implementing class
+     * @param iface the potential interface
+     * @return true if the second arg is an interface of the first
+     */
+    public static boolean hasInterface( ClassTranslator clazz, ClassTranslator iface ) {
+        if( ! iface.isInterface() ) return false;
+        
+        if( clazz.getInterfaces().contains( iface ) ) return true;
+        
+        ClassTranslator sup = clazz.getSuperclass();
+        if( sup != null ) return hasInterface( sup, iface );
+        
+        return false;
+    }
+
 }

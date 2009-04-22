@@ -76,16 +76,16 @@ public class FlashNativeClassTranslator extends ClassTranslatorBase {
         AVM2Code code = method.getCode().code();
         
         //push the class onto the stack - the call to <init> will construct
-        code.findPropStrict( avm2name );
+        code.findPropStrict( getAVM2Name() );
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateInstanceOf(org.epistem.j2avm.translator.MethodTranslator, org.epistem.jvm.code.instructions.InstanceOf) */
     public void translateInstanceOf( MethodTranslator method, InstanceOf instOfInsn ) {
-        method.getCode().code().isType( avm2name );
+        method.getCode().code().isType( getAVM2Name() );
     }
     
     /** @see org.epistem.j2avm.translator.ClassTranslator#translateStaticPush(org.epistem.j2avm.translator.MethodTranslator) */
     public void translateStaticPush( MethodTranslator method ) {
-        method.getCode().code().getLex( avm2name );
+        method.getCode().code().getLex( getAVM2Name() );
     }
 }

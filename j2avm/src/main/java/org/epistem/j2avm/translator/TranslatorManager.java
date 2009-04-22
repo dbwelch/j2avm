@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.epistem.j2avm.annotations.runtime.DefaultTranslator;
 import org.epistem.j2avm.annotations.runtime.Translator;
+import org.epistem.j2avm.translator.impl.ClassTranslatorBase;
 import org.epistem.j2avm.translator.impl.java.JavaTranslator;
 import org.epistem.j2swf.swf.code.Code;
 import org.epistem.jvm.AttributeContainer;
@@ -13,12 +14,15 @@ import org.epistem.jvm.JVMClassLoader;
 import org.epistem.jvm.attributes.JavaAnnotation;
 import org.epistem.jvm.type.ObjectType;
 
+import com.anotherbigidea.flash.avm2.model.AVM2QName;
+import com.anotherbigidea.flash.avm2.model.AVM2Script;
+
 /**
  * Manages the translation of a set of Java classes to a target SWF.
  *
  * @author nickmain
  */
-public class TranslatorManager {
+public class TranslatorManager implements Comparator<AVM2Script> {
 
     /**
      * The loader being used
@@ -56,27 +60,14 @@ public class TranslatorManager {
     public void translateRequiredClasses( Code code ) {
         while( ! translationQueue.isEmpty() ) {
             ClassTranslator trans = translationQueue.removeFirst();
+            if( translated.contains( trans )) continue;
             
             System.out.println( trans.getJVMType() );
             System.out.flush();
-            
-            translateClass( code, trans );
+         
+            trans.translateImplementation( code );
+            translated.add( trans );
         }
-    }
-    
-    //make sure superclasses and interfaces are translated first
-    private void translateClass( Code code, ClassTranslator trans ) {
-        if( trans == null ) return;
-        if( translated.contains( trans )) return;
-        
-        translateClass( code, trans.getSuperclass() );
-        
-        for( ClassTranslator ifTrans : trans.getInterfaces() ) {
-            translateClass( code, ifTrans );
-        }
-        
-        trans.translateImplementation( code );
-        translated.add( trans );
     }
     
     /**
@@ -103,6 +94,12 @@ public class TranslatorManager {
             
             translationQueue.add( clazz );
             requiredClasses.add( clazz );
+            
+            //also require implemented interfaces
+            for( ClassTranslator ifTrans : clazz.getInterfaces() ) {
+                requireClass( ifTrans );
+            }
+            
             clazz = clazz.getSuperclass();
         }
     }
@@ -199,5 +196,35 @@ public class TranslatorManager {
         } catch( IOException e ) {
             throw new RuntimeException( e );
         }
+    }
+
+    /** 
+     * Order scripts according to the classes that they initialize, such that
+     * superclasses come before base classes. 
+     *  
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+     */
+    public int compare( AVM2Script a, AVM2Script b ) {
+        AVM2QName classA = a.findClassSlot();
+        AVM2QName classB = b.findClassSlot();
+        
+        if( classA == null && classB == null ) return 0;
+        if( classA == null ) return 1;  //non-class scripts come later
+        if( classB == null ) return -1;
+                
+        ClassTranslator ctA = translatorForClass( new ObjectType( classA.toQualString() ) );
+        ClassTranslator ctB = translatorForClass( new ObjectType( classB.toQualString() ) );
+        
+        //main class always last
+        if( ctA == mainClass ) return 1;
+        if( ctB == mainClass ) return -1;
+        
+        if( ClassTranslatorBase.isSuperclassOf( ctA, ctB ) ) return 1; 
+        if( ClassTranslatorBase.isSuperclassOf( ctB, ctA ) ) return -1; 
+        
+        if( ClassTranslatorBase.hasInterface( ctA, ctB ) ) return 1;
+        if( ClassTranslatorBase.hasInterface( ctB, ctA ) ) return -1;
+        
+        return 0;
     }
 }

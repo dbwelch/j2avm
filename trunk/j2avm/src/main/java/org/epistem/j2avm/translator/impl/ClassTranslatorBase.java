@@ -226,7 +226,10 @@ public abstract class ClassTranslatorBase implements ClassTranslator {
     public static boolean hasInterface( ClassTranslator clazz, ClassTranslator iface ) {
         if( ! iface.isInterface() ) return false;
         
-        if( clazz.getInterfaces().contains( iface ) ) return true;
+        for( ClassTranslator i : clazz.getInterfaces() ) {
+            if( i == iface ) return true;            
+            if( hasInterface( i, iface ) ) return true;
+        }
         
         ClassTranslator sup = clazz.getSuperclass();
         if( sup != null ) return hasInterface( sup, iface );

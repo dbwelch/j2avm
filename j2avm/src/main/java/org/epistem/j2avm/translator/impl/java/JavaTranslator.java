@@ -12,6 +12,7 @@ import org.epistem.jvm.JVMMethod;
 import org.epistem.jvm.code.instructions.InstanceOf;
 import org.epistem.jvm.flags.ClassFlag;
 
+import com.anotherbigidea.flash.avm2.model.AVM2Multiname;
 import com.anotherbigidea.flash.avm2.model.AVM2QName;
 
 /**
@@ -75,7 +76,10 @@ public abstract class JavaTranslator extends ClassTranslatorBase {
      */
     protected void addImplementedInterfaces() {
         for( ClassTranslator trans : getInterfaces() ) {
-            codeClass.avm2class.addInterface( trans.getAVM2Name() );            
+            AVM2QName qname = trans.getAVM2Name();
+            AVM2Multiname mn = new AVM2Multiname( qname.name, qname.namespace );
+            
+            codeClass.avm2class.addInterface( mn );            
         }
     }
     
